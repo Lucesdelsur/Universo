@@ -218,36 +218,65 @@ select{
 /* =========================================================
    LÍNEA DE TIEMPO — franjas, una debajo de la otra
    ========================================================= */
-#timeline-wrap{ max-width:760px; margin:56px auto 100px; padding:0 24px; }
-#timeline{ display:flex; flex-direction:column; }
-.empty-state{ text-align:center; padding:80px 20px; color:var(--text-dim); font-family:var(--mono); }
+#timeline-wrap{ max-width:1000px; margin:56px auto 100px; padding:0 24px; }
+#timeline{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+.empty-state{ grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--text-dim); font-family:var(--mono); }
 
 @keyframes riseIn{ to{ opacity:1; transform:translateY(0); } }
 
-.tl-row{
-  display:flex; gap:24px; align-items:flex-start;
-  padding:26px 0 26px 16px; border-top:1px solid var(--line);
-  border-left:3px solid color-mix(in srgb, var(--hero-bg, var(--red)) 55%, var(--line));
+.tl-card{
+  position:relative;
   cursor:pointer; transition:opacity .15s ease;
-  opacity:0; transform:translateY(14px);
-  animation:riseIn .4s ease forwards;
+  opacity:0; transform:translateY(14px); animation:riseIn .4s ease forwards;
+  border-top:3px solid color-mix(in srgb, var(--hero-bg, var(--red)) 55%, var(--line));
+  padding-top:14px;
 }
-.tl-row:hover{ opacity:.7; }
-.tl-row-thumb{
-  width:150px; aspect-ratio:3/2; flex-shrink:0; overflow:hidden;
-  background:var(--bg-soft); position:relative;
-  display:flex; align-items:center; justify-content:center;
-}
-.tl-row-thumb img{ width:100%; height:100%; object-fit:cover; }
-.tl-row-info{ flex:1; min-width:0; }
+.tl-card:hover{ opacity:.72; }
+.tl-card img{ width:100%; aspect-ratio:3/2; object-fit:cover; margin-bottom:10px; background:var(--bg-soft); display:block; }
+.tl-card .ph{ width:100%; aspect-ratio:3/2; margin-bottom:10px; background:var(--bg-soft); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:.8rem; color:var(--text-dim); text-align:center; }
 
-.tl-date{ font-family:var(--mono); font-size:.8rem; color:var(--text-dim); letter-spacing:.03em; }
+.tl-date{ font-family:var(--mono); font-size:.72rem; color:var(--text-dim); letter-spacing:.02em; }
 .tl-cat{
-  display:inline-block; font-family:var(--mono); font-size:.72rem; text-transform:uppercase;
-  letter-spacing:.1em; margin-left:10px; color:var(--tag-color, var(--red)); font-weight:700;
+  display:inline-block; font-family:var(--mono); font-size:.66rem; text-transform:uppercase;
+  letter-spacing:.08em; margin-left:8px; color:var(--tag-color, var(--red)); font-weight:700;
 }
-.tl-title{ font-family:var(--display); font-weight:900; font-size:1.5rem; line-height:1.3; margin-top:10px; color:var(--ink); }
-.tl-thumb .ph{ font-family:var(--mono); font-size:.9rem; color:var(--text-dim); text-align:center; padding:8px; }
+.tl-title{ font-family:var(--display); font-weight:900; font-size:1.05rem; line-height:1.3; margin-top:8px; color:var(--ink); }
+.tl-lugar{ margin-top:6px; font-family:var(--mono); font-size:.72rem; color:var(--text-dim); }
+.tl-publico{ font-weight:400; color:var(--text-dim); }
+.tl-leer{
+  margin-top:8px; font-family:var(--mono); font-weight:700; font-size:.7rem;
+  letter-spacing:.05em; color:var(--red); text-transform:uppercase;
+}
+
+/* ---- Tarjeta "cita": para hitos sin foto ni video (Prensa, en su mayoría) ---- */
+.tl-card.cita{
+  aspect-ratio:3/2; background:color-mix(in srgb, var(--hero-bg, var(--red)) 8%, transparent);
+  display:flex; flex-direction:column; justify-content:center; padding:16px; margin-top:0;
+}
+.tl-card.cita .tl-teaser-grande{
+  font-family:var(--body); font-style:italic; font-size:.92rem; line-height:1.35; color:var(--ink); margin-top:8px;
+}
+.tl-card.cita .tl-medio{ font-family:var(--mono); font-size:.66rem; color:var(--text-dim); margin-top:10px; text-transform:uppercase; letter-spacing:.03em; }
+
+/* ---- Hitos "mayor": ocupan todo el ancho de la grilla ---- */
+.tl-card-mayor{
+  grid-column: 1 / -1;
+  display:flex; gap:24px; align-items:flex-start; cursor:pointer;
+  padding:28px 24px; margin:0 -24px; transition:opacity .15s ease;
+  opacity:0; transform:translateY(14px); animation:riseIn .4s ease forwards;
+  border-top:3px solid var(--hero-bg, var(--red));
+  background:color-mix(in srgb, var(--hero-bg, var(--red)) 6%, transparent);
+}
+.tl-card-mayor:hover{ opacity:.85; }
+.tl-card-mayor img{ width:280px; aspect-ratio:16/9; object-fit:cover; flex-shrink:0; background:var(--bg-soft); }
+.tl-card-mayor .ph{ width:280px; aspect-ratio:16/9; flex-shrink:0; background:var(--bg-soft); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:.8rem; color:var(--text-dim); }
+.tl-card-mayor .tl-title{ font-size:1.7rem; margin-top:10px; }
+.tl-card-mayor .tl-teaser{ font-family:var(--body); font-style:italic; color:var(--text-dim); margin-top:10px; font-size:1.05rem; }
+.tl-mayor-badge{
+  display:inline-block; font-family:var(--mono); font-weight:700; font-size:.72rem;
+  letter-spacing:.1em; text-transform:uppercase; color:#fff;
+  background:var(--hero-bg, var(--red)); padding:3px 9px; margin-bottom:8px;
+}
 .tl-play-badge{
   position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
   width:46px; height:46px; border-radius:50%;
@@ -255,33 +284,16 @@ select{
   display:flex; align-items:center; justify-content:center; font-size:1.1rem;
   border:1.5px solid var(--red);
 }
-.tl-lugar{ margin-top:8px; font-family:var(--mono); font-size:.85rem; color:var(--text-dim); }
-.tl-teaser{ margin-top:12px; font-size:1.05rem; color:var(--text-dim); line-height:1.6; font-family:var(--body); font-style:italic; }
-.tl-leer{
-  margin-top:12px; font-family:var(--mono); font-weight:700; font-size:.85rem;
-  letter-spacing:.05em; color:var(--red); text-transform:uppercase;
-}
-.tl-publico{ font-weight:400; color:var(--text-dim); font-size:.85em; }
+.tl-card-mayor{ position:relative; }
+.tl-card-mayor > img{ position:relative; }
 
-/* ---- Hitos "mayor": tratamiento destacado dentro de la misma línea de tiempo ---- */
-.tl-row-mayor{
-  flex-direction:column; padding:36px 24px 48px; margin:0 -24px;
-  border-top:3px solid var(--hero-bg, var(--red));
-  background:color-mix(in srgb, var(--hero-bg, var(--red)) 6%, transparent);
+@media (max-width:900px){
+  #timeline{ grid-template-columns:repeat(2, 1fr); }
 }
-.tl-row-mayor .tl-row-thumb{ width:100%; aspect-ratio:16/9; }
-.tl-row-mayor .tl-title{ font-size:2.1rem; margin-top:16px; }
-.tl-row-mayor .tl-teaser{ font-size:1.15rem; }
-.tl-mayor-badge{
-  display:inline-block; font-family:var(--mono); font-weight:700; font-size:.75rem;
-  letter-spacing:.12em; text-transform:uppercase; color:#fff;
-  background:var(--hero-bg, var(--red)); padding:4px 10px; margin-bottom:10px;
-}
-
 @media (max-width: 600px){
-  .tl-row{ flex-direction:column; }
-  .tl-row-thumb{ width:100%; }
-  .tl-row-mayor .tl-title{ font-size:1.7rem; }
+  #timeline{ grid-template-columns:1fr; }
+  .tl-card-mayor{ flex-direction:column; }
+  .tl-card-mayor img, .tl-card-mayor .ph{ width:100%; }
 }
 
 /* =========================================================
@@ -1535,23 +1547,52 @@ footer{
     const colores = catColors(ev.categorias);
     const el = document.createElement('div');
     const esMayor = ev.nivel === 'mayor';
-    el.className = 'tl-row' + (esMayor ? ' tl-row-mayor' : '');
-    el.style.animationDelay = `${delay}s`;
+    const tieneMedia = !!(ev.foto || ev.youtube);
     const catTags = (ev.categorias || []).map((c, i) =>
       `<span class="tl-cat" style="--tag-color:${colores[i]}">${c}</span>`
     ).join('');
-    const sinMiniatura = !ev.foto && !ev.youtube;
-    el.innerHTML = `
-      ${sinMiniatura ? '' : `<div class="tl-row-thumb">${cardThumb(ev)}</div>`}
-      <div class="tl-row-info">
-        ${esMayor ? `<span class="tl-mayor-badge">★ Hito destacado</span><br>` : ''}
+    const infoExtra = `
+      ${ev.lugar ? `<div class="tl-lugar">📍 ${ev.lugar}</div>` : ''}
+      ${ev.enlace ? `<div class="tl-leer">Leer la nota ↗</div>` : ''}
+    `;
+
+    if(esMayor){
+      el.className = 'tl-card-mayor';
+      el.style.animationDelay = `${delay}s`;
+      const media = tieneMedia
+        ? cardThumb(ev)
+        : `<div class="ph">📷<br>Espacio para tu foto</div>`;
+      el.innerHTML = `
+        ${media}
+        <div>
+          <span class="tl-mayor-badge">★ Hito destacado</span><br>
+          <span class="tl-date">${formatearFecha(ev.fecha)}</span>${catTags}
+          <div class="tl-title">${ev.titulo}${ev.publico ? ` <span class="tl-publico">(${ev.publico})</span>` : ''}</div>
+          ${ev.teaser ? `<div class="tl-teaser">${ev.teaser}</div>` : ''}
+          ${infoExtra}
+        </div>
+      `;
+    } else if(tieneMedia){
+      el.className = 'tl-card';
+      el.style.animationDelay = `${delay}s`;
+      el.innerHTML = `
+        ${cardThumb(ev)}
         <span class="tl-date">${formatearFecha(ev.fecha)}</span>${catTags}
         <div class="tl-title">${ev.titulo}${ev.publico ? ` <span class="tl-publico">(${ev.publico})</span>` : ''}</div>
-        ${ev.lugar ? `<div class="tl-lugar">📍 ${ev.lugar}</div>` : ''}
-        ${ev.teaser ? `<div class="tl-teaser">${ev.teaser}</div>` : ''}
-        ${ev.enlace ? `<div class="tl-leer">Leer la nota ↗</div>` : ''}
-      </div>
-    `;
+        ${infoExtra}
+      `;
+    } else {
+      // Sin foto ni video (la mayoría de Prensa): tarjeta "cita" — el teaser
+      // ocupa el lugar de la miniatura, en vez de dejar un hueco vacío.
+      el.className = 'tl-card cita';
+      el.style.animationDelay = `${delay}s`;
+      el.innerHTML = `
+        <span class="tl-date">${formatearFecha(ev.fecha)}</span>${catTags}
+        <div class="tl-teaser-grande">${ev.teaser ? `"${ev.teaser}"` : ev.titulo}</div>
+        ${ev.teaser ? `<div class="tl-medio">${ev.titulo}</div>` : ''}
+        ${infoExtra}
+      `;
+    }
     el.addEventListener('click', () => irADestino(ev));
     return el;
   }
