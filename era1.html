@@ -250,9 +250,19 @@ select{
 }
 .tl-publico{ font-weight:400; color:var(--text-dim); font-size:.85em; }
 
+/* ---- Hitos "mayor": tratamiento destacado dentro de la misma línea de tiempo ---- */
+.tl-row-mayor{
+  flex-direction:column; padding:44px 0 48px;
+  border-top:3px solid var(--hero-bg, var(--red));
+}
+.tl-row-mayor .tl-row-thumb{ width:100%; aspect-ratio:16/9; }
+.tl-row-mayor .tl-title{ font-size:2.1rem; margin-top:16px; }
+.tl-row-mayor .tl-teaser{ font-size:1.15rem; }
+
 @media (max-width: 600px){
   .tl-row{ flex-direction:column; }
   .tl-row-thumb{ width:100%; }
+  .tl-row-mayor .tl-title{ font-size:1.6rem; }
 }
 
 /* =========================================================
@@ -454,7 +464,7 @@ footer{
     },
     {
       fecha: "2018-01-01", hasta: "2020-05-31", categoria: "Era",
-      titulo: "Hacking the Scene", lugar: "Buenos Aires, Argentina",
+      titulo: "Nace el mito", lugar: "Buenos Aires, Argentina",
       colorEra: "var(--cyan)",
       teaser: "Hackeo a la escena del trap",
       descripcion: "<p>Para cuando se unieron como dúo, Catriel ya se llamaba Ca7riel (con el 7, su nombre de rapero) y tocaba en escenarios. Su primera canción juntos fue \"Piola\", le siguió \"A mí no\" y terminaron de hackear la matrix de la escena del trap argentino con \"JALA JALA\" y su video diseñado para ser visto en el celular.</p><p>En julio de 2018 se presentaron en un pequeño lugar, y para fin de ese año hicieron sold out en dos Niceto Club (una sala tan húmeda como emblemática, que aloja a unas 1200 almas desaforadas).</p><p>En 2019 llegó su primera gira de 54 fechas por Argentina, Uruguay y Paraguay. Fue también la primera vez que cruzaron el charco para desembarcar en España y Alemania. El cierre fue en el Estadio Obras, histórico tester para el rock nacional.</p><p>Estaban preparando el terreno para dar el gran salto: el 16 de febrero de 2020 se presentaron en el Festival Cara B en Barcelona, una conocida plataforma para artistas con proyección internacional.</p>",
@@ -463,7 +473,7 @@ footer{
     },
     {
       fecha: "2020-06-01", hasta: "2021-12-31", categoria: "Era",
-      titulo: "Shining Solo", lugar: "Argentina",
+      titulo: "FLY SOLO", lugar: "Argentina",
       colorEra: "var(--gray)",
       teaser: "Una pandemia mundial y dos discos icónicos.",
       descripcion: "<p>La pandemia interrumpe el impulso que habían construido tras el histórico Obras de 2019. La intensidad acumulada empieza a pasar factura y, para cuidar la amistad y evitar que el proyecto se desgaste, deciden separarse temporalmente. Es una etapa introspectiva en la que cada uno busca su propia voz: nacen El Disko (Ca7riel) y Saeta (Paco Amoroso).</p><p><strong>Ca7riel</strong> (Página/12, 2020): \"Antes de la cuarentena me estaba volviendo loco. Estaba metido en una rueda de hámster donde el personaje de Ca7riel se estaba comiendo al Cato real. El parate me salvó la cabeza\".</p><p><strong>Paco Amoroso</strong> (Página/12, 2021): \"Este disco solista fue un poco como hacerme adulto. Tuve que sentarme a escribir y hacerme cargo de mis miedos sin tener el escudo del chiste o a Cato al lado para tapar los baches\".</p>",
@@ -876,6 +886,7 @@ footer{
       icono: "bolt",
       destacado: true,
       bisagra: true,
+      nivel: "mayor",
       datos: [{etiqueta:"Vistas", valor:"16M+"}, {etiqueta:"Plataforma", valor:"NPR Music"}]
     },
     {
@@ -890,14 +901,14 @@ footer{
       titulo: "PAPOTA",
       teaser: "", descripcion: "EP y cortometraje audiovisual. Géneros: pop urbano, trap, electro-house, hip-hop satírico.",
       foto: "", youtube: "8Jnrkw2Lzuw",
-      destacado: true
+      destacado: true, nivel: "mayor"
     },
     {
       fecha: "2025-03-04", categorias: ["Shortfilm"], lugar: "",
       titulo: "PAPOTA",
       teaser: "", descripcion: "Comedia negra y sátira absurda sobre las presiones de la fama masiva tras el Tiny Desk y el éxito de Baño María. Sigue a Cato y Paco en una espiral de obsesión estética y \"síndrome del impostor\", intercalando los 4 tracks inéditos del EP (IMPOSTOR, #TETAS, RE FORRO y EL DÍA DEL AMIGO). Dirigido por Martín Piroyansky.",
       foto: "", youtube: "zYc1qMe_kpc",
-      destacado: true
+      destacado: true, nivel: "mayor"
     },
     {
       fecha: "2025-11-07", categorias: ["Canción"], lugar: "",
@@ -933,6 +944,13 @@ footer{
     },
 
     // ========== HITOS NUEVOS (PARA_SUBIR.xlsx) ==========
+    {
+      fecha: "2025-11-05", categorias: ["Canción"], lugar: "",
+      titulo: "GIMME MORE",
+      teaser: "", descripcion: "Nota: el video original se retiró de las plataformas y la canción fue renombrada — el link puede no funcionar todavía.",
+      foto: "", youtube: "twmKBsfLuNA",
+      destacado: true
+    },
     {
       fecha: "2018-01-01", categorias: ["Canción"], lugar: "",
       titulo: "A mi no",
@@ -1513,7 +1531,8 @@ footer{
   function renderHito(ev, delay){
     const colores = catColors(ev.categorias);
     const el = document.createElement('div');
-    el.className = 'tl-row';
+    const esMayor = ev.nivel === 'mayor';
+    el.className = 'tl-row' + (esMayor ? ' tl-row-mayor' : '');
     el.style.animationDelay = `${delay}s`;
     const catTags = (ev.categorias || []).map((c, i) =>
       `<span class="tl-cat" style="--tag-color:${colores[i]}">${c}</span>`
