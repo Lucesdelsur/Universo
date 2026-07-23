@@ -1,387 +1,587 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz: ¿Cuál es tu Era?</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universo Musical — CA7RIEL & Paco Amoroso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Merriweather:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =============================================================
+   UNIVERSO MUSICAL — CA7RIEL & Paco Amoroso
+   Estética editorial (Rolling Stone) — blanco, serif, rojo quirúrgico
+   ============================================================= */
+:root{
+  --bg: #FFFFFF;
+  --bg-soft: #FAFAFA;
+  --card: #FFFFFF;
+  --card-hover: #F5F5F5;
+  --line: #E0E0E0;
+  --text: #111111;
+  --text-dim: #555555;
 
-    body {
-      background: #0f0f12;
-      color: #f1f1f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 16px;
-    }
+  --red: #D71920;
+  --ink: #111111;
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-      background: #181820;
-      border: 1px solid #2a2a36;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
+  --lime: #D71920;
+  --magenta: #D71920;
+  --cyan: #D71920;
+  --orange: #D71920;
+  --violet: #D71920;
+  --gold: #D71920;
+  --gray: #555555;
 
-    .header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
+  --display: 'Merriweather', serif;
+  --body: 'Lora', serif;
+  --mono: 'Inter', sans-serif;
+}
 
-    .header h1 {
-      font-size: 1.5rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #a855f7, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:17px;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+::selection{ background:var(--red); color:#fff; }
+a{ color:inherit; }
+button{ font-family:inherit; cursor:pointer; }
+:focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
 
-    .progress-bar-container {
-      width: 100%;
-      height: 6px;
-      background: #2a2a36;
-      border-radius: 3px;
-      overflow: hidden;
-      margin-top: 12px;
-    }
+/* =========================================================
+   NAV superior — sticky, blanco, logo centrado
+   ========================================================= */
+#site-nav{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:center; gap:30px;
+  background:#fff; border-bottom:1px solid var(--line);
+  padding:14px 20px;
+}
+#site-nav a{
+  font-family:var(--mono); font-weight:600; font-size:.85rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink); text-decoration:none;
+  padding-bottom:4px; border-bottom:2px solid transparent;
+}
+#site-nav a:hover{ color:var(--red); }
+#site-nav a.active{ border-bottom-color:var(--red); color:var(--red); }
 
-    .progress-bar {
-      height: 100%;
-      width: 10%;
-      background: linear-gradient(90deg, #a855f7, #ec4899);
-      transition: width 0.3s ease;
-    }
+/* =========================================================
+   HERO — PORTADA
+   ========================================================= */
+.hero-portada{
+  position:relative; min-height:64vh;
+  background-image:linear-gradient(180deg, rgba(0,0,0,0) 25%, rgba(0,0,0,.88) 100%), url('images/portada-principal.jpeg');
+  background-size:cover; background-position:center 20%;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+  padding:56px 24px 44px; text-align:center; color:#fff;
+}
+.hero-portada .hero-eyebrow{ color:#fff; opacity:.9; font-family:var(--mono); font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.85rem; }
+.hero-portada .kicker{
+  font-family:var(--mono); font-weight:700; font-size:.85rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--red); background:#fff; display:inline-block;
+  padding:5px 12px; margin-top:18px;
+}
+.hero-portada h1{
+  font-family:var(--display); font-weight:900; font-size:clamp(2.6rem, 9vw, 5rem);
+  line-height:1.05; margin-top:16px; color:#fff;
+}
+.hero-portada .sub{ color:#EDEDED; opacity:.95; font-size:1.2rem; font-style:italic; margin-top:8px; }
 
-    .question-count {
-      font-size: 0.85rem;
-      color: #8f8f9d;
-      margin-top: 6px;
-      display: block;
-    }
+/* =========================================================
+   SECCIÓN DIAGNÓSTICO / TEST (OPCIÓN 3)
+   ========================================================= */
+.seccion-test{
+  max-width:760px; margin:40px auto; padding:36px 28px;
+  background:var(--bg-soft); border:1px solid var(--line);
+  border-left:4px solid var(--red); text-align:center;
+}
+.seccion-test .warning-badge{
+  font-family:var(--mono); font-weight:700; font-size:.75rem; letter-spacing:.12em;
+  text-transform:uppercase; color:#fff; background:var(--red); display:inline-block;
+  padding:4px 10px; margin-bottom:14px;
+}
+.seccion-test h2{
+  font-family:var(--display); font-weight:900; font-size:clamp(1.5rem, 5vw, 2.2rem);
+  color:var(--ink); margin-bottom:12px; line-height:1.15;
+}
+.seccion-test p{
+  font-family:var(--body); font-size:1.1rem; color:var(--text-dim);
+  line-height:1.6; margin-bottom:26px; max-width:620px; margin-left:auto; margin-right:auto;
+}
+.btn-diagnostico{
+  font-family:var(--mono); font-weight:700; font-size:.9rem; letter-spacing:.08em;
+  text-transform:uppercase; background:var(--ink); color:#fff;
+  border:1px solid var(--ink); padding:16px 32px; transition:all .2s ease;
+}
+.btn-diagnostico:hover{
+  background:var(--red); border-color:var(--red); color:#fff;
+}
 
-    .question-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      line-height: 1.4;
-      margin-bottom: 20px;
-      color: #ffffff;
-    }
+/* =========================================================
+   LISTA DE ERAS
+   ========================================================= */
+.lista-eras{
+  max-width:760px; margin:50px auto 60px; padding:0 24px;
+}
+.lista-eras h2{
+  font-family:var(--display); font-weight:900; font-size:1.3rem; text-transform:uppercase;
+  letter-spacing:.04em; border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:24px;
+}
+.era-link{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px; flex-wrap:wrap;
+  text-decoration:none; color:var(--ink);
+  padding:20px 0; border-bottom:1px solid var(--line);
+}
+.era-link:hover .nombre{ color:var(--red); }
+.era-link .kicker-chico{
+  font-family:var(--mono); font-weight:700; font-size:.78rem; letter-spacing:.1em;
+  color:var(--red); text-transform:uppercase; display:block; margin-bottom:6px;
+}
+.era-link .nombre{
+  font-family:var(--display); font-weight:900; font-size:1.4rem; color:var(--ink); transition:color .15s ease;
+}
+.era-link .periodo{ font-family:var(--mono); font-size:.9rem; color:var(--text-dim); white-space:nowrap; }
 
-    .options-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+.link-historia{
+  display:block; max-width:760px; margin:0 auto 70px; padding:0 24px; text-align:center;
+  font-family:var(--mono); font-weight:600; font-size:1rem; color:var(--ink);
+  text-decoration:underline; text-underline-offset:4px;
+}
+.link-historia:hover{ color:var(--red); }
 
-    .option-btn {
-      background: #22222e;
-      border: 1px solid #323242;
-      color: #e2e2e8;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      line-height: 1.4;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
+/* =========================================================
+   STATS
+   ========================================================= */
+.hero .stats{
+  display:flex; gap:44px; margin-top:30px; flex-wrap:wrap; justify-content:center;
+}
+.hero .stats div{ font-family:var(--mono); text-align:center; }
+.hero .stats strong{ display:block; font-family:var(--display); font-weight:900; font-size:1.9rem; color:var(--ink); }
+.hero .stats span{ font-size:.8rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.1em; opacity:.85; }
+.stats-source{
+  font-family:var(--mono); font-size:.85rem; color:var(--text-dim);
+  opacity:.7; margin-top:28px; width:100%; text-align:center;
+}
 
-    .option-btn:hover, .option-btn:active {
-      background: #2d2d3d;
-      border-color: #a855f7;
-      transform: translateY(-1px);
-    }
+/* =========================================================
+   MODAL DE TEST / DIAGNÓSTICO
+   ========================================================= */
+#quiz-modal-overlay{
+  position:fixed; inset:0; background:rgba(17,17,17,.85); backdrop-filter:blur(3px);
+  z-index:200; display:flex; align-items:center; justify-content:center; padding:20px;
+  opacity:0; visibility:hidden; transition:opacity .2s ease, visibility .2s ease;
+}
+#quiz-modal-overlay.open{ opacity:1; visibility:visible; }
+#quiz-modal{
+  background:#fff; border:1px solid var(--line);
+  max-width:640px; width:100%; max-height:90vh; overflow-y:auto;
+  padding:36px 28px; position:relative;
+  transform:scale(.97); transition:transform .2s ease;
+}
+#quiz-modal-overlay.open #quiz-modal{ transform:scale(1); }
+#quiz-modal-close{
+  position:absolute; top:18px; right:18px; background:#fff; border:1px solid var(--line);
+  color:var(--ink); width:34px; height:34px; border-radius:50%; font-size:1rem; font-family:var(--mono);
+}
+#quiz-modal-close:hover{ background:var(--red); color:#fff; border-color:var(--red); }
 
-    .option-letter {
-      background: #323242;
-      color: #a855f7;
-      font-weight: bold;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      flex-shrink: 0;
-    }
+.quiz-step-tag{
+  font-family:var(--mono); font-weight:700; font-size:.75rem; text-transform:uppercase;
+  letter-spacing:.12em; color:var(--red); margin-bottom:12px; display:block;
+}
+.quiz-question-title{
+  font-family:var(--display); font-weight:900; font-size:1.4rem; color:var(--ink);
+  line-height:1.3; margin-bottom:24px;
+}
+.quiz-options{ display:flex; flex-direction:column; gap:12px; }
+.quiz-opt-btn{
+  font-family:var(--body); font-size:1.05rem; text-align:left; background:var(--bg-soft);
+  color:var(--ink); border:1px solid var(--line); padding:16px 20px;
+  transition:all .15s ease; line-height:1.5;
+}
+.quiz-opt-btn:hover{
+  border-color:var(--red); background:#fff; color:var(--red);
+}
 
-    /* Result Screen */
-    .result-screen {
-      display: none;
-      text-align: center;
-    }
+/* Ficha de Resultado */
+.result-card{ text-align:left; }
+.result-header{ border-bottom:2px solid var(--ink); padding-bottom:14px; margin-bottom:20px; }
+.result-header .era-num{
+  font-family:var(--mono); font-weight:700; font-size:.8rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--red); display:block; margin-bottom:4px;
+}
+.result-header h3{
+  font-family:var(--display); font-weight:900; font-size:1.8rem; color:var(--ink); line-height:1.15;
+}
+.result-diag{
+  font-family:var(--body); font-size:1.1rem; color:var(--text); line-height:1.65;
+  margin-bottom:24px; font-style:italic;
+}
+.result-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:28px;
+}
+@media (max-width: 500px){ .result-grid{ grid-template-columns:1fr; } }
+.result-item{
+  background:var(--bg-soft); border:1px solid var(--line); padding:12px 16px; font-family:var(--mono);
+}
+.result-item label{
+  display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em;
+  color:var(--text-dim); margin-bottom:4px; font-weight:700;
+}
+.result-item span{ font-size:.9rem; color:var(--ink); font-weight:600; line-height:1.3; display:block; }
+.result-danger{ grid-column: 1 / -1; border-left:3px solid var(--red); }
+.result-danger span{ color:var(--red); }
 
-    .story-card {
-      background: linear-gradient(145deg, #1f1a2e, #120e1a);
-      border: 2px solid #a855f7;
-      border-radius: 16px;
-      padding: 24px 16px;
-      margin: 20px 0;
-      position: relative;
-    }
+.result-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:20px; }
+.btn-era-link{
+  font-family:var(--mono); font-weight:700; font-size:.85rem; letter-spacing:.08em;
+  text-transform:uppercase; background:var(--red); color:#fff; border:1px solid var(--red);
+  padding:14px 22px; text-decoration:none; display:inline-block; flex:1; text-align:center;
+}
+.btn-era-link:hover{ background:var(--ink); border-color:var(--ink); }
+.btn-retry{
+  font-family:var(--mono); font-weight:600; font-size:.85rem; letter-spacing:.05em;
+  text-transform:uppercase; background:transparent; color:var(--text-dim); border:1px solid var(--line);
+  padding:14px 20px; transition:all .15s ease;
+}
+.btn-retry:hover{ border-color:var(--ink); color:var(--ink); }
 
-    .story-tag {
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #ec4899;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .era-title {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 12px;
-      text-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-    }
-
-    .era-desc {
-      font-size: 0.95rem;
-      color: #c4c4d4;
-      line-height: 1.5;
-      margin-bottom: 16px;
-    }
-
-    .share-prompt {
-      font-size: 0.8rem;
-      color: #8f8f9d;
-      border-top: 1px dashed #323242;
-      padding-top: 12px;
-    }
-
-    .btn-action {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #a855f7, #ec4899);
-      color: #fff;
-      font-weight: 700;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 1rem;
-      margin-top: 10px;
-      transition: opacity 0.2s;
-    }
-
-    .btn-action:hover {
-      opacity: 0.9;
-    }
-
-    .btn-secondary {
-      background: #22222e;
-      border: 1px solid #323242;
-      color: #a855f7;
-    }
-  </style>
+footer{
+  text-align:center; padding:40px 20px 60px; color:var(--text-dim); font-family:var(--mono); font-size:.9rem;
+  border-top:1px solid var(--line);
+}
+</style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Quiz Section -->
-    <div id="quiz-screen">
-      <div class="header">
-        <h1>Descubrí tu Era</h1>
-        <div class="progress-bar-container">
-          <div class="progress-bar" id="progress-bar"></div>
-        </div>
-        <span class="question-count" id="question-count">Pregunta 1 de 10</span>
-      </div>
+  <nav id="site-nav">
+    <a href="index.html" class="active">Inicio</a>
+    <a href="historia.html">Historia</a>
+  </nav>
 
-      <div class="question-title" id="question-text">Cargando...</div>
+  <div class="hero-portada">
+    <div class="hero-eyebrow">CA7RIEL &amp; Paco Amoroso</div>
+    <span class="kicker">Universo</span>
+    <h1>LAS 7 ERAS</h1>
+    <p class="sub">Viví su historia.</p>
+  </div>
 
-      <div class="options-grid" id="options-container">
-        <!-- Buttons loaded dynamically -->
-      </div>
+  <!-- SECCIÓN DIAGNÓSTICO (OPCIÓN 3) -->
+  <section class="seccion-test">
+    <span class="warning-badge">ADVERTENCIA DE SEGURIDAD</span>
+    <h2>¿EN QUÉ ERA ESTÁS HOY?</h2>
+    <p>Siete Eras musicales, cero moderación. ¿Sos un motor a 200 km/h, un gato durmiendo en cuarentena o una estrella volando a Tokio? Sintonizá tu estado actual antes de que el caos decida por vos.</p>
+    <button id="btn-open-quiz" class="btn-diagnostico">[ EMITIR DIAGNÓSTICO AHORA ]</button>
+  </section>
+
+  <div class="lista-eras">
+    <h2>Elegí una Era</h2>
+    <div id="lista-eras-items"></div>
+  </div>
+
+  <a class="link-historia" href="historia.html">📖 Ver La Historia completa</a>
+
+  <div class="hero" style="min-height:auto; padding:20px 24px 40px; --hero-bg:#fff;">
+    <div class="stats">
+      <div><strong id="stat-shows">243</strong><span>Conciertos a la fecha</span></div>
+      <div><strong id="stat-awards">5 Latin Grammy · 1 Grammy · 7 Gardel</strong><span>Premios</span></div>
     </div>
+    <div class="stats-source">Fuente: setlist.fm · dato de conciertos sujeto a actualización</div>
+  </div>
 
-    <!-- Result Section -->
-    <div id="result-screen" class="result-screen">
-      <div class="header">
-        <h1>¡Tu Resultado!</h1>
-      </div>
+  <footer>
+    Hecho por Luces del Sur · última actualización: <span id="last-update">—</span>
+  </footer>
 
-      <div class="story-card" id="story-card">
-        <div class="story-tag">TU ENERGÍA ES</div>
-        <div class="era-title" id="res-era-title">Era 1</div>
-        <div class="era-desc" id="res-era-desc">Descripción de la Era...</div>
-        <div class="share-prompt">📸 Sacá captura y subila a tu Story etiquetándonos</div>
-      </div>
-
-      <button class="btn-action" onclick="copyShareLink()">📋 Copiar enlace del quiz</button>
-      <button class="btn-action btn-secondary" onclick="restartQuiz()">🔄 Volver a hacer</button>
+  <!-- MODAL INTERACTIVO DEL TEST -->
+  <div id="quiz-modal-overlay">
+    <div id="quiz-modal">
+      <button id="quiz-modal-close" aria-label="Cerrar">✕</button>
+      <div id="quiz-content"></div>
     </div>
   </div>
 
-  <script>
-    const questions = [
-      {
-        q: "1. ¿Cómo arranca tu lunes ideal?",
-        options: [
-          { text: "A 200 km/h, con taquicardia y pidiendo pogo antes del mediodía.", era: 2 },
-          { text: "Encerrado en mi cuarto a oscuras, hablando solo y acariciando al gato.", era: 3 },
-          { text: "Flotando en un jacuzzi de hotel con bata de seda y la mente en blanco.", era: 5 }
-        ]
-      },
-      {
-        q: "2. Te invitan a una fiesta llena de caretas. ¿Cuál es tu jugada?",
-        options: [
-          { text: "Armo un pogo improvisado en el living y rompo dos lámparas.", era: 2 },
-          { text: "Caigo en descapotable con mi compinche y nos robamos la atención de todos.", era: 4 },
-          { text: "No voy; mando a mi representante a decir que mi presencia cotiza en dólares.", era: 7 }
-        ]
-      },
-      {
-        q: "3. ¿Qué tenés tirado en el fondo del bolso/mochila ahora mismo?",
-        options: [
-          { text: "Una púa gastada, cables y una partitura arrugada.", era: 1 },
-          { text: "Un patito de goma amarillo y palitos de sushi.", era: 5 },
-          { text: "Un pasaporte lleno de sellos y una valija que no cierra.", era: 6 }
-        ]
-      },
-      {
-        q: "4. ¿Cuál es tu transporte ideal para hoy?",
-        options: [
-          { text: "Un coche rojo clásico a toda velocidad por la ruta.", era: 4 },
-          { text: "La primera clase de un avión volando sobre el Atlántico.", era: 6 },
-          { text: "Un colectivo nocturno escuchando acordes de tango disonantes.", era: 1 }
-        ]
-      },
-      {
-        q: "5. ¿Qué cenás para festejar que te fue bien en algo?",
-        options: [
-          { text: "Fideos con manteca a las 3 AM mientras discuto sobre música.", era: 1 },
-          { text: "Un bife de chorizo jugoso directo de la tabla, en soledad.", era: 3 },
-          { text: "Un barco gigante de sushi servido al borde de la pileta.", era: 5 }
-        ]
-      },
-      {
-        q: "6. Si alguien te cae mal en un evento, ¿qué hacés?",
-        options: [
-          { text: "Miro a mi socio, nos reímos en cómplice y nos vamos a toda velocidad.", era: 4 },
-          { text: "Le pongo un filtro de indiferencia y sigo mirando la Toscana desde mi ventana.", era: 7 },
-          { text: "Me aíslo en una esquina a hacer la mía sin hablarle a nadie.", era: 3 }
-        ]
-      },
-      {
-        q: "7. ¿Cuál es tu hábitat natural en este momento?",
-        options: [
-          { text: "Un sótano húmedo con olor a madera, cables y amplificadores.", era: 1 },
-          { text: "Un escenario masivo bajo luces de neón saturadas y perfume barato.", era: 2 },
-          { text: "Una mansión rodeada de verde en las colinas de la Toscana.", era: 7 }
-        ]
-      },
-      {
-        q: "8. ¿Cómo está tu nivel de energía social hoy?",
-        options: [
-          { text: "Frenesí absoluto: de 0 a 100 sin medir ninguna consecuencia.", era: 2 },
-          { text: "Jet lag de éxito: no sé en qué zona horaria estoy, pero no paro de facturar.", era: 6 },
-          { text: "Inseparable: solo funciono si estoy en dupla con mi par.", era: 4 }
-        ]
-      },
-      {
-        q: "9. ¿Qué accesorio define tu día?",
-        options: [
-          { text: "Un gato durmiendo sobre las piernas o un par de maquetas solistas.", era: 3 },
-          { text: "Un frasco de perfume que te hace picar los ojos y tres pelotas neón.", era: 2 },
-          { text: "Un collar de diamantes gigantes y una pelota de goma negra.", era: 7 }
-        ]
-      },
-      {
-        q: "10. ¿Cuál es tu filosofía de vida actual?",
-        options: [
-          { text: "«El exceso y el spa son el único camino al equilibrio.»", era: 5 },
-          { text: "«Mi vida es una prueba de sonido constante en un Tiny Desk global.»", era: 6 },
-          { text: "«Inseparables e improbables. Un peligro público.»", era: 4 }
-        ]
-      }
-    ];
+<script>
+  const ERAS = [
+    { archivo: "era1.html", titulo: "ASTOR", periodo: "2011–2017" },
+    { archivo: "era2.html", titulo: "Nace el mito", periodo: "2018–2020" },
+    { archivo: "era3.html", titulo: "FLY SOLO", periodo: "2020–2021" },
+    { archivo: "era4.html", titulo: "TEMPORADA II", periodo: "2022–2023" },
+    { archivo: "era5.html", titulo: "BAÑO MARIA: POP UP", periodo: "2024" },
+    { archivo: "era6.html", titulo: "PAPOTA: THE BIG BANG DUO ", periodo: "2024–2025" },
+    { archivo: "era7.html", titulo: "FREES SPIRITS: GLOBAL POP STARTS ", periodo: "2026" },
+  ];
 
-    const eraDescriptions = {
-      1: { title: "ERA 1: Under & Sótano", desc: "Madrugadas de ensayo, cables, madera húmeda y acordes disonantes. La esencia pura del comienzo y la obsesión por la música auténtica." },
-      2: { title: "ERA 2: Frenesí & Pogo", desc: "Luces de neón saturadas, 200 km/h, adrenalina pura y caos controlled. Vivís en vivo y con el volumen al máximo." },
-      3: { title: "ERA 3: Introspección & Cueva", desc: "Modo ermitaño creativo. Preferís la tranquilidad de tu cuarto, tu gato, maquetas a solas y bife de chorizo en soledad." },
-      4: { title: "ERA 4: Dupla Peligrosa", desc: "Inseparables, descapotables rojos y complicidad absoluta. Dos contra el mundo listos para armar un revuelo." },
-      5: { title: "ERA 5: Exceso & Spa", desc: "Jacuzzi, batas de seda, sushi al borde de la pileta y patitos de goma. El equilibrio exacto entre el glamour y el relax." },
-      6: { title: "ERA 6: Jet Lag Global", desc: "Primera clase, pasaportes sellados y pruebas de sonido internacionales. No sabés en qué huso horario estás, pero estás facturando." },
-      7: { title: "ERA 7: La Toscana & Diamantes", desc: "Mansión en las colinas, collares gigantes e indiferencia total. Estás en la cima de la pirámide y tu presencia cotiza alto." }
-    };
+  // Renderizado de lista de eras
+  const lista = document.getElementById('lista-eras-items');
+  ERAS.forEach((era, i) => {
+    const a = document.createElement('a');
+    a.className = 'era-link';
+    a.href = era.archivo;
+    a.innerHTML = `
+      <div>
+        <span class="kicker-chico">Era ${i+1} de 7</span>
+        <span class="nombre">${era.titulo}</span>
+      </div>
+      <span class="periodo">${era.periodo}</span>
+    `;
+    lista.appendChild(a);
+  });
 
-    let currentQ = 0;
-    let scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
+  (function setLastUpdate(){
+    const el = document.getElementById('last-update');
+    if(!el) return;
+    const d = new Date(document.lastModified);
+    if(isNaN(d.getTime())){ el.textContent = 'sin datos'; return; }
+    el.textContent = d.toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
+  })();
 
-    function renderQuestion() {
-      const qData = questions[currentQ];
-      document.getElementById("question-text").innerText = qData.q;
-      document.getElementById("question-count").innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
-      document.getElementById("progress-bar").style.width = `${((currentQ + 1) / questions.length) * 100}%`;
-
-      const optionsContainer = document.getElementById("options-container");
-      optionsContainer.innerHTML = "";
-
-      const letters = ["A", "B", "C"];
-      qData.options.forEach((opt, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.innerHTML = `<span class="option-letter">${letters[idx]}</span> <span>${opt.text}</span>`;
-        btn.onclick = () => selectOption(opt.era);
-        optionsContainer.appendChild(btn);
-      });
+  /* =========================================================
+     LÓGICA DEL TEST DE DIAGNÓSTICO
+     ========================================================= */
+  const QUESTIONS = [
+    {
+      q: "1. ¿Cómo arranca tu lunes ideal?",
+      opts: [
+        { text: "A 200 km/h, con taquicardia y pidiendo pogo antes del mediodía.", era: 2 },
+        { text: "Encerrado en mi cuarto a oscuras, hablando solo y acariciando al gato.", era: 3 },
+        { text: "Flotando en un jacuzzi de hotel con bata de seda y la mente en blanco.", era: 5 }
+      ]
+    },
+    {
+      q: "2. Te invitan a una fiesta. ¿Cuál es tu jugada?",
+      opts: [
+        { text: "Armo un pogo improvisado en el living y rompo dos lámparas.", era: 2 },
+        { text: "Caigo en descapotable con mi compa y nos robamos la atención de todos.", era: 4 },
+        { text: "No voy; mando a mi representante a decir que mi presencia cotiza en dólares.", era: 7 }
+      ]
+    },
+    {
+      q: "3. ¿Qué tenés tirado en el fondo del bolso/mochila ahora mismo?",
+      opts: [
+        { text: "Una púa gastada, cables y una partitura arrugada.", era: 1 },
+        { text: "Un patito de goma amarillo y palitos de sushi.", era: 5 },
+        { text: "Un pasaporte lleno de sellos y una valija que no cierra.", era: 6 }
+      ]
+    },
+    {
+      q: "4. ¿Cuál es tu transporte ideal para hoy?",
+      opts: [
+        { text: "Un coche rojo clásico a toda velocidad por la ruta.", era: 4 },
+        { text: "La primera clase de un avión volando sobre el Atlántico.", era: 6 },
+        { text: "Un colectivo nocturno escuchando a los Redonditos de Ricota.", era: 1 }
+      ]
+    },
+    {
+      q: "5. ¿Qué cenás para festejar que te fue bien en algo?",
+      opts: [
+        { text: "Fideos con manteca a las 3 AM mientras discuto sobre música.", era: 1 },
+        { text: "Un bife de chorizo jugoso directo de la tabla, en soledad.", era: 3 },
+        { text: "Un barco gigante de sushi servido al borde de la pileta.", era: 5 }
+      ]
+    },
+    {
+      q: "6. Si alguien te cae mal en un evento, ¿qué hacés?",
+      opts: [
+        { text: "Miro a mi amigo, nos reímos en cómplice y nos vamos a toda velocidad.", era: 4 },
+        { text: "Le pongo un filtro de indiferencia y sigo mirando la Toscana desde mi ventana.", era: 7 },
+        { text: "Me aíslo en una esquina a hacer la mía sin hablarle a nadie.", era: 3 }
+      ]
+    },
+    {
+      q: "7. ¿Cuál es tu hábitat natural en este momento?",
+      opts: [
+        { text: "Un sótano húmedo con olor a madera, cables y amplificadores.", era: 1 },
+        { text: "Un escenario masivo bajo luces de neón saturadas y perfume Dior.", era: 2 },
+        { text: "Una mansión rodeada de verde en las colinas de una locación secreta.", era: 7 }
+      ]
+    },
+    {
+      q: "8. ¿Cómo está tu nivel de energía social hoy?",
+      opts: [
+        { text: "Frenesí absoluto: de 0 a 100 sin medir ninguna consecuencia.", era: 2 },
+        { text: "Jet lag de éxito: no sé en qué zona horaria estoy, pero no paro de facturar.", era: 6 },
+        { text: "Inseparable: solo funciono si estoy en dupla con mi par.", era: 4 }
+      ]
+    },
+    {
+      q: "9. ¿Qué accesorio define tu día?",
+      opts: [
+        { text: "Un gato durmiendo sobre las piernas o un par de maquetas solistas.", era: 3 },
+        { text: "Un frasco de perfume y tres pelotas neón.", era: 2 },
+        { text: "La viola y una pelota de goma negra.", era: 7 }
+      ]
+    },
+    {
+      q: "10. ¿Cuál es tu filosofía de vida actual?",
+      opts: [
+        { text: "\"El exceso y el spa son el único camino al equilibrio.\"", era: 5 },
+        { text: "\"Mi vida es una prueba de sonido constante en un Tiny Desk global.\"", era: 6 },
+        { text: "\"Inseparables e improbables. Un peligro público.\"", era: 4 }
+      ]
     }
+  ];
 
-    function selectOption(era) {
-      scores[era] = (scores[era] || 0) + 1;
-      currentQ++;
-      if (currentQ < questions.length) {
-        renderQuestion();
-      } else {
-        showResults();
-      }
+  const RESULTS = {
+    1: {
+      title: "ERA 1 – ASTOR",
+      diag: "Purismo Under & Caos Creativo. Estás en la etapa previa a la explosión, rumiando ideas y peleándote con las normas.",
+      cancion: "Piola",
+      bebida: "Café negro recalentado en jarrito de lata.",
+      accesorio: "Campera de jean gastada y una púa.",
+      peligro: "2/10 (Inofensivo, pero podés aburrir hablando de acordes a medianoche).",
+      archivo: "era1.html"
+    },
+    2: {
+      title: "ERA 2 – NACE EL MITO",
+      diag: "Colapso Neón & Sobredosis de Pogo. Vivís a mil por hora, metiste 74 shows mentales en dos años y tu cuerpo pide auxilio pero vos pedís más bajo.",
+      cancion: "Ouke",
+      bebida: "Energizante de oferta en vaso de plástico.",
+      accesorio: "Frasco de perfume.",
+      peligro: "9/10 (Inestable. Podés arrancar un pogo en el supermercado).",
+      archivo: "era2.html"
+    },
+    3: {
+      title: "ERA 3 – FLY SOLO",
+      diag: "Aislamiento Glam & Melodias. Tu casa es tu templo. Estás en tu propio planeta haciendo la tuya, creando en silencio y esquivando a la gente.",
+      cancion: "Saeta / El Disko",
+      bebida: "Agua con gas en copa fina.",
+      accesorio: "Un gato durmiendo en tu regazo.",
+      peligro: "4/10 (Pasivo-agresivo. Si te sacan de casa sin aviso, colapsás).",
+      archivo: "era3.html"
+    },
+    4: {
+      title: "ERA 4 – TEMPORADA II",
+      diag: "Dúo Dinámico Improbable. Encontraste a tu cómplice o estás en tu era de mayor magnetismo. Juntos son indestructibles y bastante peligrosos.",
+      cancion: "Paga Dios",
+      bebida: "Fernet en botella cortada dentro de un coche.",
+      accesorio: "Bola 8 de billar y anteojos de sol de noche.",
+      peligro: "8.5/10 (Si encontrás a tu par, destruyen la ciudad en 20 minutos).",
+      archivo: "era4.html"
+    },
+    5: {
+      title: "ERA 5 – BAÑO MARÍA",
+      diag: "Hedonismo & Spa Psicológico. Tu cuerpo exige burbujas, sushi y despreocupación total. Estás en un modo Miami donde el estrés no entra.",
+      cancion: "DUMBAI",
+      bebida: "Champán servido en un patito de goma.",
+      accesorio: "Bata de baño de satén abierta.",
+      peligro: "6/10 (Peligroso únicamente para tu tarjeta de crédito).",
+      archivo: "era5.html"
+    },
+    6: {
+      title: "ERA 6 – PAPOTA / TINY DESK",
+      diag: "Jet Lag & Consagración Masiva. Rompiste el algoritmo. Tu vida es un pasillo de aeropuerto y una valija que jamás se termina de desarmar.",
+      cancion: "El Único",
+      bebida: "Café de aeropuerto a precio insólito.",
+      accesorio: "Valija por reventar y globo azul flotando.",
+      peligro: "7.5/10 (Te estás por desmayar de sueño o por ganar un Grammy).",
+      archivo: "era6.html"
+    },
+    7: {
+      title: "ERA 7 – FREE SPIRITS",
+      diag: "Popstar Global Inalcanzable. Ya jugás en otra liga. Mirás el mundo desde arrriba y tus problemas son puramente espirituales.",
+      cancion: "Muero",
+      bebida: "Vino tinto caro derramado en remera blanca.",
+      accesorio: "Diamantes gigantes y pelota de goma negra.",
+      peligro: "10/10 (Inalcanzable. Ya ni respondés el WhatsApp).",
+      archivo: "era7.html"
     }
+  };
 
-    function showResults() {
-      document.getElementById("quiz-screen").style.display = "none";
-      document.getElementById("result-screen").style.display = "block";
+  let currentStep = 0;
+  let scores = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
 
-      let winningEra = 1;
-      let maxScore = -1;
-      for (const [era, score] of Object.entries(scores)) {
-        if (score > maxScore) {
-          maxScore = score;
-          winningEra = era;
-        }
-      }
+  const modalOverlay = document.getElementById('quiz-modal-overlay');
+  const btnOpen = document.getElementById('btn-open-quiz');
+  const btnClose = document.getElementById('quiz-modal-close');
+  const quizContent = document.getElementById('quiz-content');
 
-      const eraInfo = eraDescriptions[winningEra];
-      document.getElementById("res-era-title").innerText = eraInfo.title;
-      document.getElementById("res-era-desc").innerText = eraInfo.desc;
-    }
-
-    function copyShareLink() {
-      navigator.clipboard.writeText(window.location.href);
-      alert("¡Enlace copiado al portapapeles!");
-    }
-
-    function restartQuiz() {
-      currentQ = 0;
-      scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
-      document.getElementById("quiz-screen").style.display = "block";
-      document.getElementById("result-screen").style.display = "none";
-      renderQuestion();
-    }
-
+  btnOpen.addEventListener('click', () => {
+    currentStep = 0;
+    scores = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
     renderQuestion();
-  </script>
+    modalOverlay.classList.add('open');
+  });
+
+  btnClose.addEventListener('click', () => modalOverlay.classList.remove('open'));
+  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) modalOverlay.classList.remove('open'); });
+
+  function renderQuestion(){
+    const item = QUESTIONS[currentStep];
+    quizContent.innerHTML = `
+      <span class="quiz-step-tag">Pregunta ${currentStep + 1} de ${QUESTIONS.length}</span>
+      <h3 class="quiz-question-title">${item.q}</h3>
+      <div class="quiz-options">
+        ${item.opts.map((opt, i) => `
+          <button class="quiz-opt-btn" onclick="selectOption(${opt.era})">${opt.text}</button>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  window.selectOption = function(eraNumber){
+    scores[eraNumber] = (scores[eraNumber] || 0) + 1;
+    currentStep++;
+    if(currentStep < QUESTIONS.length){
+      renderQuestion();
+    } else {
+      renderResult();
+    }
+  };
+
+  function renderResult(){
+    let winningEra = 1;
+    let maxVal = -1;
+    for(let era in scores){
+      if(scores[era] > maxVal){
+        maxVal = scores[era];
+        winningEra = era;
+      }
+    }
+
+    const res = RESULTS[winningEra];
+    quizContent.innerHTML = `
+      <div class="result-card">
+        <div class="result-header">
+          <span class="era-num">PRESCRIPCIÓN MÉDICA OFICIAL</span>
+          <h3>${res.title}</h3>
+        </div>
+        <p class="result-diag">"${res.diag}"</p>
+        <div class="result-grid">
+          <div class="result-item">
+            <label>Canción del día</label>
+            <span>${res.cancion}</span>
+          </div>
+          <div class="result-item">
+            <label>Bebida del día</label>
+            <span>${res.bebida}</span>
+          </div>
+          <div class="result-item">
+            <label>Accesorio del día</label>
+            <span>${res.accesorio}</span>
+          </div>
+          <div class="result-item result-danger">
+            <label>Nivel de Peligro Social</label>
+            <span>${res.peligro}</span>
+          </div>
+        </div>
+        <div class="result-actions">
+          <a href="${res.archivo}" class="btn-era-link">EXPLORAR ${res.title}</a>
+          <button class="btn-retry" onclick="resetQuiz()">REPETIR TEST</button>
+        </div>
+      </div>
+    `;
+  }
+
+  window.resetQuiz = function(){
+    currentStep = 0;
+    scores = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
+    renderQuestion();
+  };
+</script>
 </body>
 </html>
