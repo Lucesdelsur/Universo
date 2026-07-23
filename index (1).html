@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz: ¿Cuál es tu Era?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #0f0f12;
+      color: #f1f1f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: #181820;
+      border: 1px solid #2a2a36;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: #2a2a36;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 10%;
+      background: linear-gradient(90deg, #a855f7, #ec4899);
+      transition: width 0.3s ease;
+    }
+
+    .question-count {
+      font-size: 0.85rem;
+      color: #8f8f9d;
+      margin-top: 6px;
+      display: block;
+    }
+
+    .question-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: #22222e;
+      border: 1px solid #323242;
+      color: #e2e2e8;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .option-btn:hover, .option-btn:active {
+      background: #2d2d3d;
+      border-color: #a855f7;
+      transform: translateY(-1px);
+    }
+
+    .option-letter {
+      background: #323242;
+      color: #a855f7;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* Result Screen */
+    .result-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .story-card {
+      background: linear-gradient(145deg, #1f1a2e, #120e1a);
+      border: 2px solid #a855f7;
+      border-radius: 16px;
+      padding: 24px 16px;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .story-tag {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ec4899;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .era-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 12px;
+      text-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+    }
+
+    .era-desc {
+      font-size: 0.95rem;
+      color: #c4c4d4;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .share-prompt {
+      font-size: 0.8rem;
+      color: #8f8f9d;
+      border-top: 1px dashed #323242;
+      padding-top: 12px;
+    }
+
+    .btn-action {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 10px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-action:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: #22222e;
+      border: 1px solid #323242;
+      color: #a855f7;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Quiz Section -->
+    <div id="quiz-screen">
+      <div class="header">
+        <h1>Descubrí tu Era</h1>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <span class="question-count" id="question-count">Pregunta 1 de 10</span>
+      </div>
+
+      <div class="question-title" id="question-text">Cargando pregunta...</div>
+
+      <div class="options-grid" id="options-container">
+        <!-- Buttons loaded dynamically -->
+      </div>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result-screen" class="result-screen">
+      <div class="header">
+        <h1>¡Tu Resultado!</h1>
+      </div>
+
+      <div class="story-card" id="story-card">
+        <div class="story-tag">TU ENERGÍA ES</div>
+        <div class="era-title" id="res-era-title">Era 1</div>
+        <div class="era-desc" id="res-era-desc">Descripción de la Era...</div>
+        <div class="share-prompt">📸 Sacá captura y subila a tu Story etiquetándonos</div>
+      </div>
+
+      <button class="btn-action" onclick="copyShareLink()">📋 Copiar enlace del quiz</button>
+      <button class="btn-action btn-secondary" onclick="restartQuiz()">🔄 Volver a hacer</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "1. ¿Cómo arranca tu lunes ideal?",
+        options: [
+          { text: "A 200 km/h, con taquicardia y pidiendo pogo antes del mediodía.", era: 2 },
+          { text: "Encerrado en mi cuarto a oscuras, hablando solo y acariciando al gato.", era: 3 },
+          { text: "Flotando en un jacuzzi de hotel con bata de seda y la mente en blanco.", era: 5 }
+        ]
+      },
+      {
+        q: "2. Te invitan a una fiesta llena de caretas. ¿Cuál es tu jugada?",
+        options: [
+          { text: "Armo un pogo improvisado en el living y rompo dos lámparas.", era: 2 },
+          { text: "Caigo en descapotable con mi compinche y nos robamos la atención de todos.", era: 4 },
+          { text: "No voy; mando a mi representante a decir que mi presencia cotiza en dólares.", era: 7 }
+        ]
+      },
+      {
+        q: "3. ¿Qué tenés tirado en el fondo del bolso/mochila ahora mismo?",
+        options: [
+          { text: "Una púa gastada, cables y una partitura arrugada.", era: 1 },
+          { text: "Un patito de goma amarillo y palitos de sushi.", era: 5 },
+          { text: "Un pasaporte lleno de sellos y una valija que no cierra.", era: 6 }
+        ]
+      },
+      {
+        q: "4. ¿Cuál es tu transporte ideal para hoy?",
+        options: [
+          { text: "Un coche rojo clásico a toda velocidad por la ruta.", era: 4 },
+          { text: "La primera clase de un avión volando sobre el Atlántico.", era: 6 },
+          { text: "Un colectivo nocturno escuchando acordes de tango disonantes.", era: 1 }
+        ]
+      },
+      {
+        q: "5. ¿Qué cenás para festejar que te fue bien en algo?",
+        options: [
+          { text: "Fideos con manteca a las 3 AM mientras discuto sobre música.", era: 1 },
+          { text: "Un bife de chorizo jugoso directo de la tabla, en soledad.", era: 3 },
+          { text: "Un barco gigante de sushi servido al borde de la pileta.", era: 5 }
+        ]
+      },
+      {
+        q: "6. Si alguien te cae mal en un evento, ¿qué hacés?",
+        options: [
+          { text: "Miro a mi socio, nos reímos en cómplice y nos vamos a toda velocidad.", era: 4 },
+          { text: "Le pongo un filtro de indiferencia y sigo mirando la Toscana desde mi ventana.", era: 7 },
+          { text: "Me aíslo en una esquina a hacer la mía sin hablarle a nadie.", era: 3 }
+        ]
+      },
+      {
+        q: "7. ¿Cuál es tu hábitat natural en este momento?",
+        options: [
+          { text: "Un sótano húmedo con olor a madera, cables y amplificadores.", era: 1 },
+          { text: "Un escenario masivo bajo luces de neón saturadas y perfume barato.", era: 2 },
+          { text: "Una mansión rodeada de verde en las colinas de la Toscana.", era: 7 }
+        ]
+      },
+      {
+        q: "8. ¿Cómo está tu nivel de energía social hoy?",
+        options: [
+          { text: "Frenesí absoluto: de 0 a 100 sin medir ninguna consecuencia.", era: 2 },
+          { text: "Jet lag de éxito: no sé en qué zona horaria estoy, pero no paro de facturar.", era: 6 },
+          { text: "Inseparable: solo funciono si estoy en dupla con mi par.", era: 4 }
+        ]
+      },
+      {
+        q: "9. ¿Qué accesorio define tu día?",
+        options: [
+          { text: "Un gato durmiendo sobre las piernas o un par de maquetas solistas.", era: 3 },
+          { text: "Un frasco de perfume que te hace picar los ojos y tres pelotas neón.", era: 2 },
+          { text: "Un collar de diamantes gigantes y una pelota de goma negra.", era: 7 }
+        ]
+      },
+      {
+        q: "10. ¿Cuál es tu filosofía de vida actual?",
+        options: [
+          { text: ""El exceso y el spa son el único camino al equilibrio."", era: 5 },
+          { text: ""Mi vida es una prueba de sonido constante en un Tiny Desk global."", era: 6 },
+          { text: ""Inseparables e improbables. Un peligro público."", era: 4 }
+        ]
+      }
+    ];
+
+    const eraDescriptions = {
+      1: { title: "ERA 1: Under & Sótano", desc: "Madrugadas de ensayo, cables, madera húmeda y acordes disonantes. La esencia pura del comienzo y la obsesión por la música auténtica." },
+      2: { title: "ERA 2: Frenesí & Pogo", desc: "Luces de neón saturadas, 200 km/h, adrenalina pura y caos controlado. Vivís en vivo y con el volumen al máximo." },
+      3: { title: "ERA 3: Introspección & Cueva", desc: "Modo ermitaño creativo. Preferís la tranquilidad de tu cuarto, tu gato, maquetas a solas y bife de chorizo en soledad." },
+      4: { title: "ERA 4: Dupla Peligrosa", desc: "Inseparables, descapotables rojos y complicidad absoluta. Dos contra el mundo listos para armar un revuelo." },
+      5: { title: "ERA 5: Exceso & Spa", desc: "Jacuzzi, batas de seda, sushi al borde de la pileta y patitos de goma. El equilibrio exacto entre el glamour y el relax." },
+      6: { title: "ERA 6: Jet Lag Global", desc: "Primera clase, pasaportes sellados y pruebas de sonido internacionales. No sabés en qué huso horario estás, pero estás facturando." },
+      7: { title: "ERA 7: La Toscana & Diamantes", desc: "Mansión en las colinas, collares gigantes e indiferencia total. Estás en la cima de la pirámide y tu presencia cotiza alto." }
+    };
+
+    let currentQ = 0;
+    let scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
+
+    function renderQuestion() {
+      const qData = questions[currentQ];
+      document.getElementById("question-text").innerText = qData.q;
+      document.getElementById("question-count").innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
+      document.getElementById("progress-bar").style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      const letters = ["A", "B", "C"];
+      qData.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerHTML = `<span class="option-letter">${letters[idx]}</span> <span>${opt.text}</span>`;
+        btn.onclick = () => selectOption(opt.era);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(era) {
+      scores[era] = (scores[era] || 0) + 1;
+      currentQ++;
+      if (currentQ < questions.length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById("quiz-screen").style.display = "none";
+      document.getElementById("result-screen").style.display = "block";
+
+      let winningEra = 1;
+      let maxScore = -1;
+      for (const [era, score] of Object.entries(scores)) {
+        if (score > maxScore) {
+          maxScore = score;
+          winningEra = era;
+        }
+      }
+
+      const eraInfo = eraDescriptions[winningEra];
+      document.getElementById("res-era-title").innerText = eraInfo.title;
+      document.getElementById("res-era-desc").innerText = eraInfo.desc;
+    }
+
+    function copyShareLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert("¡Enlace copiado al portapapeles! Listo para pegar en Instagram.");
+    }
+
+    function restartQuiz() {
+      currentQ = 0;
+      scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
+      document.getElementById("quiz-screen").style.display = "block";
+      document.getElementById("result-screen").style.display = "none";
+      renderQuestion();
+    }
+
+    // Start
+    renderQuestion();
+  </script>
+</body>
+</html>
