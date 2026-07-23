@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Tour — Universo Musical CA7RIEL & Paco Amoroso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Merriweather:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root{
+  --bg: #FFFFFF; --bg-soft: #FAFAFA; --line: #E0E0E0;
+  --text: #111111; --text-dim: #555555; --red: #D71920; --ink: #111111;
+  --display: 'Merriweather', serif; --body: 'Lora', serif; --mono: 'Inter', sans-serif;
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+body{ background:var(--bg); color:var(--text); font-family:var(--body); font-size:17px; }
+a{ color:inherit; }
+button{ font-family:inherit; cursor:pointer; }
+
+#site-nav{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:center; gap:30px;
+  background:#fff; border-bottom:1px solid var(--line); padding:14px 20px;
+}
+#site-nav a{
+  font-family:var(--mono); font-weight:600; font-size:.85rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink); text-decoration:none;
+  padding-bottom:4px; border-bottom:2px solid transparent;
+}
+#site-nav a:hover{ color:var(--red); }
+#site-nav a.active{ border-bottom-color:var(--red); color:var(--red); }
+
+header{ text-align:center; padding:44px 20px 10px; }
+.kicker{ font-family:var(--mono); font-weight:700; font-size:.85rem; letter-spacing:.14em; text-transform:uppercase; color:var(--red); }
+h1{ font-family:var(--display); font-weight:900; font-size:clamp(2rem,7vw,2.6rem); margin-top:10px; }
+.sub-nomade{ font-family:var(--body); font-style:italic; font-size:1.1rem; color:var(--text-dim); margin-top:14px; max-width:540px; margin-left:auto; margin-right:auto; }
+
+.stats-km{
+  display:flex; gap:36px; justify-content:center; flex-wrap:wrap;
+  margin:32px 0 0; padding:24px; background:var(--bg-soft); border-top:2px solid var(--ink);
+}
+.stats-km div{ text-align:center; }
+.stats-km strong{ display:block; font-family:var(--display); font-weight:900; font-size:1.6rem; color:var(--ink); }
+.stats-km span{ font-size:.72rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; }
+
+.stats-horas{
+  display:flex; gap:36px; justify-content:center; flex-wrap:wrap;
+  padding:0 22px 24px; background:var(--bg-soft); border-bottom:1px solid var(--line);
+}
+.stats-horas div{ text-align:center; }
+.stats-horas strong{ display:block; font-family:var(--display); font-weight:900; font-size:1.4rem; color:var(--red); }
+.stats-horas span{ font-size:.7rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; }
+
+.toggles{ display:flex; gap:12px; justify-content:center; margin:28px 0; flex-wrap:wrap; padding:0 20px; }
+.toggle-btn{
+  font-family:var(--mono); font-weight:700; font-size:.9rem; letter-spacing:.02em;
+  border:2px solid var(--btn-color); background:#fff; color:var(--btn-color);
+  padding:9px 20px; border-radius:100px; transition:all .15s ease;
+  display:inline-flex; align-items:center; gap:8px;
+}
+.toggle-btn .punto{ width:11px; height:11px; border-radius:50%; background:var(--btn-color); }
+.toggle-btn.activo{ background:var(--btn-color); color:#fff; }
+.toggle-btn.activo .punto{ background:#fff; }
+.toggle-btn:hover{ opacity:.85; }
+
+#mapa{ height:600px; width:100%; }
+.leaflet-popup-content-wrapper{ border-radius:0; font-family:var(--mono); }
+.popup-cat{ font-family:var(--mono); font-weight:700; font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; }
+.popup-title{ font-family:var(--display); font-weight:900; font-size:1rem; margin-top:4px; }
+
+footer{
+  text-align:center; padding:40px 20px 60px; color:var(--text-dim); font-family:var(--mono); font-size:.9rem;
+  border-top:1px solid var(--line);
+}
+</style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html">Inicio</a>
+    <a href="historia.html">Historia</a>
+    <a href="mapa.html" class="active">Mapa</a>
+  </nav>
+
+  <header>
+    <div class="kicker">Universo CA7RIEL &amp; Paco Amoroso</div>
+    <h1>World Tour</h1>
+    <p class="sub-nomade">Más noches en aviones y camas de hotel que en su propia casa. La vida nómade de una gira mundial.</p>
+  </header>
+
+  <div class="stats-km" id="stats-km"></div>
+  <div class="stats-horas" id="stats-horas"></div>
+
+  <div class="toggles">
+    <button class="toggle-btn activo" data-anio="2024" style="--btn-color:#2E7D32"><span class="punto"></span>2024</button>
+    <button class="toggle-btn activo" data-anio="2025" style="--btn-color:#1E4FBF"><span class="punto"></span>2025</button>
+    <button class="toggle-btn activo" data-anio="2026" style="--btn-color:#B0141C"><span class="punto"></span>2026</button>
+  </div>
+
+  <div id="mapa"></div>
+
+  <footer>
+    Hecho por Luces del Sur · última actualización: <span id="last-update">—</span>
+  </footer>
+
+<script>
+  const LUGARES_ORIG = [{"anio": 2024, "ciudad": "Barcelona", "pais": "España", "lugar": "Razzmatazz (Sala 2)", "lat": 41.3874, "lng": 2.1686}, {"anio": 2024, "ciudad": "Madrid", "pais": "España", "lugar": "But", "lat": 40.4168, "lng": -3.7038}, {"anio": 2024, "ciudad": "Sevilla", "pais": "España", "lugar": "Sala La2", "lat": 37.3891, "lng": -5.9845}, {"anio": 2024, "ciudad": "Buenos Aires", "pais": "Argentina", "lugar": "Hipódromo de San Isidro", "lat": -34.6037, "lng": -58.3816}, {"anio": 2024, "ciudad": "Washington, D.C.", "pais": "Estados Unidos", "lugar": "Tiny Desk Concerts", "lat": 38.9072, "lng": -77.0369}, {"anio": 2024, "ciudad": "Quilmes", "pais": "Argentina", "lugar": "Multiespacio Area Costanera", "lat": -34.7203, "lng": -58.2545}, {"anio": 2024, "ciudad": "Bruselas", "pais": "Bélgica", "lugar": "Ancienne Belgique", "lat": 50.8503, "lng": 4.3517}, {"anio": 2024, "ciudad": "La Zubia", "pais": "España", "lugar": "Industrial Copera", "lat": 37.1214, "lng": -3.5919}, {"anio": 2024, "ciudad": "Buenos Aires", "pais": "Argentina", "lugar": "Movistar Arena", "lat": -34.6037, "lng": -58.3816}, {"anio": 2024, "ciudad": "Berlín", "pais": "Alemania", "lugar": "Gretchen", "lat": 52.52, "lng": 13.405}, {"anio": 2024, "ciudad": "Santiago de Querétaro", "pais": "México", "lugar": "Foro Arpa", "lat": 20.5888, "lng": -100.3899}, {"anio": 2024, "ciudad": "Bogotá", "pais": "Colombia", "lugar": "Royal House", "lat": 4.711, "lng": -74.0721}, {"anio": 2024, "ciudad": "Córdoba", "pais": "Argentina", "lugar": "Plaza de la Música", "lat": -31.4201, "lng": -64.1888}, {"anio": 2024, "ciudad": "San Miguel de Tucumán", "pais": "Argentina", "lugar": "Club All Boys", "lat": -26.8241, "lng": -65.2226}, {"anio": 2024, "ciudad": "San Luis", "pais": "Argentina", "lugar": "Comuna Club", "lat": -33.295, "lng": -66.3356}, {"anio": 2024, "ciudad": "Monterrey", "pais": "México", "lugar": "Foro Tims", "lat": 25.6866, "lng": -100.3161}, {"anio": 2024, "ciudad": "Lima", "pais": "Perú", "lugar": "Centro de Convenciones Barranco", "lat": -12.0464, "lng": -77.0428}, {"anio": 2024, "ciudad": "Salta", "pais": "Argentina", "lugar": "Teatro Provincial Juan Carlos Saravia", "lat": -24.7859, "lng": -65.4117}, {"anio": 2024, "ciudad": "Valencia", "pais": "España", "lugar": "Spook Multiespacio", "lat": 39.4699, "lng": -0.3763}, {"anio": 2024, "ciudad": "Zapopan (Guadalajara)", "pais": "México", "lugar": "C4 Concert House", "lat": 20.7167, "lng": -103.3833}, {"anio": 2024, "ciudad": "Buenos Aires", "pais": "Argentina", "lugar": "OLGA", "lat": -34.6037, "lng": -58.3816}, {"anio": 2024, "ciudad": "París", "pais": "Francia", "lugar": "Petit Bain", "lat": 48.8566, "lng": 2.3522}, {"anio": 2024, "ciudad": "Mar del Plata", "pais": "Argentina", "lugar": "GAP", "lat": -38.0055, "lng": -57.5426}, {"anio": 2024, "ciudad": "Porto", "pais": "Portugal", "lugar": "Hard Club sala 2", "lat": 41.1579, "lng": -8.6291}, {"anio": 2024, "ciudad": "Rosario", "pais": "Argentina", "lugar": "La Sala de las Artes", "lat": -32.9468, "lng": -60.6393}, {"anio": 2024, "ciudad": "Santa Fe", "pais": "Argentina", "lugar": "Tribus Bar & Arte", "lat": -31.6333, "lng": -60.7}, {"anio": 2024, "ciudad": "La Plata", "pais": "Argentina", "lugar": "Hipódromo de La Plata", "lat": -34.9214, "lng": -57.9544}, {"anio": 2024, "ciudad": "Caracas", "pais": "Venezuela", "lugar": "La Quinta Bar", "lat": 10.4806, "lng": -66.9036}, {"anio": 2024, "ciudad": "Neuquén", "pais": "Argentina", "lugar": "Mood", "lat": -38.9516, "lng": -68.0591}, {"anio": 2024, "ciudad": "Ciudad de México", "pais": "México", "lugar": "Foro Puebla", "lat": 19.4326, "lng": -99.1332}, {"anio": 2024, "ciudad": "Haedo", "pais": "Argentina", "lugar": "Auditorio Oeste", "lat": -34.6403, "lng": -58.5809}, {"anio": 2024, "ciudad": "Londres", "pais": "Reino Unido", "lugar": "Electric Brixton", "lat": 51.5074, "lng": -0.1278}, {"anio": 2024, "ciudad": "San Andrés Cholula", "pais": "México", "lugar": "Foro Cholula", "lat": 19.0611, "lng": -98.2919}, {"anio": 2024, "ciudad": "Mendoza", "pais": "Argentina", "lugar": "Auditorio Ángel Bustelo", "lat": -32.8895, "lng": -68.8458}, {"anio": 2024, "ciudad": "San Juan", "pais": "Argentina", "lugar": "Hugo Espectáculos", "lat": -31.5375, "lng": -68.5364}, {"anio": 2024, "ciudad": "Santiago", "pais": "Chile", "lugar": "Blondie", "lat": -33.4489, "lng": -70.6693}, {"anio": 2024, "ciudad": "Montevideo", "pais": "Uruguay", "lugar": "Sala del Museo", "lat": -34.9011, "lng": -56.1645}, {"anio": 2025, "fecha": "2025-03-21", "ciudad": "Buenos Aires", "pais": "ARGENTINA", "lugar": "LOLLAPALOOZA", "lat": -34.6037, "lng": -58.3816}, {"anio": 2025, "fecha": "2025-03-29", "ciudad": "Bogota", "pais": "COLOMBIA", "lugar": "FESTIVAL ESTÉREO PICNIC -PARQUE SIMON BOLIVAR", "lat": 4.711, "lng": -74.0721}, {"anio": 2025, "fecha": "2025-03-30", "ciudad": "Sp", "pais": "BRASIL", "lugar": "", "lat": -23.5505, "lng": -46.6333}, {"anio": 2025, "fecha": "2025-04-04", "ciudad": "Monterrey", "pais": "MEXICO", "lugar": "TECATE PA’L NORTE-PARQUE FUNDIDORA", "lat": 25.6866, "lng": -100.3161}, {"anio": 2025, "fecha": "2025-04-06", "ciudad": "Mexico Df", "pais": "MEXICO", "lugar": "AXE CEREMONIA-PARQUE BICENTENARIO", "lat": 19.4326, "lng": -99.1332}, {"anio": 2025, "fecha": "2025-04-11", "ciudad": "Indio-California", "pais": "USA", "lugar": "COACHELLA-EMPIRE POLO CLUB ", "lat": 33.7206, "lng": -116.2156}, {"anio": 2025, "fecha": "2025-04-18", "ciudad": "Indio-California", "pais": "USA", "lugar": "COACHELLA-EMPIRE POLO CLUB ", "lat": 33.7206, "lng": -116.2156}, {"anio": 2025, "fecha": "2025-04-21", "ciudad": "Philadelphia", "pais": "USA", "lugar": "THEATRE OF LIVING ARTS (TLA)", "lat": 39.9526, "lng": -75.1652}, {"anio": 2025, "fecha": "2025-04-23", "ciudad": "Nueva York", "pais": "USA", "lugar": "", "lat": 40.7128, "lng": -74.006}, {"anio": 2025, "fecha": "2025-04-25", "ciudad": "Washington Dc", "pais": "USA", "lugar": "", "lat": 38.9072, "lng": -77.0369}, {"anio": 2025, "fecha": "2025-04-27", "ciudad": "Atlanta", "pais": "USA", "lugar": "", "lat": 33.749, "lng": -84.388}, {"anio": 2025, "fecha": "2025-04-30", "ciudad": "Orlando", "pais": "USA", "lugar": "", "lat": 28.5383, "lng": -81.3792}, {"anio": 2025, "fecha": "2025-05-01", "ciudad": "Miami", "pais": "USA", "lugar": "", "lat": 25.7617, "lng": -80.1918}, {"anio": 2025, "fecha": "2025-05-02", "ciudad": "San Juan", "pais": "PUERTO RICO", "lugar": "", "lat": -31.5375, "lng": -68.5364}, {"anio": 2025, "fecha": "2025-05-04", "ciudad": "Dallas", "pais": "USA", "lugar": "", "lat": 32.7767, "lng": -96.797}, {"anio": 2025, "fecha": "2025-05-05", "ciudad": "Houston,Tx", "pais": "USA", "lugar": "", "lat": 29.7604, "lng": -95.3698}, {"anio": 2025, "fecha": "2025-05-06", "ciudad": "San Antonio,Tx", "pais": "USA", "lugar": "", "lat": 29.4241, "lng": -98.4936}, {"anio": 2025, "fecha": "2025-05-27", "ciudad": "Barcelona", "pais": "ESPAÑA", "lugar": "CLUB SANT JORDI", "lat": 41.3874, "lng": 2.1686}, {"anio": 2025, "fecha": "2025-05-28", "ciudad": "Madrid", "pais": "ESPAÑA", "lugar": "MOVISTAR ARENA", "lat": 40.4168, "lng": -3.7038}, {"anio": 2025, "fecha": "2025-06-26", "ciudad": "Londres", "pais": "INGLATERRA", "lugar": "GLASTONBURY-WORTHY FARM ", "lat": 51.5074, "lng": -0.1278}, {"anio": 2025, "fecha": "2025-07-02", "ciudad": "Copenhague", "pais": "DINAMARCA", "lugar": "ROSKILDE", "lat": 55.6761, "lng": 12.5683}, {"anio": 2025, "fecha": "2025-07-13", "ciudad": "Berlin", "pais": "ALEMANIA", "lugar": "LOLLAPALOOZA-OLYMPIASTADION  (ESTADIO OLIMPICO)", "lat": 52.52, "lng": 13.405}, {"anio": 2025, "fecha": "2025-07-18", "ciudad": "Paris", "pais": "FRANCIA", "lugar": "FESTIVAL DE JAZZ-MONTREAUX", "lat": 48.8566, "lng": 2.3522}, {"anio": 2025, "fecha": "2025-07-20", "ciudad": "Paris", "pais": "FRANCIA", "lugar": "LOLLAPALOOZA-HIPÓDROMO DE LONGCHAMP  ", "lat": 48.8566, "lng": 2.3522}, {"anio": 2025, "fecha": "2025-07-26", "ciudad": "Niigata ", "pais": "JAPON", "lugar": "FUJI ROCK-NAEBA SKI RESORT ", "lat": 37.9161, "lng": 139.0364}, {"anio": 2025, "fecha": "2025-08-04", "ciudad": "Chicago ", "pais": "USA", "lugar": "HOUSE OF BLUES", "lat": 41.8781, "lng": -87.6298}, {"anio": 2025, "fecha": "2025-08-05", "ciudad": "Los Angeles", "pais": "USA", "lugar": "BROOKLYN PARAMOUNT", "lat": 34.0522, "lng": -118.2437}, {"anio": 2025, "fecha": "2025-08-06", "ciudad": "Los Angeles", "pais": "USA", "lugar": "THE NOVO ", "lat": 34.0522, "lng": -118.2437}, {"anio": 2025, "fecha": "2025-08-11", "ciudad": "San Francisco", "pais": "USA", "lugar": "OUTLANDS FESTIVAL-GOLDEN GATE PARK ", "lat": 37.7749, "lng": -122.4194}, {"anio": 2025, "fecha": "2025-08-15", "ciudad": "Mexico Df", "pais": "MEXICO", "lugar": "PALACIO DE LOS DEPORTES", "lat": 19.4326, "lng": -99.1332}, {"anio": 2025, "fecha": "2025-08-30", "ciudad": "Santo Domingo", "pais": "REPUBLICA DOMINICANA", "lugar": "BARBARELLA-ESTADIO OLÍMPICO FÉLIX SÁNCHEZ ", "lat": 18.4861, "lng": -69.9312}, {"anio": 2025, "fecha": "2025-09-10", "ciudad": "Bogota", "pais": "COLOMBIA", "lugar": "MOVISTAR ARENA", "lat": 4.711, "lng": -74.0721}, {"anio": 2025, "fecha": "2025-09-12", "ciudad": "Lima", "pais": "PERU", "lugar": "COSTA 21", "lat": -12.0464, "lng": -77.0428}, {"anio": 2025, "fecha": "2025-09-14", "ciudad": "Santiago", "pais": "CHILE", "lugar": "MOVISTAR ARENA", "lat": -33.4489, "lng": -70.6693}, {"anio": 2025, "fecha": "2025-09-17", "ciudad": "Sp", "pais": "BRASIL", "lugar": "AUDIO", "lat": -23.5505, "lng": -46.6333}, {"anio": 2025, "fecha": "2025-09-18", "ciudad": "Rj", "pais": "BRASIL", "lugar": "CIRCO VOADOR", "lat": -22.9068, "lng": -43.1729}, {"anio": 2025, "fecha": "2025-09-25", "ciudad": "Montevideo", "pais": "URUGUAY", "lugar": "ANTEL ARENA", "lat": -34.9011, "lng": -56.1645}, {"anio": 2025, "fecha": "2025-10-20", "ciudad": "Copenhague", "pais": "DINAMARCA", "lugar": "AMAGER BIO", "lat": 55.6761, "lng": 12.5683}, {"anio": 2025, "fecha": "2025-10-22", "ciudad": "Amsterdam", "pais": "PAISES BAJOS", "lugar": "PARADISO", "lat": 52.3676, "lng": 4.9041}, {"anio": 2025, "fecha": "2025-10-25", "ciudad": "Bruselas", "pais": "BELGICA", "lugar": "LA MADELINE", "lat": 50.8503, "lng": 4.3517}, {"anio": 2025, "fecha": "2025-10-26", "ciudad": "Paris", "pais": "FRANCIA", "lugar": "BATACLAN", "lat": 48.8566, "lng": 2.3522}, {"anio": 2025, "fecha": "2025-10-27", "ciudad": "Paris", "pais": "FRANCIA", "lugar": "BATACLAN", "lat": 48.8566, "lng": 2.3522}, {"anio": 2025, "fecha": "2025-10-30", "ciudad": "Oslo", "pais": "NORUEGA", "lugar": "OSLOWORLD-SENTRUM SCENE ", "lat": 59.9139, "lng": 10.7522}, {"anio": 2025, "fecha": "2025-11-02", "ciudad": "Estocolmo", "pais": "SUECIA", "lugar": "FÀLLAN", "lat": 59.3293, "lng": 18.0686}, {"anio": 2025, "fecha": "2025-11-04", "ciudad": "Berlin", "pais": "ALEMANIA", "lugar": "COLUMBIA HALLE", "lat": 52.52, "lng": 13.405}, {"anio": 2025, "fecha": "2025-11-05", "ciudad": "Basel", "pais": "SUIZA", "lugar": "BALOISE SESSION", "lat": 47.5596, "lng": 7.5886}, {"anio": 2025, "fecha": "2025-11-07", "ciudad": "Zurich", "pais": "SUIZA", "lugar": "KOMPLEX457", "lat": 47.3769, "lng": 8.5417}, {"anio": 2025, "fecha": "2025-11-09", "ciudad": "Milan", "pais": "ITALIA", "lugar": "FABRIQUE", "lat": 45.4642, "lng": 9.19}, {"anio": 2025, "fecha": "2025-11-22", "ciudad": "Los Angeles", "pais": "USA", "lugar": "CAMP FLOG GNAW-DODGER STADIUM", "lat": 34.0522, "lng": -118.2437}, {"anio": 2026, "fecha": "2026-05-14", "ciudad": "Buenos Aires", "pais": "Argentina", "lugar": "Movistar Arena", "lat": -34.6037, "lng": -58.3816}, {"anio": 2026, "fecha": "2026-05-15", "ciudad": "Buenos Aires", "pais": "Argentina", "lugar": "Movistar Arena", "lat": -34.6037, "lng": -58.3816}, {"anio": 2026, "fecha": "2026-05-17", "ciudad": "Rosario", "pais": "Argentina", "lugar": "Metropolitano", "lat": -32.9468, "lng": -60.6393}, {"anio": 2026, "fecha": "2026-05-21", "ciudad": "Córdoba", "pais": "Argentina", "lugar": "Plaza de la Música", "lat": -31.4201, "lng": -64.1888}, {"anio": 2026, "fecha": "2026-05-24", "ciudad": "Mendoza", "pais": "Argentina", "lugar": "Arena Maipú", "lat": -32.8895, "lng": -68.8458}, {"anio": 2026, "fecha": "2026-05-28", "ciudad": "Madrid", "pais": "España", "lugar": "Colors Ballantine's azul", "lat": 40.4168, "lng": -3.7038}, {"anio": 2026, "fecha": "2026-05-31", "ciudad": "Denver", "pais": "Estados Unidos", "lugar": "-", "lat": 39.7392, "lng": -104.9903}, {"anio": 2026, "fecha": "2026-06-02", "ciudad": "Irving", "pais": "Estados Unidos", "lugar": "-", "lat": 32.814, "lng": -96.9489}, {"anio": 2026, "fecha": "2026-06-04", "ciudad": "Austin", "pais": "Estados Unidos", "lugar": "-", "lat": 30.2672, "lng": -97.7431}, {"anio": 2026, "fecha": "2026-06-07", "ciudad": "Houston", "pais": "Estados Unidos", "lugar": "-", "lat": 29.7604, "lng": -95.3698}, {"anio": 2026, "fecha": "2026-06-09", "ciudad": "Nashville", "pais": "Estados Unidos", "lugar": "-", "lat": 36.1627, "lng": -86.7816}, {"anio": 2026, "fecha": "2026-06-10", "ciudad": "Atlanta", "pais": "Estados Unidos", "lugar": "-", "lat": 33.749, "lng": -84.388}, {"anio": 2026, "fecha": "2026-06-12", "ciudad": "Miami", "pais": "Estados Unidos", "lugar": "-", "lat": 25.7617, "lng": -80.1918}, {"anio": 2026, "fecha": "2026-06-14", "ciudad": "Buena Vista", "pais": "Estados Unidos", "lugar": "-", "lat": 37.7318, "lng": -79.3489}, {"anio": 2026, "fecha": "2026-06-16", "ciudad": "Philadelphia", "pais": "Estados Unidos", "lugar": "-", "lat": 39.9526, "lng": -75.1652}, {"anio": 2026, "fecha": "2026-06-17", "ciudad": "Washington, D.C.", "pais": "Estados Unidos", "lugar": "-", "lat": 38.9072, "lng": -77.0369}, {"anio": 2026, "fecha": "2026-06-19", "ciudad": "New York", "pais": "Estados Unidos", "lugar": "-", "lat": 40.7128, "lng": -74.006}, {"anio": 2026, "fecha": "2026-06-23", "ciudad": "Toronto", "pais": "Canadá", "lugar": "-", "lat": 43.6532, "lng": -79.3832}, {"anio": 2026, "fecha": "2026-06-24", "ciudad": "Detroit", "pais": "Estados Unidos", "lugar": "-", "lat": 42.3314, "lng": -83.0458}, {"anio": 2026, "fecha": "2026-06-26", "ciudad": "Montreal", "pais": "Canadá", "lugar": "-", "lat": 45.5019, "lng": -73.5674}, {"anio": 2026, "fecha": "2026-06-27", "ciudad": "Boston", "pais": "Estados Unidos", "lugar": "-", "lat": 42.3601, "lng": -71.0589}, {"anio": 2026, "fecha": "2026-06-30", "ciudad": "Chicago", "pais": "Estados Unidos", "lugar": "-", "lat": 41.8781, "lng": -87.6298}, {"anio": 2026, "fecha": "2026-07-03", "ciudad": "Minneapolis", "pais": "Estados Unidos", "lugar": "-", "lat": 44.9778, "lng": -93.265}, {"anio": 2026, "fecha": "2026-07-07", "ciudad": "Seattle", "pais": "Estados Unidos", "lugar": "-", "lat": 47.6062, "lng": -122.3321}, {"anio": 2026, "fecha": "2026-07-08", "ciudad": "Vancouver", "pais": "Canadá", "lugar": "Queen Elizabeth Theatre", "lat": 49.2827, "lng": -123.1207}, {"anio": 2026, "fecha": "2026-07-11", "ciudad": "San Francisco", "pais": "Estados Unidos", "lugar": "The Masonic", "lat": 37.7749, "lng": -122.4194}, {"anio": 2026, "fecha": "2026-07-13", "ciudad": "Anaheim", "pais": "Estados Unidos", "lugar": "House of Blues", "lat": 33.8366, "lng": -117.9143}, {"anio": 2026, "fecha": "2026-07-16", "ciudad": "Los Ángeles", "pais": "Estados Unidos", "lugar": "Greek Theatre", "lat": 34.0522, "lng": -118.2437}, {"anio": 2026, "fecha": "2026-07-18", "ciudad": "Las Vegas", "pais": "Estados Unidos", "lugar": "Fontainebleau Las Vegas", "lat": 36.1699, "lng": -115.1398}, {"anio": 2026, "fecha": "2026-07-21", "ciudad": "San Diego", "pais": "Estados Unidos", "lugar": "Cal Coast Credit Union Open Air Theatre", "lat": 32.7157, "lng": -117.1611}, {"anio": 2026, "fecha": "2026-07-24", "ciudad": "Phoenix", "pais": "Estados Unidos", "lugar": "Arizona Financial Theatre", "lat": 33.4484, "lng": -112.074}, {"anio": 2026, "fecha": "2026-07-31", "ciudad": "Monterrey", "pais": "México", "lugar": "Auditorio Banamex", "lat": 25.6866, "lng": -100.3161}, {"anio": 2026, "fecha": "2026-08-02", "ciudad": "Zapopan (Guadalajara)", "pais": "México", "lugar": "Auditorio Telmex", "lat": 20.7167, "lng": -103.3833}, {"anio": 2026, "fecha": "2026-08-04", "ciudad": "Querétaro", "pais": "México", "lugar": "Auditorio Josefa Ortiz De Dominguez", "lat": 20.5888, "lng": -100.3899}, {"anio": 2026, "fecha": "2026-08-06", "ciudad": "Ciudad de México", "pais": "México", "lugar": "Palacio de los Deportes", "lat": 19.4326, "lng": -99.1332}, {"anio": 2026, "fecha": "2026-08-07", "ciudad": "Ciudad de México", "pais": "México", "lugar": "Palacio de los Deportes", "lat": 19.4326, "lng": -99.1332}, {"anio": 2026, "fecha": "2026-08-09", "ciudad": "Puebla", "pais": "México", "lugar": "Auditorio GNP", "lat": 19.0414, "lng": -98.2063}, {"anio": 2026, "fecha": "2026-08-12", "ciudad": "Mérida", "pais": "México", "lugar": "Foro GNP", "lat": 20.9674, "lng": -89.5926}, {"anio": 2026, "fecha": "2026-08-31", "ciudad": "Manchester", "pais": "Reino Unido", "lugar": "O2 Apollo Manchester", "lat": 53.4808, "lng": -2.2426}, {"anio": 2026, "fecha": "2026-09-02", "ciudad": "Londres", "pais": "Reino Unido", "lugar": "O2 Academy Brixton", "lat": 51.5074, "lng": -0.1278}, {"anio": 2026, "fecha": "2026-09-05", "ciudad": "Bruselas", "pais": "Bélgica", "lugar": "Vorst Nationaal / Forest National", "lat": 50.8503, "lng": 4.3517}, {"anio": 2026, "fecha": "2026-09-07", "ciudad": "Milán", "pais": "Italia", "lugar": "Unipol Forum", "lat": 45.4642, "lng": 9.19}, {"anio": 2026, "fecha": "2026-09-10", "ciudad": "Barcelona", "pais": "España", "lugar": "Palau Sant Jordi", "lat": 41.3874, "lng": 2.1686}, {"anio": 2026, "fecha": "2026-09-13", "ciudad": "Lisboa", "pais": "Portugal", "lugar": "Sala Tejo", "lat": 38.7223, "lng": -9.1393}, {"anio": 2026, "fecha": "2026-09-17", "ciudad": "Madrid", "pais": "España", "lugar": "Movistar Arena", "lat": 40.4168, "lng": -3.7038}, {"anio": 2026, "fecha": "2026-09-20", "ciudad": "Colonia", "pais": "Alemania", "lugar": "Palladium Köln", "lat": 50.9375, "lng": 6.9603}, {"anio": 2026, "fecha": "2026-09-21", "ciudad": "Zúrich", "pais": "Suiza", "lugar": "Halle 622", "lat": 47.3769, "lng": 8.5417}, {"anio": 2026, "fecha": "2026-09-23", "ciudad": "Viena", "pais": "Austria", "lugar": "Raiffeisen Halle im Gasometer", "lat": 48.2082, "lng": 16.3738}, {"anio": 2026, "fecha": "2026-09-25", "ciudad": "Frederiksberg (Copenhague)", "pais": "Dinamarca", "lugar": "K.B. Hallen", "lat": 55.6761, "lng": 12.5683}, {"anio": 2026, "fecha": "2026-09-26", "ciudad": "Estocolmo", "pais": "Suecia", "lugar": "Annexet", "lat": 59.3293, "lng": 18.0686}, {"anio": 2026, "fecha": "2026-09-29", "ciudad": "París", "pais": "Francia", "lugar": "Zénith Paris - La Villette", "lat": 48.8566, "lng": 2.3522}, {"anio": 2026, "fecha": "2026-10-01", "ciudad": "Ámsterdam", "pais": "Países Bajos", "lugar": "AFAS Live", "lat": 52.3676, "lng": 4.9041}, {"anio": 2026, "fecha": "2026-10-04", "ciudad": "Berlín", "pais": "Alemania", "lugar": "UFO im Velodrom", "lat": 52.52, "lng": 13.405}, {"anio": 2026, "fecha": "2026-10-21", "ciudad": "Osaka", "pais": "Japón", "lugar": "Namba Hatch", "lat": 34.6937, "lng": 135.5023}, {"anio": 2026, "fecha": "2026-10-22", "ciudad": "Tokio", "pais": "Japón", "lugar": "Toyosu PIT", "lat": 35.6762, "lng": 139.6503}, {"anio": 2026, "fecha": "2026-11-08", "ciudad": "San Juan", "pais": "Puerto Rico", "lugar": "Coliseo de Puerto Rico", "lat": -31.5375, "lng": -68.5364}, {"anio": 2026, "fecha": "2026-11-15", "ciudad": "San José", "pais": "Costa Rica", "lugar": "Parque Viva - Anf. Coca Cola", "lat": 9.9281, "lng": -84.0907}, {"anio": 2026, "fecha": "2026-11-18", "ciudad": "São Paulo", "pais": "Brasil", "lugar": "Espaço Unimed", "lat": -23.5505, "lng": -46.6333}, {"anio": 2026, "fecha": "2026-11-20", "ciudad": "Río de Janeiro", "pais": "Brasil", "lugar": "Vivo Rio", "lat": -22.9068, "lng": -43.1729}, {"anio": 2026, "fecha": "2026-11-23", "ciudad": "Santiago", "pais": "Chile", "lugar": "Movistar Arena", "lat": -33.4489, "lng": -70.6693}, {"anio": 2026, "fecha": "2026-11-27", "ciudad": "Lima", "pais": "Perú", "lugar": "Multiespacio Costa 21", "lat": -12.0464, "lng": -77.0428}];
+  const COLORES = { 2024: '#2E7D32', 2025: '#1E4FBF', 2026: '#B0141C' };
+
+  const KM_INTERNOS = { 2024: 218452, 2025: 119466, 2026: 99894 };
+  const CONECTOR_24_25 = 205;
+  const CONECTOR_25_26 = 9852;
+  const SHOWS_POR_ANIO = { 2024: 37, 2025: 49, 2026: 61 };
+
+  const CIRCUNFERENCIA_TIERRA = 40075;
+  const DISTANCIA_LUNA = 384400;
+  const VELOCIDAD_VUELO_KMH = 850;
+  const HORAS_POR_SHOW = 1.5;
+
+  let aniosActivos = [2024, 2025, 2026];
+
+  function calcularYPintarStats(){
+    const totalKm = aniosActivos.reduce((acc, a) => acc + KM_INTERNOS[a], 0)
+      + (aniosActivos.includes(2024) && aniosActivos.includes(2025) ? CONECTOR_24_25 : 0)
+      + (aniosActivos.includes(2025) && aniosActivos.includes(2026) ? CONECTOR_25_26 : 0);
+
+    const totalShows = aniosActivos.reduce((acc, a) => acc + SHOWS_POR_ANIO[a], 0);
+    const horasVuelo = totalKm / VELOCIDAD_VUELO_KMH;
+    const horasShow = totalShows * HORAS_POR_SHOW;
+    const diasVolando = horasVuelo / 24;
+
+    document.getElementById('stats-km').innerHTML = `
+      <div><strong>${Math.round(totalKm).toLocaleString('es-AR')}</strong><span>Kilómetros recorridos</span></div>
+      <div><strong>${(totalKm / CIRCUNFERENCIA_TIERRA).toFixed(2)}</strong><span>Vueltas al mundo</span></div>
+      <div><strong>${(totalKm / DISTANCIA_LUNA).toFixed(2)}</strong><span>Viajes a la Luna (ida)</span></div>
+    `;
+    document.getElementById('stats-horas').innerHTML = `
+      <div><strong>${diasVolando.toFixed(1)}</strong><span>Días completos en el aire</span></div>
+      <div><strong>${Math.round(horasShow).toLocaleString('es-AR')} hs</strong><span>Arriba del escenario</span></div>
+    `;
+  }
+
+  const mapa = L.map('mapa').setView([20, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors', maxZoom: 18
+  }).addTo(mapa);
+
+  function agruparCercanos(lista, umbral){
+    const grupos = [];
+    lista.forEach(l => {
+      let grupo = grupos.find(g => Math.hypot(g[0].lat - l.lat, g[0].lng - l.lng) < umbral);
+      if(!grupo){ grupo = []; grupos.push(grupo); }
+      grupo.push(l);
+    });
+    return grupos;
+  }
+  const grupos = agruparCercanos(LUGARES_ORIG, 0.3);
+  const LUGARES = [];
+  grupos.forEach(grupo => {
+    if(grupo.length === 1){ LUGARES.push(grupo[0]); return; }
+    const radio = 0.35;
+    grupo.forEach((l, i) => {
+      const angulo = (2 * Math.PI * i) / grupo.length;
+      LUGARES.push({ ...l, lat: l.lat + radio * Math.cos(angulo), lng: l.lng + radio * Math.sin(angulo), repetido: true, totalEnGrupo: grupo.length });
+    });
+  });
+
+  const capasPorAnio = {};
+  [2024, 2025, 2026].forEach(anio => {
+    const grupo = L.layerGroup().addTo(mapa);
+    const lugaresAnio = LUGARES.filter(l => l.anio === anio);
+    lugaresAnio.forEach(l => {
+      const marker = L.circleMarker([l.lat, l.lng], { radius: 6, fillColor: COLORES[anio], color: '#fff', weight: 1.5, fillOpacity: 0.9 });
+      marker.bindPopup(`
+        <div class="popup-cat" style="color:${COLORES[anio]}">${anio} · ${l.pais || ''}</div>
+        <div class="popup-title">${l.ciudad}</div>
+        <div style="font-size:.8rem; color:#555; margin-top:2px;">${l.lugar || ''}</div>
+        ${l.repetido ? `<div style="font-size:.7rem; color:#D71920; margin-top:6px; font-weight:700;">📍 Tocaron varias veces en esta zona (${l.totalEnGrupo} shows)</div>` : ''}
+      `);
+      marker.addTo(grupo);
+    });
+    const puntos = LUGARES_ORIG.filter(l => l.anio === anio).map(l => [l.lat, l.lng]);
+    L.polyline(puntos, { color: COLORES[anio], weight: 1.5, opacity: 0.5, dashArray: '4 6' }).addTo(grupo);
+    capasPorAnio[anio] = grupo;
+  });
+
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const anio = parseInt(btn.dataset.anio);
+      const capa = capasPorAnio[anio];
+      const activo = btn.classList.toggle('activo');
+      if(activo){ mapa.addLayer(capa); aniosActivos.push(anio); }
+      else { mapa.removeLayer(capa); aniosActivos = aniosActivos.filter(a => a !== anio); }
+      calcularYPintarStats();
+    });
+  });
+
+  calcularYPintarStats();
+
+  (function setLastUpdate(){
+    const el = document.getElementById('last-update');
+    if(!el) return;
+    const d = new Date(document.lastModified);
+    if(isNaN(d.getTime())){ el.textContent = 'sin datos'; return; }
+    el.textContent = d.toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
+  })();
+</script>
+
+<script data-goatcounter="https://lucesdelsur.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
