@@ -140,7 +140,7 @@
     }
 
     .era-title {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 900;
       color: #fff;
       margin-bottom: 12px;
@@ -184,10 +184,6 @@
       border: 1px solid #323242;
       color: #a855f7;
     }
-
-    .hidden {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -203,7 +199,7 @@
         <span class="question-count" id="question-count">Pregunta 1 de 10</span>
       </div>
 
-      <div class="question-title" id="question-text">Cargando pregunta...</div>
+      <div class="question-title" id="question-text">Cargando...</div>
 
       <div class="options-grid" id="options-container">
         <!-- Buttons loaded dynamically -->
@@ -305,16 +301,16 @@
       {
         q: "10. ¿Cuál es tu filosofía de vida actual?",
         options: [
-          { text: ""El exceso y el spa son el único camino al equilibrio."", era: 5 },
-          { text: ""Mi vida es una prueba de sonido constante en un Tiny Desk global."", era: 6 },
-          { text: ""Inseparables e improbables. Un peligro público."", era: 4 }
+          { text: "«El exceso y el spa son el único camino al equilibrio.»", era: 5 },
+          { text: "«Mi vida es una prueba de sonido constante en un Tiny Desk global.»", era: 6 },
+          { text: "«Inseparables e improbables. Un peligro público.»", era: 4 }
         ]
       }
     ];
 
     const eraDescriptions = {
       1: { title: "ERA 1: Under & Sótano", desc: "Madrugadas de ensayo, cables, madera húmeda y acordes disonantes. La esencia pura del comienzo y la obsesión por la música auténtica." },
-      2: { title: "ERA 2: Frenesí & Pogo", desc: "Luces de neón saturadas, 200 km/h, adrenalina pura y caos controlado. Vivís en vivo y con el volumen al máximo." },
+      2: { title: "ERA 2: Frenesí & Pogo", desc: "Luces de neón saturadas, 200 km/h, adrenalina pura y caos controlled. Vivís en vivo y con el volumen al máximo." },
       3: { title: "ERA 3: Introspección & Cueva", desc: "Modo ermitaño creativo. Preferís la tranquilidad de tu cuarto, tu gato, maquetas a solas y bife de chorizo en soledad." },
       4: { title: "ERA 4: Dupla Peligrosa", desc: "Inseparables, descapotables rojos y complicidad absoluta. Dos contra el mundo listos para armar un revuelo." },
       5: { title: "ERA 5: Exceso & Spa", desc: "Jacuzzi, batas de seda, sushi al borde de la pileta y patitos de goma. El equilibrio exacto entre el glamour y el relax." },
@@ -374,7 +370,7 @@
 
     function copyShareLink() {
       navigator.clipboard.writeText(window.location.href);
-      alert("¡Enlace copiado al portapapeles! Listo para pegar en Instagram.");
+      alert("¡Enlace copiado al portapapeles!");
     }
 
     function restartQuiz() {
@@ -385,7 +381,6 @@
       renderQuestion();
     }
 
-    // Start
     renderQuestion();
   </script>
 </body>
