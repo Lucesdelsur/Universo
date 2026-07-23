@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -250,9 +251,19 @@ select{
 }
 .tl-publico{ font-weight:400; color:var(--text-dim); font-size:.85em; }
 
+/* ---- Hitos "mayor": tratamiento destacado dentro de la misma línea de tiempo ---- */
+.tl-row-mayor{
+  flex-direction:column; padding:44px 0 48px;
+  border-top:3px solid var(--hero-bg, var(--red));
+}
+.tl-row-mayor .tl-row-thumb{ width:100%; aspect-ratio:16/9; }
+.tl-row-mayor .tl-title{ font-size:2.1rem; margin-top:16px; }
+.tl-row-mayor .tl-teaser{ font-size:1.15rem; }
+
 @media (max-width: 600px){
   .tl-row{ flex-direction:column; }
   .tl-row-thumb{ width:100%; }
+  .tl-row-mayor .tl-title{ font-size:1.6rem; }
 }
 
 /* =========================================================
@@ -890,14 +901,14 @@ footer{
       titulo: "PAPOTA",
       teaser: "", descripcion: "EP y cortometraje audiovisual. Géneros: pop urbano, trap, electro-house, hip-hop satírico.",
       foto: "", youtube: "8Jnrkw2Lzuw",
-      destacado: true
+      destacado: true, nivel: "mayor"
     },
     {
       fecha: "2025-03-04", categorias: ["Shortfilm"], lugar: "",
       titulo: "PAPOTA",
       teaser: "", descripcion: "Comedia negra y sátira absurda sobre las presiones de la fama masiva tras el Tiny Desk y el éxito de Baño María. Sigue a Cato y Paco en una espiral de obsesión estética y \"síndrome del impostor\", intercalando los 4 tracks inéditos del EP (IMPOSTOR, #TETAS, RE FORRO y EL DÍA DEL AMIGO). Dirigido por Martín Piroyansky.",
       foto: "", youtube: "zYc1qMe_kpc",
-      destacado: true
+      destacado: true, nivel: "mayor"
     },
     {
       fecha: "2025-11-07", categorias: ["Canción"], lugar: "",
@@ -933,6 +944,13 @@ footer{
     },
 
     // ========== HITOS NUEVOS (PARA_SUBIR.xlsx) ==========
+    {
+      fecha: "2025-11-05", categorias: ["Canción"], lugar: "",
+      titulo: "GIMME MORE",
+      teaser: "", descripcion: "Nota: el video original se retiró de las plataformas y la canción fue renombrada — el link puede no funcionar todavía.",
+      foto: "", youtube: "twmKBsfLuNA",
+      destacado: true
+    },
     {
       fecha: "2018-01-01", categorias: ["Canción"], lugar: "",
       titulo: "A mi no",
@@ -1513,7 +1531,8 @@ footer{
   function renderHito(ev, delay){
     const colores = catColors(ev.categorias);
     const el = document.createElement('div');
-    el.className = 'tl-row';
+    const esMayor = ev.nivel === 'mayor';
+    el.className = 'tl-row' + (esMayor ? ' tl-row-mayor' : '');
     el.style.animationDelay = `${delay}s`;
     const catTags = (ev.categorias || []).map((c, i) =>
       `<span class="tl-cat" style="--tag-color:${colores[i]}">${c}</span>`
