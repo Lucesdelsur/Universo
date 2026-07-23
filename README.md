@@ -80,6 +80,32 @@ git push -u origin main
 - Los **premios** (5 Latin Grammy · 1 Grammy · 7 Gardel) se editan en
   `index.html`, buscá `stat-awards`.
 
+---
+
+## Roadmap y decisiones tomadas
+
+Esta sección es un registro de qué se decidió dejar para más adelante, y por qué — para no perder el hilo entre sesiones de trabajo.
+
+### ✅ Ya decidido / implementado
+
+- **Contador de visitas (GoatCounter)**: está conectado, pero **no se muestra ningún número en la página pública** (decisión tomada a propósito). Para ver las estadísticas (visitas, países), entrar a `lucesdelsur.goatcounter.com` con el login de la cuenta. Es privado, solo lo ve quien tenga ese acceso.
+- **CSS y datos duplicados en los 7 archivos de Era**: es intencional, no un error — prioriza que el sitio funcione siempre aunque se abra un solo archivo suelto, sin depender de archivos externos que se puedan romper o desincronizar.
+- **Categorías de filtro**: consolidadas a 4 — Discografía (canciones, álbumes/EPs, cortometrajes), Colaboración, Prensa (entrevistas + artículos), Conciertos.
+- **Jerarquía "hito destacado"**: los hitos más importantes de cada Era tienen tratamiento visual más grande (foto e título más grandes, franja con tinte del color de la Era), visible también en celular.
+
+### 🕑 Pendiente para una segunda etapa
+
+- **Página de Premios**: hoy es solo una línea de texto en la portada ("5 Latin Grammy · 1 Grammy · 7 Gardel"). Se evaluará armar una página propia con el detalle de cada premio (año, categoría) más adelante.
+- **Página de Colaboradores**: un "quién es quién" del universo (Chita, Wos, Miranda!, Jack Black, Sting, Anderson .Paak, etc.), aprovechando que ya existe el filtro de "Colaboración". Se evaluará cuando el contenido principal esté más avanzado.
+- **Layout en grilla para la línea de tiempo**: hoy los hitos van uno debajo del otro (franjas secuenciales). Se está evaluando una alternativa en grilla (varias columnas) para achicar el largo de cada página de Era. Pendiente de mockup antes de implementar.
+- **SEO / Open Graph / favicon**: para que el link se vea bien al compartirlo en WhatsApp o redes, y que el navegador muestre un ícono propio en la pestaña.
+
+### ❓ Sin resolver — a la espera de datos
+
+- El texto acortado de cada Era (el usuario lo va a proveer).
+- El texto completo de `historia.html` (hoy es un placeholder).
+- Varios hitos sin foto, descripción o link — ver la planilla de seguimiento (`hitos-para-completar.xlsx`) para el detalle fila por fila.
+
 ## Hecho por
 
 Lucesdelsur

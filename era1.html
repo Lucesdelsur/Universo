@@ -155,6 +155,18 @@ button{ font-family:inherit; cursor:pointer; }
 /* =========================================================
    Navegación Era anterior / siguiente / inicio
    ========================================================= */
+.era-breadcrumb{
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+  max-width:760px; margin:0 auto 40px; padding:0 24px;
+}
+.era-crumb{
+  width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-weight:700; font-size:.85rem;
+  border:1.5px solid var(--line); color:var(--text-dim); text-decoration:none;
+}
+.era-crumb:hover{ border-color:var(--red); color:var(--red); }
+.era-crumb.actual{ background:var(--hero-bg, var(--red)); border-color:var(--hero-bg, var(--red)); color:#fff; cursor:default; }
+
 .era-prevnext{
   max-width:960px; margin:0 auto 20px; padding:0 24px;
   display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
@@ -214,7 +226,8 @@ select{
 
 .tl-row{
   display:flex; gap:24px; align-items:flex-start;
-  padding:26px 0; border-top:1px solid var(--line);
+  padding:26px 0 26px 16px; border-top:1px solid var(--line);
+  border-left:3px solid color-mix(in srgb, var(--hero-bg, var(--red)) 55%, var(--line));
   cursor:pointer; transition:opacity .15s ease;
   opacity:0; transform:translateY(14px);
   animation:riseIn .4s ease forwards;
@@ -252,17 +265,23 @@ select{
 
 /* ---- Hitos "mayor": tratamiento destacado dentro de la misma línea de tiempo ---- */
 .tl-row-mayor{
-  flex-direction:column; padding:44px 0 48px;
+  flex-direction:column; padding:36px 24px 48px; margin:0 -24px;
   border-top:3px solid var(--hero-bg, var(--red));
+  background:color-mix(in srgb, var(--hero-bg, var(--red)) 6%, transparent);
 }
 .tl-row-mayor .tl-row-thumb{ width:100%; aspect-ratio:16/9; }
 .tl-row-mayor .tl-title{ font-size:2.1rem; margin-top:16px; }
 .tl-row-mayor .tl-teaser{ font-size:1.15rem; }
+.tl-mayor-badge{
+  display:inline-block; font-family:var(--mono); font-weight:700; font-size:.75rem;
+  letter-spacing:.12em; text-transform:uppercase; color:#fff;
+  background:var(--hero-bg, var(--red)); padding:4px 10px; margin-bottom:10px;
+}
 
 @media (max-width: 600px){
   .tl-row{ flex-direction:column; }
   .tl-row-thumb{ width:100%; }
-  .tl-row-mayor .tl-title{ font-size:1.6rem; }
+  .tl-row-mayor .tl-title{ font-size:1.7rem; }
 }
 
 /* =========================================================
@@ -347,10 +366,7 @@ footer{
 
   <div class="era-bloque" id="era-bloque"></div>
 
-  <div class="era-prevnext">
-    <a id="era-prev" href="#">◀ Era anterior</a>
-    <a id="era-next" href="#">Era siguiente ▶</a>
-  </div>
+  <nav class="era-breadcrumb" id="era-breadcrumb"></nav>
 
   <!-- ============ FILTROS ============ -->
   <div id="filterbar">
@@ -1085,7 +1101,7 @@ footer{
 
 
     {
-      fecha: "2019-01-24", categorias: ["Discografía"], lugar: "",
+      fecha: "2018-01-01", categorias: ["Discografía"], lugar: "",
       titulo: "Piola",
       teaser: "Entraron a la escena con una mirada ácida y crítica.", descripcion: "",
       foto: "", youtube: "lo54JoPlUms",
@@ -1409,13 +1425,12 @@ footer{
     const clavesAMostrar = CATS_PERMITIDAS;
 
     function pintarActivo(){
+      const todasActivas = activeCats.size === clavesAMostrar.length;
       document.querySelectorAll('.pill').forEach(b => {
-        const esActivo = b.dataset.cat === 'TODAS'
-          ? activeCats.size === clavesAMostrar.length
-          : activeCats.size === 1 && activeCats.has(b.dataset.cat);
+        const esActivo = todasActivas || activeCats.has(b.dataset.cat);
         if(esActivo){
           b.classList.add('active');
-          b.style.background = b.dataset.cat === 'TODAS' ? 'var(--ink)' : CATEGORIAS[b.dataset.cat].color;
+          b.style.background = CATEGORIAS[b.dataset.cat].color;
           b.style.color = '#fff';
         } else {
           b.classList.remove('active');
@@ -1425,29 +1440,26 @@ footer{
       });
     }
 
-    // Pill "Todas" — vuelve a mostrar todas las categorías con un solo click
-    const bTodas = document.createElement('button');
-    bTodas.className = 'pill active';
-    bTodas.textContent = 'Todas';
-    bTodas.dataset.cat = 'TODAS';
-    bTodas.addEventListener('click', () => {
-      activeCats = new Set(clavesAMostrar);
-      pintarActivo();
-      render();
-    });
-    pillWrap.appendChild(bTodas);
-
     clavesAMostrar.forEach(cat => {
       const info = CATEGORIAS[cat];
       if(!info) return;
       const b = document.createElement('button');
-      b.className = 'pill';
+      b.className = 'pill active';
       b.textContent = cat;
       b.style.setProperty('--cat-color', info.color);
       b.dataset.cat = cat;
       b.addEventListener('click', () => {
-        // Selección única: mostrar SOLO esta categoría (no hace falta apagar el resto a mano)
-        activeCats = new Set([cat]);
+        const todasActivas = activeCats.size === clavesAMostrar.length;
+        if(todasActivas){
+          // Estaban todas activas: aislar esta sola categoría
+          activeCats = new Set([cat]);
+        } else if(activeCats.size === 1 && activeCats.has(cat)){
+          // Ya estaba sola y la volvés a tocar: vuelve a mostrar todo
+          activeCats = new Set(clavesAMostrar);
+        } else {
+          // Estaba aislada otra categoría: pasa a aislar esta
+          activeCats = new Set([cat]);
+        }
         pintarActivo();
         render();
       });
@@ -1532,6 +1544,7 @@ footer{
     el.innerHTML = `
       ${sinMiniatura ? '' : `<div class="tl-row-thumb">${cardThumb(ev)}</div>`}
       <div class="tl-row-info">
+        ${esMayor ? `<span class="tl-mayor-badge">★ Hito destacado</span><br>` : ''}
         <span class="tl-date">${formatearFecha(ev.fecha)}</span>${catTags}
         <div class="tl-title">${ev.titulo}${ev.publico ? ` <span class="tl-publico">(${ev.publico})</span>` : ''}</div>
         ${ev.lugar ? `<div class="tl-lugar">📍 ${ev.lugar}</div>` : ''}
@@ -1604,7 +1617,7 @@ footer{
 
     if(CFG.colorEra){
       const hero = document.querySelector('.hero');
-      hero.style.setProperty('--hero-bg', CFG.colorEra);
+      document.body.style.setProperty('--hero-bg', CFG.colorEra);
       hero.style.setProperty('--hero-fg', CFG.colorEraTexto || '#111111');
     }
 
@@ -1639,21 +1652,23 @@ footer{
       `;
     }
 
-    const prevA = document.getElementById('era-prev');
-    const nextA = document.getElementById('era-next');
+    const breadcrumb = document.getElementById('era-breadcrumb');
+    breadcrumb.innerHTML = eras.map((e, i) => {
+      const esActual = i === idx;
+      return `<a class="era-crumb${esActual ? ' actual' : ''}" ${esActual ? '' : `href="${CFG.hrefEras[i]}"`}>${i+1}</a>`;
+    }).join('');
+
     const prevB = document.getElementById('era-prev-bottom');
     const nextB = document.getElementById('era-next-bottom');
     if(idx > 0){
-      prevA.href = CFG.hrefEras[idx-1]; prevA.textContent = `◀ ${eras[idx-1].titulo}`;
       prevB.href = CFG.hrefEras[idx-1]; prevB.textContent = `◀ ${eras[idx-1].titulo}`;
     } else {
-      prevA.classList.add('vacio'); prevB.classList.add('vacio');
+      prevB.classList.add('vacio');
     }
     if(idx < eras.length - 1){
-      nextA.href = CFG.hrefEras[idx+1]; nextA.textContent = `${eras[idx+1].titulo} ▶`;
       nextB.href = CFG.hrefEras[idx+1]; nextB.textContent = `${eras[idx+1].titulo} ▶`;
     } else {
-      nextA.classList.add('vacio'); nextB.classList.add('vacio');
+      nextB.classList.add('vacio');
     }
 
     document.title = `${era.titulo} — Universo Musical CA7RIEL & Paco Amoroso`;
