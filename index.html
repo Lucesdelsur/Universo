@@ -8,10 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Merriweather:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* =============================================================
-   UNIVERSO MUSICAL — CA7RIEL & Paco Amoroso
-   Estética editorial (Rolling Stone) — blanco, serif, rojo quirúrgico 
-   ============================================================= */
 :root{
   --bg: #FFFFFF;
   --bg-soft: #FAFAFA;
@@ -52,9 +48,6 @@ a{ color:inherit; }
 button{ font-family:inherit; cursor:pointer; }
 :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
 
-/* =========================================================
-   NAV superior — sticky, blanco, logo centrado
-   ========================================================= */
 #site-nav{
   position:sticky; top:0; z-index:50;
   display:flex; align-items:center; justify-content:center; gap:30px;
@@ -69,9 +62,6 @@ button{ font-family:inherit; cursor:pointer; }
 #site-nav a:hover{ color:var(--red); }
 #site-nav a.active{ border-bottom-color:var(--red); color:var(--red); }
 
-/* =========================================================
-   HERO — PORTADA
-   ========================================================= */
 .hero-portada{
   position:relative; min-height:64vh;
   background-image:linear-gradient(180deg, rgba(0,0,0,0) 25%, rgba(0,0,0,.88) 100%), url('images/portada-principal.jpeg');
@@ -90,10 +80,16 @@ button{ font-family:inherit; cursor:pointer; }
   line-height:1.05; margin-top:16px; color:#fff;
 }
 .hero-portada .sub{ color:#EDEDED; opacity:.95; font-size:1.2rem; font-style:italic; margin-top:8px; }
+.stats-header{
+  display:flex; gap:44px; margin-top:28px; flex-wrap:wrap; justify-content:center;
+}
+.stats-header div{ font-family:var(--mono); text-align:center; }
+.stats-header strong{ display:block; font-family:var(--display); font-weight:900; font-size:1.7rem; color:#fff; }
+.stats-header span{ font-size:.78rem; color:#EDEDED; text-transform:uppercase; letter-spacing:.1em; opacity:.85; }
+.stats-header-source{
+  font-family:var(--mono); font-size:.8rem; color:#EDEDED; opacity:.75; margin-top:14px; text-align:center;
+}
 
-/* =========================================================
-   SECCIÓN DIAGNÓSTICO / TEST (OPCIÓN 3)
-   ========================================================= */
 .seccion-test{
   max-width:760px; margin:40px auto; padding:36px 28px;
   background:var(--bg-soft); border:1px solid var(--line);
@@ -121,9 +117,6 @@ button{ font-family:inherit; cursor:pointer; }
   background:var(--red); border-color:var(--red); color:#fff;
 }
 
-/* =========================================================
-   LISTA DE ERAS
-   ========================================================= */
 .lista-eras{
   max-width:760px; margin:50px auto 60px; padding:0 24px;
 }
@@ -153,9 +146,6 @@ button{ font-family:inherit; cursor:pointer; }
 }
 .link-historia:hover{ color:var(--red); }
 
-/* =========================================================
-   STATS
-   ========================================================= */
 .hero .stats{
   display:flex; gap:44px; margin-top:30px; flex-wrap:wrap; justify-content:center;
 }
@@ -167,9 +157,6 @@ button{ font-family:inherit; cursor:pointer; }
   opacity:.7; margin-top:28px; width:100%; text-align:center;
 }
 
-/* =========================================================
-   MODAL DE TEST / DIAGNÓSTICO
-   ========================================================= */
 #quiz-modal-overlay{
   position:fixed; inset:0; background:rgba(17,17,17,.85); backdrop-filter:blur(3px);
   z-index:200; display:flex; align-items:center; justify-content:center; padding:20px;
@@ -207,7 +194,6 @@ button{ font-family:inherit; cursor:pointer; }
   border-color:var(--red); background:#fff; color:var(--red);
 }
 
-/* Ficha de Resultado */
 .result-card{ text-align:left; }
 .result-header{ border-bottom:2px solid var(--ink); padding-bottom:14px; margin-bottom:20px; }
 .result-header .era-num{
@@ -268,9 +254,13 @@ footer{
     <span class="kicker">Universo</span>
     <h1>LAS 7 ERAS</h1>
     <p class="sub">Viví su historia.</p>
+    <div class="stats-header">
+      <div><strong id="stat-shows">243</strong><span>Conciertos a la fecha</span></div>
+      <div><strong id="stat-awards">5 Latin Grammy · 1 Grammy · 7 Gardel</strong><span>Premios</span></div>
+    </div>
+    <div class="stats-header-source">Fuente: setlist.fm · dato de conciertos sujeto a actualización</div>
   </div>
 
-  <!-- SECCIÓN DIAGNÓSTICO (OPCIÓN 3) -->
   <section class="seccion-test">
     <span class="warning-badge">ADVERTENCIA DE SEGURIDAD</span>
     <h2>¿EN QUÉ ERA ESTÁS HOY?</h2>
@@ -285,19 +275,10 @@ footer{
 
   <a class="link-historia" href="historia.html">📖 Ver La Historia completa</a>
 
-  <div class="hero" style="min-height:auto; padding:20px 24px 40px; --hero-bg:#fff;">
-    <div class="stats">
-      <div><strong id="stat-shows">243</strong><span>Conciertos a la fecha</span></div>
-      <div><strong id="stat-awards">5 Latin Grammy · 1 Grammy · 7 Gardel</strong><span>Premios</span></div>
-    </div>
-    <div class="stats-source">Fuente: setlist.fm · dato de conciertos sujeto a actualización</div>
-  </div>
-
   <footer>
     Hecho por Luces del Sur · última actualización: <span id="last-update">—</span>
   </footer>
 
-  <!-- MODAL INTERACTIVO DEL TEST -->
   <div id="quiz-modal-overlay">
     <div id="quiz-modal">
       <button id="quiz-modal-close" aria-label="Cerrar">✕</button>
@@ -316,7 +297,6 @@ footer{
     { archivo: "era7.html", titulo: "FREES SPIRITS: GLOBAL POP STARTS ", periodo: "2026" },
   ];
 
-  // Renderizado de lista de eras
   const lista = document.getElementById('lista-eras-items');
   ERAS.forEach((era, i) => {
     const a = document.createElement('a');
@@ -340,9 +320,6 @@ footer{
     el.textContent = d.toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
   })();
 
-  /* =========================================================
-     LÓGICA DEL TEST DE DIAGNÓSTICO
-     ========================================================= */
   const QUESTIONS = [
     {
       q: "1. ¿Cómo arranca tu lunes ideal?",
