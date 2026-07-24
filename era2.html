@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nace el mito (Era 2) — Universo Musical</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Cómo CA7RIEL & Paco Amoroso hackearon la escena del trap argentino con Povre, Livre, Ouke y Jala Jala.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Universo Musical — CA7RIEL & Paco Amoroso">
+<meta property="og:title" content="Nace el mito (Era 2) — Universo Musical">
+<meta property="og:description" content="Cómo CA7RIEL & Paco Amoroso hackearon la escena del trap argentino con Povre, Livre, Ouke y Jala Jala.">
+<meta property="og:image" content="https://lucesdelsur.github.io/Universo/images/portada-principal.jpeg">
+<meta property="og:url" content="https://lucesdelsur.github.io/Universo/era2.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nace el mito (Era 2) — Universo Musical">
+<meta name="twitter:description" content="Cómo CA7RIEL & Paco Amoroso hackearon la escena del trap argentino con Povre, Livre, Ouke y Jala Jala.">
+<meta name="twitter:image" content="https://lucesdelsur.github.io/Universo/images/portada-principal.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Merriweather:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -282,11 +294,12 @@ select{
   letter-spacing:.1em; text-transform:uppercase; color:#fff;
   background:var(--hero-bg, var(--red)); padding:3px 9px; margin-bottom:8px;
 }
+.tl-thumb-wrap{ position:relative; }
 .tl-play-badge{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:46px; height:46px; border-radius:50%;
+  position:absolute; bottom:8px; right:8px;
+  width:26px; height:26px; border-radius:50%;
   background:rgba(255,255,255,.9); color:var(--red);
-  display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+  display:flex; align-items:center; justify-content:center; font-size:.7rem;
   border:1.5px solid var(--red);
 }
 
@@ -1506,12 +1519,12 @@ footer{
 
   function cardThumb(ev){
     if(ev.foto){
-      return `<img src="${ev.foto}" alt="${ev.titulo}">${ev.youtube ? '<div class="tl-play-badge">▶</div>' : ''}`;
+      return `<div class="tl-thumb-wrap"><img src="${ev.foto}" alt="${ev.titulo}">${ev.youtube ? '<div class="tl-play-badge">▶</div>' : ''}</div>`;
     }
     if(ev.youtube){
       // Sin foto propia: usamos la miniatura automática de YouTube, así no hace
       // falta subir una imagen para que la tarjeta se vea con contenido visual.
-      return `<img src="https://img.youtube.com/vi/${ev.youtube}/hqdefault.jpg" alt="${ev.titulo}"><div class="tl-play-badge">▶</div>`;
+      return `<div class="tl-thumb-wrap"><img src="https://img.youtube.com/vi/${ev.youtube}/hqdefault.jpg" alt="${ev.titulo}"><div class="tl-play-badge">▶</div></div>`;
     }
     return `<div class="ph">📷<br>Espacio para tu foto</div>`;
   }
