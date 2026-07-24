@@ -147,12 +147,16 @@ button{ font-family:inherit; cursor:pointer; }
   display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start;
 }
 .era-foto{
-  width:320px; flex-shrink:0; max-height:440px; overflow:hidden;
+  width:320px; flex-shrink:0; max-height:470px; overflow:hidden;
   background:var(--bg-soft); border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
   font-family:var(--mono); font-size:.85rem; color:var(--text-dim); text-align:center; padding:16px;
 }
 .era-foto img{ width:100%; height:auto; max-height:440px; object-fit:contain; display:block; }
+.era-foto-credito{
+  width:100%; font-family:var(--mono); font-style:italic; font-size:.72rem;
+  color:var(--text-dim); text-align:left; margin-top:8px; opacity:.8;
+}
 .era-texto{ flex:1; min-width:280px; font-size:1.15rem; line-height:1.8; color:var(--text); font-family:var(--body); text-align:justify; }
 .era-texto p{ margin-bottom:18px; }
 .era-texto p:last-child{ margin-bottom:0; }
@@ -434,6 +438,7 @@ footer{
 
   <footer>
     Escrito y diseñado por <a href="https://lucesdelsur.substack.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Luces del Sur</a> · última actualización: <span id="last-update">—</span>
+    <div style="font-style:italic; font-size:.78rem; opacity:.75; margin-top:10px; max-width:600px; margin-left:auto; margin-right:auto;">Fotografías sin crédito individual: material de prensa o de las redes oficiales de CA7RIEL & Paco Amoroso. Los derechos pertenecen a sus autores y/o representantes.</div>
   </footer>
 
 <script>
@@ -511,6 +516,7 @@ footer{
       teaser: "Hackeo a la escena del trap",
       descripcion: "<p>Es el nacimiento del mito y su irrupción en el trap argentino. CA7RIEL lanza los EPs Povre y Livre, y junto a Paco publican hits virales como \"Ouke\" y \"Jala Jala\". Esta era culmina con el show \"La Celebración\" en el Estadio Obras en diciembre de 2019.</p><p>El video de \"Jala Jala\" fue diseñado específicamente para verse en formato vertical en celulares, simulando que el teléfono estaba hackeado.</p><p class=\"cita-destacada\">\"¿Sabé' lo qué es odiarte y que todo el mundo te ame?\" —CA7RIEL, en su BZRP Session #14</p>",
       foto: "", fotos: ["images/era2-pared-roja.jpg", "images/era2-recital-2019.png"], youtube: "",
+      creditosFotos: ["", "Foto: Rafael Mario Quinteros"],
       datos: [{etiqueta:"Período", valor:"2018–2020"}]
     },
     {
@@ -520,6 +526,7 @@ footer{
       teaser: "Una pandemia mundial y dos discos icónicos.",
       descripcion: "<p>Durante la pandemia, el dúo se separa para explorar sus identidades individuales. CA7RIEL lanza EL DISKO, una obra de jazz-rock y funk experimental, mientras Paco presenta SAETA, un álbum de pop electrónico y r&b.</p><p>CA7RIEL definió EL DISKO como una \"purga\" de lo que sentía como \"música de mierda\" o \"experimentos sociales\" hechos durante su etapa de trap.</p><p class=\"cita-destacada\">\"Con esto purgué. Realmente todo lo que tenía de sucio dentro mío, lo eliminé\" —CA7RIEL, sobre EL DISKO</p>",
       foto: "", fotos: ["images/era3-parrilla.jpeg", "images/era3-glitch-face.png"], youtube: "",
+      creditosFotos: ["", "Ilustración: Florencia Daniel"],
       datos: [{etiqueta:"Período", valor:"2020–2021"}]
     },
     {
@@ -1711,20 +1718,25 @@ footer{
     // costado del texto).
     const bloque = document.getElementById('era-bloque');
     const listaFotos = (era.fotos && era.fotos.length) ? era.fotos : (era.foto ? [era.foto] : []);
+    const listaCreditos = era.creditosFotos || [];
     const textoHTML = era.descripcion || '';
+
+    function creditoHTML(i){
+      return listaCreditos[i] ? `<div class="era-foto-credito">${listaCreditos[i]}</div>` : '';
+    }
 
     if(listaFotos.length >= 2){
       bloque.className = 'era-bloque era-bloque-doble';
       bloque.innerHTML = `
         <div class="era-fotos-fila">
-          ${listaFotos.slice(0,2).map(f => `<div class="era-foto"><img src="${f}" alt="${era.titulo}"></div>`).join('')}
+          ${listaFotos.slice(0,2).map((f, i) => `<div class="era-foto"><img src="${f}" alt="${era.titulo}">${creditoHTML(i)}</div>`).join('')}
         </div>
         <div class="era-texto">${textoHTML}</div>
       `;
     } else {
       bloque.className = 'era-bloque';
       bloque.innerHTML = `
-        <div class="era-foto">${listaFotos[0] ? `<img src="${listaFotos[0]}" alt="${era.titulo}">` : 'Sin foto todavía'}</div>
+        <div class="era-foto">${listaFotos[0] ? `<img src="${listaFotos[0]}" alt="${era.titulo}">${creditoHTML(0)}` : 'Sin foto todavía'}</div>
         <div class="era-texto">${textoHTML}</div>
       `;
     }
