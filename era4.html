@@ -145,6 +145,10 @@ button{ font-family:inherit; cursor:pointer; }
 .era-texto p{ margin-bottom:18px; }
 .era-texto p:last-child{ margin-bottom:0; }
 .era-texto strong{ font-weight:700; color:var(--ink); }
+.era-texto .cita-destacada{
+  font-style:italic; font-size:1.25rem; line-height:1.6; color:var(--ink);
+  border-left:3px solid var(--red); padding-left:22px; margin:26px 0; text-align:left;
+}
 
 /* ---- Variante: 2 fotos en fila arriba, texto ancho completo debajo ---- */
 .era-bloque-doble{ flex-direction:column; }
@@ -483,7 +487,7 @@ footer{
       titulo: "Astor", lugar: "Buenos Aires, Argentina",
       colorEra: "var(--violet)",
       teaser: "Los años en salas de ensayo.",
-      descripcion: "<p>Crecieron musicalmente juntos. «Astor y las flores de marte» fue su primera banda, con pulsión rockera-funkera-spinetteana. Solo grabaron un álbum y un single para un concurso de bandas. Por esos años Catriel lanza su primer disco (2015) y firma por primera vez con 5020 Records el sello que lo acompaña en su carrera astronómica años más tarde.</p>",
+      descripcion: "<p>Esta era se define por el virtuosismo instrumental y las raíces en el rock, el funk y el reggae. Los artistas, amigos desde los 6 años, formaron la banda Astor y las Flores de Marte, donde CA7RIEL ya destacaba como un guitarrista formado en conservatorio.</p><p>Antes de ser \"Paco Amoroso\", Ulises era el baterista de la banda y CA7RIEL lo llamaba para que fuera su \"secuaz\" en sus proyectos.</p><p class=\"cita-destacada\">\"Cato vive como si no hubiera mañana, y yo soy lo opuesto... soy el que lleva la parte más racional\" —Paco Amoroso</p>",
       foto: "images/era1-astor-y-las-flores-de-marte.jpg", youtube: "",
       datos: [{etiqueta:"Período", valor:"2011–2017"}]
     },
@@ -492,7 +496,7 @@ footer{
       titulo: "Nace el mito", lugar: "Buenos Aires, Argentina",
       colorEra: "var(--cyan)",
       teaser: "Hackeo a la escena del trap",
-      descripcion: "<p>Para cuando se unieron como dúo, Catriel ya se llamaba Ca7riel (con el 7, su nombre de rapero) y tocaba en escenarios. Su primera canción juntos fue \"Piola\", le siguió \"A mí no\" y terminaron de hackear la matrix de la escena del trap argentino con \"JALA JALA\" y su video diseñado para ser visto en el celular.</p><p>En julio de 2018 se presentaron en un pequeño lugar, y para fin de ese año hicieron sold out en dos Niceto Club (una sala tan húmeda como emblemática, que aloja a unas 1200 almas desaforadas).</p><p>En 2019 llegó su primera gira de 54 fechas por Argentina, Uruguay y Paraguay. Fue también la primera vez que cruzaron el charco para desembarcar en España y Alemania. El cierre fue en el Estadio Obras, histórico tester para el rock nacional.</p><p>Estaban preparando el terreno para dar el gran salto: el 16 de febrero de 2020 se presentaron en el Festival Cara B en Barcelona, una conocida plataforma para artistas con proyección internacional.</p>",
+      descripcion: "<p>Es el nacimiento del mito y su irrupción en el trap argentino. CA7RIEL lanza los EPs Povre y Livre, y junto a Paco publican hits virales como \"Ouke\" y \"Jala Jala\". Esta era culmina con el show \"La Celebración\" en el Estadio Obras en diciembre de 2019.</p><p>El video de \"Jala Jala\" fue diseñado específicamente para verse en formato vertical en celulares, simulando que el teléfono estaba hackeado.</p><p class=\"cita-destacada\">\"¿Sabé' lo qué es odiarte y que todo el mundo te ame?\" —CA7RIEL, en su BZRP Session #14</p>",
       foto: "", fotos: ["images/era2-pared-roja.jpg", "images/era2-recital-2019.png"], youtube: "",
       datos: [{etiqueta:"Período", valor:"2018–2020"}]
     },
@@ -501,7 +505,7 @@ footer{
       titulo: "FLY SOLO", lugar: "Argentina",
       colorEra: "var(--gray)",
       teaser: "Una pandemia mundial y dos discos icónicos.",
-      descripcion: "<p>La pandemia interrumpe el impulso que habían construido tras el histórico Obras de 2019. La intensidad acumulada empieza a pasar factura y, para cuidar la amistad y evitar que el proyecto se desgaste, deciden separarse temporalmente. Es una etapa introspectiva en la que cada uno busca su propia voz: nacen El Disko (Ca7riel) y Saeta (Paco Amoroso).</p><p><strong>Ca7riel</strong> (Página/12, 2020): \"Antes de la cuarentena me estaba volviendo loco. Estaba metido en una rueda de hámster donde el personaje de Ca7riel se estaba comiendo al Cato real. El parate me salvó la cabeza\".</p><p><strong>Paco Amoroso</strong> (Página/12, 2021): \"Este disco solista fue un poco como hacerme adulto. Tuve que sentarme a escribir y hacerme cargo de mis miedos sin tener el escudo del chiste o a Cato al lado para tapar los baches\".</p>",
+      descripcion: "<p>Durante la pandemia, el dúo se separa para explorar sus identidades individuales. CA7RIEL lanza EL DISKO, una obra de jazz-rock y funk experimental, mientras Paco presenta SAETA, un álbum de pop electrónico y r&b.</p><p>CA7RIEL definió EL DISKO como una \"purga\" de lo que sentía como \"música de mierda\" o \"experimentos sociales\" hechos durante su etapa de trap.</p><p class=\"cita-destacada\">\"Con esto purgué. Realmente todo lo que tenía de sucio dentro mío, lo eliminé\" —CA7RIEL, sobre EL DISKO</p>",
       foto: "", fotos: ["images/era3-parrilla.jpeg", "images/era3-glitch-face.png"], youtube: "",
       datos: [{etiqueta:"Período", valor:"2020–2021"}]
     },
@@ -510,7 +514,7 @@ footer{
       titulo: "Temporada II", lugar: "Argentina",
       colorEra: "var(--orange)",
       teaser: "",
-      descripcion: "<p>Vuelven sintonizados en otra frecuencia. Ya no son los chicos rústicos del trap de 2019: regresan después de absorber la electrónica, el house y el pop durante sus proyectos solistas. Lanzan \"Paga Dios\" y \"En el After\", confirmando que la química seguía intacta y sellando el reencuentro con un Obras a fin de año.</p><p><strong>Paco Amoroso</strong> (Clarín, 2022): \"Hacer música solos estuvo buenísimo, pero cuando nos volvimos a juntar en el estudio y tiramos la primera barra, nos miramos y dijimos: 'Claro, es que esto que nos pasa a nosotros dos juntos no pasa en ningún otro lado del mundo'\".</p><p><strong>Ca7riel</strong> (Pousta, 2022): \"Volvimos porque nos extrañábamos como hermanos, pero también porque nos dimos cuenta de que la bestia que creamos juntos camina sola y tiene hambre propia\".</p>",
+      descripcion: "<p>Marca el regreso oficial del dúo a los escenarios tras sus carreras solistas. Lanzan el single \"Para Afuera\", incursionando en el big room house y la estética de la noche electrónica.</p><p>Presentaron su regreso con una gira titulada literalmente \"Temporada II\", como si su carrera fuera una serie de ficción.</p><p class=\"cita-destacada\">Las fuentes los describen en esta etapa como \"perros sobreestimulados\" que van tras el rastro del placer en un laberinto de beats.</p>",
       foto: "images/era4-auto.jpg", youtube: "",
       datos: [{etiqueta:"Período", valor:"2022–2023"}]
     },
@@ -519,7 +523,7 @@ footer{
       titulo: "Baño María: Pop Up", lugar: "Argentina / gira",
       colorEra: "var(--magenta)",
       teaser: "",
-      descripcion: "<p>Baño María se convierte en el primer álbum de estudio de larga duración de Ca7riel & Paco Amoroso. Es la era del jacuzzi, de la fiesta constante y del coqueteo con el pop electrónico bailable, donde el dúo lleva su universo estético y sonoro a una nueva escala. Mientras tanto, la prensa internacional empieza a notar que alrededor de ellos está ocurriendo algo distinto.</p><p><strong>Paco Amoroso</strong> (The Guardian, 2025, recordando el impacto del álbum): \"La música pop actual le tiene miedo a ofender, es todo demasiado limpio y corporativo. Nosotros con Baño María vinimos a devolverle el peligro, el sudor y la deformidad\".</p>",
+      descripcion: "<p>El dúo firma con Sony y lanza Baño María, un disco con una estrategia de marketing agresiva que incluye colaboraciones con Lali y Tini. Es la era de la \"de-generación\" musical, mezclando géneros globales.</p><p>En el Lollapalooza 2024, en lugar de tocar en vivo, se metieron en un jacuzzi en el escenario mientras un DJ pasaba el disco, un gesto que Paco luego calificó como una \"idea horrible\" que hicieron por estrategia.</p><p class=\"cita-destacada\">\"No tiene género, amor, nosotros somos 'de-generados'\" —CA7RIEL</p>",
       foto: "images/era5-bano-maria.webp", youtube: "",
       datos: [{etiqueta:"Período", valor:"Enero – 3 de octubre de 2024"}]
     },
@@ -528,7 +532,7 @@ footer{
       titulo: "Papota: The Big Bang Duo", lugar: "Global",
       colorEra: "var(--lime)",
       teaser: "Estallido y expansión global",
-      descripcion: "<p>El Tiny Desk se convierte en un fenómeno viral histórico y marca un punto de inflexión. La banda trasciende definitivamente las fronteras argentinas y alcanza una escala global: gira por Europa, desembarca en Asia —donde los bautizan \"Katopako\" en Tower Records Shibuya— y llega al Main Stage de festivales como Fuji Rock, Glastonbury y Coachella.</p><p><strong>Ca7riel</strong> (Rolling Stone Japan, 2025): \"Había japoneses en el Fuji Rock que no entendían un carajo de nuestra jerga ni de lo que decíamos, pero cuando explota el groove de la banda, el cuerpo entiende mucho antes que la cabeza\".</p>",
+      descripcion: "<p>Tras el éxito masivo de su Tiny Desk (que superó en vistas a artistas como Taylor Swift), el dúo alcanza un estatus global. Lanzan el EP Papota, ganan 5 Latin Grammys y adoptan el \"Bait\" como su principal herramienta artística y comunicacional.</p><p>Para anunciar el fin de esta era y el inicio de la siguiente, quemaron sus icónicos atuendos del Tiny Desk en el video de \"GIMME MORE\".</p><p class=\"cita-destacada\">\"Ya no nos percibimos humanos, nos autopercibimos empresas\" —CA7RIEL, al recibir los Latin Grammys</p>",
       foto: "images/era6-papota-globos.jpeg", youtube: "",
       datos: [{etiqueta:"Período", valor:"4 de octubre de 2024 – 2025"}]
     },
@@ -537,7 +541,7 @@ footer{
       titulo: "Free Spirits: Global Pop Stars", lugar: "Global",
       colorEra: "var(--gold)",
       teaser: "",
-      descripcion: "<p>Tras la explosión internacional, la dupla deja de ocupar el lugar de revelación para consolidarse como cabeza de cartel en los mercados anglo y europeo. Frente a la presión del éxito y de la industria, construyen el concepto del Free Spirits Wellness Center, un centro de rehabilitación espiritual ficticio que utiliza la ironía como respuesta al fenómeno global que los rodea. Es la etapa en la que comparten escena y colaboran con figuras como Sting, Anderson .Paak y Jack Black, demostrando que se puede jugar en las grandes ligas de la industria sin perder un milímetro de su irreverente esencia.</p>",
+      descripcion: "<p>Tras un supuesto anuncio de burnout y cancelación de su disco TOP OF THE HILLS, regresan con Sting como mentor espiritual. El álbum FREE SPIRITS parodia los centros de retiro espiritual para famosos y explora el peso de la fama.</p><p>El propio Sting aparece en un video explicando que el disco anterior del dúo era tan malo que tuvo que tomarlos como discípulos para \"sanarlos\".</p><p class=\"cita-destacada\">\"Nadie inventa nada nuevo, todo ya está hecho, bebo\" —lírica con la que abren el disco</p>",
       foto: "images/era7-free-spirits.jpeg", youtube: "",
       datos: [{etiqueta:"Período", valor:"2026"}]
     },
@@ -620,14 +624,14 @@ footer{
     {
       fecha: "2019-12-12", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "McFly",
-      teaser: "", descripcion: "Producido por Evlay Beats y CA7RIEL. Dirección: Orco Videos.",
+      teaser: "Junto con \"Coca Cola\", formó un díptico de canciones que \"rompieron internet\" y tuvo un debut en vivo impecable durante el show en Obras", descripcion: "Producido por Evlay Beats y CA7RIEL. Dirección: Orco Videos.",
       foto: "", youtube: "Bp0-TarxMH0",
       destacado: true, nivel: "mayor"
     },
     {
       fecha: "2019-12-18", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "Cono Hielo",
-      teaser: "", descripcion: "Producido por Evlay Beats y Laucha the Kid. Dirección: Orco Videos, dirección de arte de Lucía Lalor.",
+      teaser: "Fue su último gran lanzamiento de 2019; lo tocaron por primera vez ante el público en Obras  se convirtio en un himno.", descripcion: "Producido por Evlay Beats y Laucha the Kid. Dirección: Orco Videos, dirección de arte de Lucía Lalor.",
       foto: "", youtube: "GJxyBZvAGRc",
       destacado: true, nivel: "mayor"
     },
@@ -648,7 +652,7 @@ footer{
     {
       fecha: "2019-12-12", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "Todo el día",
-      teaser: "", descripcion: "Canción con Axel Fiks. Producción de Facundo Yalve, dirección de Orco Videos.",
+      teaser: "Es la canción favorita dentro de los fans más jovenes del duo.", descripcion: "Canción con Axel Fiks. Producción de Facundo Yalve, dirección de Orco Videos.",
       foto: "", youtube: "kgMRI3yh6_k",
       destacado: true, nivel: "mayor"
     },
@@ -656,21 +660,21 @@ footer{
     {
       fecha: "2020-06-17", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "MI DESEO / Las Vegas Strip",
-      teaser: "", descripcion: "",
+      teaser: "En estos temas Paco Amoroso encuentra profundidad e intensidad lírica diferente a la de sus hits festivos previos", descripcion: "",
       foto: "", youtube: "FlO-W844Lc4",
       destacado: true
     },
     {
       fecha: "2020-11-25", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "FATAL",
-      teaser: "", descripcion: "",
+      teaser: "La canción favorita de los fans de Paco Amoroso, no esta en el set list desde 2024.", descripcion: "",
       foto: "", youtube: "vW64D12-uAA",
       destacado: true
     },
     {
       fecha: "2020-09-02", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "POLVO",
-      teaser: "", descripcion: "Incluida en el álbum solista El Disko. Producción musical de Tomy Sainz y CA7RIEL, dirigido por Kevin Zeta.",
+      teaser: "Fue el primer adelanto del álbum solista de CA7RIEL, EL DISKO, y es descrita como una \"rapsodia dramática\" que funciona como una purga personal. Musicalmente es compleja, con ruidos industriales, sintetizadores \"que descienden al infierno\" y una batería que groovvea de golpe", descripcion: "Incluida en el álbum solista El Disko. Producción musical de Tomy Sainz y CA7RIEL, dirigido por Kevin Zeta.",
       foto: "", youtube: "uenecPEzBTk",
       destacado: true, nivel: "mayor"
     },
@@ -684,35 +688,35 @@ footer{
     {
       fecha: "2021-01-03", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "Sabe",
-      teaser: "", descripcion: "Dirigido por Orco Videos, producción de Baby Boom.",
+      teaser: "Una canción volcada de lleno al dancehall con fuertes tintes de música urbana y trap, ideal para la temporada veraniega", descripcion: "Dirigido por Orco Videos, producción de Baby Boom.",
       foto: "", youtube: "5bZYHFo7ZSI",
       destacado: true
     },
     {
       fecha: "2021-09-30", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "Viuda Negra",
-      teaser: "", descripcion: "Video producido y dirigido por Pampa x Kato. Producción musical de Tadefonk y Alot (Baby Boom).",
+      teaser: "Una de las canciones más icónicas de Saeta con un estilo house pop de los años 90.", descripcion: "Video producido y dirigido por Pampa x Kato. Producción musical de Tadefonk y Alot (Baby Boom).",
       foto: "", youtube: "kLYkKk9U3j0",
       destacado: true
     },
     {
       fecha: "2021-11-04", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "Chinga Sport",
-      teaser: "", descripcion: "Con Tío La Bomba. Video de Orco Videos, producción musical de Maxi Sayes y Bruno Donato.",
+      teaser: "Durante su show de Berlin en 2025, Tio la Bomba, el bajista de la banda que los acompaña en esta Era canto una parte de la canción", descripcion: "Con Tío La Bomba. Video de Orco Videos, producción musical de Maxi Sayes y Bruno Donato.",
       foto: "", youtube: "7XBS-dlk_-8",
       destacado: true
     },
     {
       fecha: "2021-11-25", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "SAETA",
-      teaser: "", descripcion: "Álbum solista de Paco Amoroso. Producción de Tadeo Kopistinski, Alejandro Glikman, Bruno Donato y Maxi Sayes, entre otros. Géneros: electrónica, house, pop experimental, hip-hop/urban.",
+      teaser: "“Desde que arrancó la pandemia fue darme cuenta de que existían las melodías, cosa que antes había pasado por alto... Todo el disco pasa por esa búsqueda: la inquietud por cantar” (Paco Amoroso)", descripcion: "Álbum solista de Paco Amoroso. Producción de Tadeo Kopistinski, Alejandro Glikman, Bruno Donato y Maxi Sayes, entre otros. Géneros: electrónica, house, pop experimental, hip-hop/urban.",
       foto: "", youtube: "QoE8jici2Fc",
       destacado: true, nivel: "mayor"
     },
     {
       fecha: "2021-11-10", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "EL DISKO",
-      teaser: "", descripcion: "Álbum solista de CA7RIEL, grabado entre diciembre de 2019 y agosto de 2021. Producción principal de Tomás Sainz y CA7RIEL. Géneros: funk, trap, rock alternativo, electrónica, hip-hop experimental.",
+      teaser: "Una obra de once canciones \"deformes\" que mezclan el virtuosismo del jazz rock con la estética del trap. “Realmente todo lo que tenía de sucio dentro mío, lo eliminé. A eso me refiero con pureza” (CA7RIEL sobre el disco)", descripcion: "Álbum solista de CA7RIEL, grabado entre diciembre de 2019 y agosto de 2021. Producción principal de Tomás Sainz y CA7RIEL. Géneros: funk, trap, rock alternativo, electrónica, hip-hop experimental.",
       foto: "images/hito-el-disko.png", youtube: "GWYWcDuypRw",
       destacado: true, nivel: "mayor"
     },
@@ -807,7 +811,7 @@ footer{
     {
       fecha: "2019-12-20", categorias: ["Conciertos"], lugar: "Argentina",
       titulo: "Estadio Obras Sanitarias (La Celebración)",
-      teaser: "", descripcion: "",
+      teaser: "Obras es conocido como el  \"Templo del Rock\", el show fue apodado por CA7RIEL como \"Silvio Soldout\" y contó con Esteban Lamothe recreando el video de \"Ouke\" en vivo sobre el escenario", descripcion: "",
       foto: "", youtube: "RUrugzFOYW8",
       destacado: true
     },
@@ -832,21 +836,21 @@ footer{
     {
       fecha: "2022-02-17", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "LAION SHUFFLE / PAQUIRRI",
-      teaser: "", descripcion: "",
+      teaser: "El epílogo y la continuación estética de la etapa solista de Paco Amoroso tras publicar su álbum debut Saeta", descripcion: "",
       foto: "", youtube: "gYMQz3jEPMU",
       destacado: true
     },
     {
       fecha: "2022-03-16", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "PAGA DIOS",
-      teaser: "", descripcion: "Producción musical de Neekl. Mezcla de Nico Cotton, masterizado por Jaime Estalella. Video de Juanita, grabado en Buenos Aires.",
+      teaser: "Con sonidos cercanos al liquid funk y el highlife  fue llamada el \"episodio 1\" de su \"Temporada II\"", descripcion: "Producción musical de Neekl. Mezcla de Nico Cotton, masterizado por Jaime Estalella. Video de Juanita, grabado en Buenos Aires.",
       foto: "", youtube: "64r03gcbS1A",
       destacado: true, nivel: "mayor"
     },
     {
       fecha: "2022-03-22", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "EN EL AFTER",
-      teaser: "", descripcion: "",
+      teaser: "Para anunciar su lanzamiento publicaron fotos de ellos cuando era chicos. Una canción futurista que mezcla electrónica con toques de chill, propocionada con el pasado.", descripcion: "",
       foto: "", youtube: "JCtFjWR4W6w",
       destacado: true
     },
@@ -873,16 +877,16 @@ footer{
     },
     // ---- ERA Quinta (2024) : Bautismo de estudio. Baño Maria [falta texto se agrega despues] ----
     {
-      fecha: "2024-04-18", categorias: ["Discografía"], lugar: "",
+      fecha: "2024-04-18", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "BAÑO MARÍA",
-      teaser: "", descripcion: "Primer álbum de estudio de larga duración del dúo. Producción de Federico Vindver, Casta, Taiko, XAY, DVLP, Sir Nolan y Slow Mike, entre otros. Géneros: pop latino, house/EDM, trap, R&B, jazz-rock.",
+      teaser: "\"No tiene género, amor, nosotros somos 'de-generados'\" CA7RIEL define la versatilidad del disco, evita etiquetas fijas para saltar entre el trap, el rock y la electrónica. El álbum fue grabado íntegramente en Miami en apenas dos semanas (una en agosto y otra en octubre) en los estudios de Sony. En el Lollapalooza 2024 Buenos Aires en lugar de realizar un show tradicional, el dúo optó por un \"perfomance de bait\" donde se metieron en un jacuzzi en medio del escenario mientras su DJ, Anita B Queen, reproducía el álbum completo", descripcion: "Primer álbum de estudio de larga duración del dúo. Producción de Federico Vindver, Casta, Taiko, XAY, DVLP, Sir Nolan y Slow Mike, entre otros. Géneros: pop latino, house/EDM, trap, R&B, jazz-rock.",
       foto: "", youtube: "iETY_1WGjiU",
       destacado: true
     },
     {
-      fecha: "2024-05-01", categorias: ["Discografía"], lugar: "",
+      fecha: "2024-05-01", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "BAÑO MARÍA",
-      teaser: "", descripcion: "El cortometraje funciona como el marco visual y narrativo del álbum: sigue a Cato y Paco a lo largo de una noche desenfrenada, psicodélica y caótica por Buenos Aires, enlazando fragmentos de temas como BABY GANGSTA, DUMBAI y LA QUE PUEDE, PUEDE. Dirigido por Brian Kazez (Pantera Film).",
+      teaser: "El corto adopta el formato de una buddy film (película de compinches). Sigue a CA7RIEL y Paco Amoroso durante un día completo (24 horas) en el inframundo de la noche porteña de Buenos Aires", descripcion: "El cortometraje funciona como el marco visual y narrativo del álbum: sigue a Cato y Paco a lo largo de una noche desenfrenada, psicodélica y caótica por Buenos Aires, enlazando fragmentos de temas como BABY GANGSTA, DUMBAI y LA QUE PUEDE, PUEDE. Dirigido por Brian Kazez (Pantera Film).",
       foto: "", youtube: "j6hZv58R2tM",
       destacado: true, nivel: "mayor",
       datos: [{etiqueta:"Fecha", valor:"Aproximada (2024 (post-abril))"}]
@@ -890,7 +894,7 @@ footer{
     {
       fecha: "2024-08-16", categorias: ["Conciertos"], lugar: "Buenos Aires, Argentina",
       titulo: "BAÑO MARÍA",
-      teaser: "", descripcion: "",
+      teaser: "\"CA7RIEL & Paco Amoroso dan comienzo a su gira con un show explosivo en el Movistar Arena\" fue el titular de Rollins Stones Argentina. Armaron un Jacuzzi gigante en medio de la arena, y volaron por todo el lugar mientras cantaban.", descripcion: "",
       foto: "", youtube: "gHmA1PYH5Io",
       destacado: true
     },
@@ -923,7 +927,7 @@ footer{
     {
       fecha: "2025-03-04", categorias: ["Discografía"], lugar: "Uruguay",
       titulo: "PAPOTA",
-      teaser: "", descripcion: "Comedia negra y sátira absurda sobre las presiones de la fama masiva tras el Tiny Desk y el éxito de Baño María. Sigue a Cato y Paco en una espiral de obsesión estética y \"síndrome del impostor\", intercalando los 4 tracks inéditos del EP (IMPOSTOR, #TETAS, RE FORRO y EL DÍA DEL AMIGO). Dirigido por Martín Piroyansky.",
+      teaser: "Dirigido por Martín Piroyansky y se presenta como una comedia negra  y sátira absurda de la industria de los artistas prefabricados, el culto a la imagen y las crisis que conlleva el camino a la fama.", descripcion: "Comedia negra y sátira absurda sobre las presiones de la fama masiva tras el Tiny Desk y el éxito de Baño María. Sigue a Cato y Paco en una espiral de obsesión estética y \"síndrome del impostor\", intercalando los 4 tracks inéditos del EP (IMPOSTOR, #TETAS, RE FORRO y EL DÍA DEL AMIGO). Dirigido por Martín Piroyansky.",
       foto: "", youtube: "zYc1qMe_kpc",
       destacado: true, nivel: "mayor"
     },
@@ -955,12 +959,21 @@ footer{
     {
       fecha: "2026-02-06", categorias: ["Discografía"], lugar: "Los Angeles, Estados Unidos",
       titulo: "FREE SPIRITS",
-      teaser: "", descripcion: "Cato y Paco ingresan al Free Spirits Wellness Center, una clínica de rehabilitación holística con un tratamiento de 12 pasos, en una sátira de la cultura new age y los retiros wellness de lujo. Escrito y dirigido por Ferina, con Jack Black, Sting y Anderson .Paak.",
+      teaser: "Cato y Paco ingresan al Free Spirits Wellness Center, una clínica de rehabilitación holística con un tratamiento de 12 pasos, en una sátira de la cultura new age y los retiros wellness de lujo. Escrito y dirigido por Ferina, con Jack Black, Sting y Anderson .Paak.", descripcion: "Cato y Paco ingresan al Free Spirits Wellness Center, una clínica de rehabilitación holística con un tratamiento de 12 pasos, en una sátira de la cultura new age y los retiros wellness de lujo. Escrito y dirigido por Ferina, con Jack Black, Sting y Anderson .Paak.",
       foto: "", youtube: "mHDXyjGcUu0",
       destacado: true, nivel: "mayor"
     },
 
     // ========== HITOS NUEVOS (PARA_SUBIR.xlsx) ==========
+    {
+      fecha: "2026-10-06", categorias: ["Prensa"], lugar: "Berlín, Alemania",
+      titulo: "Todo Oro en Ellos, También Oropel: Ca7riel y Paco Amoroso en Berlín.",
+      teaser: "Globos en Berlín, el mix latino, y la extraña magia de otro sold out lejos de casa", descripcion: "",
+      foto: "", youtube: "",
+      enlace: "https://medium.com/@lucesdelsur/todo-oro-en-ellos-tambi%C3%A9n-oropel-ca7riel-y-paco-amoroso-en-berl%C3%ADn-709480780874",
+      destacado: true,
+      datos: [{etiqueta:"Medio", valor:"Medium (Luces del Sur)"}]
+    },
     {
       fecha: "2025-11-05", categorias: ["Discografía"], lugar: "",
       titulo: "GIMME MORE",
@@ -1023,7 +1036,7 @@ footer{
     {
       fecha: "2021-11-10", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "Muy bien",
-      teaser: "", descripcion: "Del álbum solista El Disko. Video producido por The Movement, producción musical de Tomy Sainz, mezcla de Nico Cotton.",
+      teaser: "Una bomba de trap experimental y rock alternativo pesado. Cuenta con una producción sumamente agresiva de Tomy Sainz en la batería y la mezcla del multipremiado Nico Cotton", descripcion: "Del álbum solista El Disko. Video producido por The Movement, producción musical de Tomy Sainz, mezcla de Nico Cotton.",
       foto: "", youtube: "SqWnQFKh45Q",
       destacado: true, nivel: "mayor"
     },
@@ -1037,7 +1050,7 @@ footer{
     {
       fecha: "2022-09-22", categorias: ["Discografía"], lugar: "Argentina",
       titulo: "Para afuera",
-      teaser: "", descripcion: "Producción musical de Evlay, Neekl y Tomy Sainz. Video de Pampa x Kato.",
+      teaser: "Al ritmo altamente bailable del Big house room esta canción es lalanzan al volver de su primera gira por Latinoamerica y Europa.", descripcion: "Producción musical de Evlay, Neekl y Tomy Sainz. Video de Pampa x Kato.",
       foto: "", youtube: "GtEnfS2-2GU",
       destacado: true, nivel: "mayor",
       datos: [{etiqueta:"Discográfica", valor:"5020 Records"}]
