@@ -127,7 +127,8 @@ button{ font-family:inherit; cursor:pointer; }
 .era-link{
   display:flex; justify-content:space-between; align-items:baseline; gap:14px; flex-wrap:wrap;
   text-decoration:none; color:var(--ink);
-  padding:20px 0; border-bottom:1px solid var(--line);
+  padding:20px 0 20px 16px; border-bottom:1px solid var(--line);
+  border-left:4px solid var(--era-color, var(--line));
 }
 .era-link:hover .nombre{ color:var(--red); }
 .era-link .kicker-chico{
@@ -277,7 +278,7 @@ footer{
   <a class="link-historia" href="historia.html">📖 Ver La Historia completa</a>
 
   <footer>
-    Hecho por Luces del Sur · última actualización: <span id="last-update">—</span>
+    Escrito y diseñado por <a href="https://lucesdelsur.substack.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Luces del Sur</a> · última actualización: <span id="last-update">—</span>
   </footer>
 
   <div id="quiz-modal-overlay">
@@ -289,13 +290,13 @@ footer{
 
 <script>
   const ERAS = [
-    { archivo: "era1.html", titulo: "ASTOR", periodo: "2011–2017" },
-    { archivo: "era2.html", titulo: "Nace el mito", periodo: "2018–2020" },
-    { archivo: "era3.html", titulo: "FLY SOLO", periodo: "2020–2021" },
-    { archivo: "era4.html", titulo: "TEMPORADA II", periodo: "2022–2023" },
-    { archivo: "era5.html", titulo: "BAÑO MARIA: POP UP", periodo: "2024" },
-    { archivo: "era6.html", titulo: "PAPOTA: THE BIG BANG DUO ", periodo: "2024–2025" },
-    { archivo: "era7.html", titulo: "FREES SPIRITS: GLOBAL POP STARTS ", periodo: "2026" },
+    { archivo: "era1.html", titulo: "ASTOR", periodo: "2011–2017", color: "#FFC72C" },
+    { archivo: "era2.html", titulo: "Nace el mito", periodo: "2018–2020", color: "#C6D92E" },
+    { archivo: "era3.html", titulo: "FLY SOLO", periodo: "2020–2021", color: "#2E7D32" },
+    { archivo: "era4.html", titulo: "TEMPORADA II", periodo: "2022–2023", color: "#F4772E" },
+    { archivo: "era5.html", titulo: "BAÑO MARIA: POP UP", periodo: "2024", color: "#B0141C" },
+    { archivo: "era6.html", titulo: "PAPOTA: THE BIG BANG DUO ", periodo: "2024–2025", color: "#1E4FBF" },
+    { archivo: "era7.html", titulo: "FREES SPIRITS: GLOBAL POP STARTS ", periodo: "2026", color: "#F3EFE7" },
   ];
 
   const lista = document.getElementById('lista-eras-items');
@@ -303,6 +304,7 @@ footer{
     const a = document.createElement('a');
     a.className = 'era-link';
     a.href = era.archivo;
+    a.style.setProperty('--era-color', era.color);
     a.innerHTML = `
       <div>
         <span class="kicker-chico">Era ${i+1} de 7</span>

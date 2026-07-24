@@ -157,7 +157,7 @@ button{ font-family:inherit; cursor:pointer; }
    ========================================================= */
 .era-breadcrumb{
   display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
-  max-width:760px; margin:0 auto 40px; padding:0 24px;
+  max-width:760px; margin:24px auto 40px; padding:0 24px;
 }
 .era-crumb{
   width:34px; height:34px; display:flex; align-items:center; justify-content:center;
@@ -260,9 +260,10 @@ select{
 
 /* ---- Hitos "mayor": ocupan todo el ancho de la grilla ---- */
 .tl-card-mayor{
+  position:relative;
   grid-column: 1 / -1;
   display:flex; gap:24px; align-items:flex-start; cursor:pointer;
-  padding:28px 24px; margin:0 -24px; transition:opacity .15s ease;
+  padding:28px 24px; transition:opacity .15s ease;
   opacity:0; transform:translateY(14px); animation:riseIn .4s ease forwards;
   border-top:3px solid var(--hero-bg, var(--red));
   background:color-mix(in srgb, var(--hero-bg, var(--red)) 6%, transparent);
@@ -284,8 +285,6 @@ select{
   display:flex; align-items:center; justify-content:center; font-size:1.1rem;
   border:1.5px solid var(--red);
 }
-.tl-card-mayor{ position:relative; }
-.tl-card-mayor > img{ position:relative; }
 
 @media (max-width:900px){
   #timeline{ grid-template-columns:repeat(2, 1fr); }
@@ -414,8 +413,10 @@ footer{
     <a id="era-next-bottom" href="#">Era siguiente ▶</a>
   </div>
 
+  <nav class="era-breadcrumb" id="era-breadcrumb-bottom"></nav>
+
   <footer>
-    Hecho por Luces del Sur · última actualización: <span id="last-update">—</span>
+    Escrito y diseñado por <a href="https://lucesdelsur.substack.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Luces del Sur</a> · última actualización: <span id="last-update">—</span>
   </footer>
 
 <script>
@@ -1694,11 +1695,12 @@ footer{
       `;
     }
 
-    const breadcrumb = document.getElementById('era-breadcrumb');
-    breadcrumb.innerHTML = eras.map((e, i) => {
+    const htmlBreadcrumb = eras.map((e, i) => {
       const esActual = i === idx;
       return `<a class="era-crumb${esActual ? ' actual' : ''}" ${esActual ? '' : `href="${CFG.hrefEras[i]}"`}>${i+1}</a>`;
     }).join('');
+    document.getElementById('era-breadcrumb').innerHTML = htmlBreadcrumb;
+    document.getElementById('era-breadcrumb-bottom').innerHTML = htmlBreadcrumb;
 
     const prevB = document.getElementById('era-prev-bottom');
     const nextB = document.getElementById('era-next-bottom');
