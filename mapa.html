@@ -173,13 +173,45 @@ footer{
   const grupos = agruparCercanos(LUGARES_ORIG, 0.3);
   const LUGARES = [];
   grupos.forEach(grupo => {
-    if(grupo.length === 1){ LUGARES.push(grupo[0]); return; }
+    // Ordeno el grupo cronológicamente para que la ficha liste los shows en orden
+    const grupoOrdenado = [...grupo].sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+    if(grupo.length === 1){
+      LUGARES.push({ ...grupo[0], grupoCompleto: grupoOrdenado });
+      return;
+    }
     const radio = 0.35;
     grupo.forEach((l, i) => {
       const angulo = (2 * Math.PI * i) / grupo.length;
-      LUGARES.push({ ...l, lat: l.lat + radio * Math.cos(angulo), lng: l.lng + radio * Math.sin(angulo), repetido: true, totalEnGrupo: grupo.length });
+      LUGARES.push({
+        ...l, lat: l.lat + radio * Math.cos(angulo), lng: l.lng + radio * Math.sin(angulo),
+        repetido: true, totalEnGrupo: grupo.length, grupoCompleto: grupoOrdenado
+      });
     });
   });
+
+  function formatearFechaCorta(iso){
+    if(!iso) return 'Fecha aprox.';
+    const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    const [y, m, d] = iso.split('-').map(Number);
+    return `${d} ${meses[m-1]} ${y}`;
+  }
+
+  function armarFichaHTML(l){
+    const filas = l.grupoCompleto.map(s => `
+      <div style="padding:8px 0; border-top:1px solid #eee;">
+        <div style="font-family:'Inter'; font-weight:700; font-size:.78rem; color:${COLORES[s.anio]};">${formatearFechaCorta(s.fecha)}</div>
+        <div style="font-size:.85rem; color:#111;">${s.ciudad}${s.lugar ? ' — ' + s.lugar : ''}</div>
+      </div>
+    `).join('');
+    return `
+      <div class="popup-cat" style="color:${COLORES[l.anio]}">${l.pais || ''}</div>
+      <div class="popup-title">${l.ciudad}</div>
+      ${l.grupoCompleto.length > 1
+        ? `<div style="font-size:.72rem; color:#D71920; font-weight:700; margin-top:4px;">${l.grupoCompleto.length} shows en esta zona</div>`
+        : ''}
+      <div style="max-height:220px; overflow-y:auto; margin-top:6px;">${filas}</div>
+    `;
+  }
 
   const capasPorAnio = {};
   [2024, 2025, 2026].forEach(anio => {
@@ -187,12 +219,7 @@ footer{
     const lugaresAnio = LUGARES.filter(l => l.anio === anio);
     lugaresAnio.forEach(l => {
       const marker = L.circleMarker([l.lat, l.lng], { radius: 6, fillColor: COLORES[anio], color: '#fff', weight: 1.5, fillOpacity: 0.9 });
-      marker.bindPopup(`
-        <div class="popup-cat" style="color:${COLORES[anio]}">${anio} · ${l.pais || ''}</div>
-        <div class="popup-title">${l.ciudad}</div>
-        <div style="font-size:.8rem; color:#555; margin-top:2px;">${l.lugar || ''}</div>
-        ${l.repetido ? `<div style="font-size:.7rem; color:#D71920; margin-top:6px; font-weight:700;">📍 Tocaron varias veces en esta zona (${l.totalEnGrupo} shows)</div>` : ''}
-      `);
+      marker.bindPopup(armarFichaHTML(l), { maxWidth: 280 });
       marker.addTo(grupo);
     });
     const puntos = LUGARES_ORIG.filter(l => l.anio === anio).map(l => [l.lat, l.lng]);
