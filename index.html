@@ -5,17 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Universo Musical — CA7RIEL & Paco Amoroso</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="i18n.js"></script>
 <meta name="description" content="Las 7 Eras de CA7RIEL & Paco Amoroso: discografía, conciertos, colaboraciones y prensa, contados como una nota de revista.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Universo Musical — CA7RIEL & Paco Amoroso">
 <meta property="og:title" content="Universo Musical — CA7RIEL & Paco Amoroso">
 <meta property="og:description" content="Las 7 Eras de CA7RIEL & Paco Amoroso: discografía, conciertos, colaboraciones y prensa, contados como una nota de revista.">
-<meta property="og:image" content="https://lucesdelsur.github.io/Universo/images/portada-principal.jpeg">
+<meta property="og:image" content="https://lucesdelsur.github.io/Universo/images/og/index.jpg">
 <meta property="og:url" content="https://lucesdelsur.github.io/Universo/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Universo Musical — CA7RIEL & Paco Amoroso">
 <meta name="twitter:description" content="Las 7 Eras de CA7RIEL & Paco Amoroso: discografía, conciertos, colaboraciones y prensa, contados como una nota de revista.">
-<meta name="twitter:image" content="https://lucesdelsur.github.io/Universo/images/portada-principal.jpeg">
+<meta name="twitter:image" content="https://lucesdelsur.github.io/Universo/images/og/index.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Merriweather:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -74,32 +75,36 @@ button{ font-family:inherit; cursor:pointer; }
 #site-nav a:hover{ color:var(--red); }
 #site-nav a.active{ border-bottom-color:var(--red); color:var(--red); }
 
+/* Portada estilo tapa de revista: la foto limpia arriba y el texto debajo,
+   en negro sobre blanco, para que se lea siempre. */
+.portada{ max-width:760px; margin:0 auto; }
 .hero-portada{
-  position:relative; min-height:64vh;
-  background-image:linear-gradient(180deg, rgba(0,0,0,0) 25%, rgba(0,0,0,.88) 100%), url('images/portada-principal.jpeg');
-  background-size:cover; background-position:center 20%;
-  display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
-  padding:56px 24px 44px; text-align:center; color:#fff;
+  aspect-ratio:1206 / 869; max-width:100%;
+  background:#EDEDED url('images/portada-recorte.jpeg') center top / cover no-repeat;
 }
-.hero-portada .hero-eyebrow{ color:#fff; opacity:.9; font-family:var(--mono); font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.85rem; }
-.hero-portada .kicker{
+@media (max-width:600px){ .hero-portada{ aspect-ratio:1 / 1; background-position:center top; } }
+.franja-portada{
+  text-align:center; padding:30px 24px 34px; border-bottom:4px solid var(--red);
+}
+.franja-portada .hero-eyebrow{ color:var(--text-dim); font-family:var(--mono); font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.85rem; }
+.franja-portada .kicker{
   font-family:var(--mono); font-weight:700; font-size:.85rem; letter-spacing:.14em;
-  text-transform:uppercase; color:var(--red); background:#fff; display:inline-block;
-  padding:5px 12px; margin-top:18px;
+  text-transform:uppercase; color:#fff; background:var(--red); display:inline-block;
+  padding:5px 12px; margin-top:16px;
 }
-.hero-portada h1{
-  font-family:var(--display); font-weight:900; font-size:clamp(2.6rem, 9vw, 5rem);
-  line-height:1.05; margin-top:16px; color:#fff;
+.franja-portada h1{
+  font-family:var(--display); font-weight:900; font-size:clamp(2.6rem, 9vw, 4.6rem);
+  line-height:1.05; margin-top:14px; color:var(--ink);
 }
-.hero-portada .sub{ color:#EDEDED; opacity:.95; font-size:1.2rem; font-style:italic; margin-top:8px; }
+.franja-portada .sub{ color:var(--text-dim); font-size:1.2rem; font-style:italic; margin-top:8px; }
 .stats-header{
-  display:flex; gap:44px; margin-top:28px; flex-wrap:wrap; justify-content:center;
+  display:flex; gap:44px; margin-top:26px; flex-wrap:wrap; justify-content:center;
 }
 .stats-header div{ font-family:var(--mono); text-align:center; }
-.stats-header strong{ display:block; font-family:var(--display); font-weight:900; font-size:1.7rem; color:#fff; }
-.stats-header span{ font-size:.78rem; color:#EDEDED; text-transform:uppercase; letter-spacing:.1em; opacity:.85; }
+.stats-header strong{ display:block; font-family:var(--display); font-weight:900; font-size:1.7rem; color:var(--red); text-wrap:balance; }
+.stats-header span{ font-size:.78rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.1em; }
 .stats-header-source{
-  font-family:var(--mono); font-size:.8rem; color:#EDEDED; opacity:.75; margin-top:14px; text-align:center;
+  font-family:var(--mono); font-size:.8rem; color:var(--text-dim); opacity:.85; margin-top:14px; text-align:center;
 }
 
 .seccion-test{
@@ -248,6 +253,21 @@ button{ font-family:inherit; cursor:pointer; }
   padding:14px 20px; transition:all .15s ease;
 }
 .btn-retry:hover{ border-color:var(--ink); color:var(--ink); }
+.btn-share{
+  font-family:var(--mono); font-weight:700; font-size:.85rem; letter-spacing:.08em;
+  text-transform:uppercase; background:var(--ink); color:#fff; border:1px solid var(--ink);
+  padding:14px 20px; transition:all .15s ease;
+}
+.btn-share:hover{ background:#fff; color:var(--ink); }
+.result-actions .btn-share, .result-actions .btn-retry{ flex:1 1 auto; }
+.btn-back{
+  margin-top:18px; background:none; border:none; padding:6px 0;
+  font-family:var(--mono); font-size:.85rem; color:var(--text-dim); text-decoration:underline; text-underline-offset:3px;
+}
+.btn-back:hover{ color:var(--red); }
+.quiz-progress{ height:3px; background:var(--line); margin:-4px 0 20px; }
+.quiz-progress span{ display:block; height:100%; background:var(--red); transition:width .2s ease; }
+.share-feedback{ font-family:var(--mono); font-size:.85rem; color:var(--text-dim); margin-top:14px; word-break:break-all; }
 
 footer{
   text-align:center; padding:40px 20px 60px; color:var(--text-dim); font-family:var(--mono); font-size:.9rem;
@@ -258,44 +278,47 @@ footer{
 <body>
 
   <nav id="site-nav">
-    <a href="index.html" class="active">Inicio</a>
-    <a href="historia.html">Historia</a>
-    <a href="mapa.html">Mapa</a>
+    <a data-i18n="nav.inicio" href="index.html" class="active">Inicio</a>
+    <a data-i18n="nav.historia" href="historia.html">Historia</a>
+    <a data-i18n="nav.mapa" href="mapa.html">Mapa</a>
   </nav>
 
-  <div class="hero-portada">
+  <header class="portada">
+  <div class="hero-portada" role="img" aria-label="CA7RIEL y Paco Amoroso en la alfombra roja"></div>
+  <div class="franja-portada">
     <div class="hero-eyebrow">CA7RIEL &amp; Paco Amoroso</div>
     <span class="kicker">Universo</span>
-    <h1>LAS 7 ERAS</h1>
-    <p class="sub">Viví su historia.</p>
+    <h1 data-i18n="idx.h1">LAS 7 ERAS</h1>
+    <p data-i18n="idx.sub" class="sub">Viví su historia.</p>
     <div class="stats-header">
-      <div><strong id="stat-shows">243</strong><span>Conciertos a la fecha</span></div>
-      <div><strong id="stat-awards">5 Latin Grammy · 1 Grammy · 7 Gardel</strong><span>Premios</span></div>
+      <div><strong id="stat-shows">243</strong><span data-i18n="idx.conciertos">Conciertos a la fecha</span></div>
+      <div><strong id="stat-awards" data-i18n="idx.awards">5 Latin Grammy · 1 Grammy · 7 Gardel</strong><span data-i18n="idx.premios">Premios</span></div>
     </div>
-    <div class="stats-header-source">Fuente: setlist.fm · dato de conciertos sujeto a actualización</div>
+    <div data-i18n="idx.fuente" class="stats-header-source">Fuente: setlist.fm · dato de conciertos sujeto a actualización</div>
   </div>
+  </header>
 
   <section class="seccion-test">
-    <span class="warning-badge">ADVERTENCIA DE SEGURIDAD</span>
-    <h2>¿EN QUÉ ERA ESTÁS HOY?</h2>
-    <p>Siete Eras musicales, cero moderación. ¿Sos un motor a 200 km/h, un gato durmiendo en cuarentena o una estrella volando a Tokio? Sintonizá tu estado actual antes de que el caos decida por vos.</p>
-    <button id="btn-open-quiz" class="btn-diagnostico">[ EMITIR DIAGNÓSTICO AHORA ]</button>
+    <span data-i18n="idx.badge" class="warning-badge">ADVERTENCIA DE SEGURIDAD</span>
+    <h2 data-i18n="idx.test.h2">¿EN QUÉ ERA ESTÁS HOY?</h2>
+    <p data-i18n="idx.test.p">Siete Eras musicales, cero moderación. ¿Sos un motor a 200 km/h, un gato durmiendo en cuarentena o una estrella volando a Tokio? Sintonizá tu estado actual antes de que el caos decida por vos.</p>
+    <button data-i18n="idx.test.btn" id="btn-open-quiz" class="btn-diagnostico">[ EMITIR DIAGNÓSTICO AHORA ]</button>
   </section>
 
   <div class="lista-eras">
-    <h2>Elegí una Era</h2>
+    <h2 data-i18n="idx.elegi">Elegí una Era</h2>
     <div id="lista-eras-items"></div>
   </div>
 
-  <a class="link-historia" href="historia.html">📖 Ver La Historia completa</a>
+  <a data-i18n="idx.linkhistoria" class="link-historia" href="historia.html">📖 Ver La Historia completa</a>
 
   <footer>
-    Escrito y diseñado por <a href="https://lucesdelsur.substack.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Luces del Sur</a> · última actualización: <span id="last-update">—</span>
-    <div style="font-style:italic; font-size:.78rem; opacity:.75; margin-top:10px; max-width:600px; margin-left:auto; margin-right:auto;">Fotografías sin crédito individual: material de prensa o de las redes oficiales de CA7RIEL & Paco Amoroso. Los derechos pertenecen a sus autores y/o representantes.</div>
+    <span data-i18n="footer.escrito">Escrito y diseñado por</span> <a href="https://lucesdelsur.substack.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Luces del Sur</a> · <span data-i18n="footer.actualizacion">última actualización:</span> <span id="last-update">—</span>
+    <div data-i18n="footer.fotos" style="font-style:italic; font-size:.78rem; opacity:.75; margin-top:10px; max-width:600px; margin-left:auto; margin-right:auto;">Fotografías sin crédito individual: material de prensa o de las redes oficiales de CA7RIEL & Paco Amoroso. Los derechos pertenecen a sus autores y/o representantes.</div>
   </footer>
 
   <div id="quiz-modal-overlay">
-    <div id="quiz-modal">
+    <div id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
       <button id="quiz-modal-close" aria-label="Cerrar">✕</button>
       <div id="quiz-content"></div>
     </div>
@@ -307,9 +330,9 @@ footer{
     { archivo: "era2.html", titulo: "Nace el mito", periodo: "2018–2020", color: "#C6D92E" },
     { archivo: "era3.html", titulo: "FLY SOLO", periodo: "2020–2021", color: "#2E7D32" },
     { archivo: "era4.html", titulo: "TEMPORADA II", periodo: "2022–2023", color: "#F4772E" },
-    { archivo: "era5.html", titulo: "BAÑO MARIA: POP UP", periodo: "2024", color: "#B0141C" },
-    { archivo: "era6.html", titulo: "PAPOTA: THE BIG BANG DUO ", periodo: "2024–2025", color: "#1E4FBF" },
-    { archivo: "era7.html", titulo: "FREES SPIRITS: GLOBAL POP STARS ", periodo: "2026", color: "#F3EFE7" },
+    { archivo: "era5.html", titulo: "BAÑO MARÍA: POP UP", periodo: "2024", color: "#B0141C" },
+    { archivo: "era6.html", titulo: "PAPOTA: THE BIG BANG DUO", periodo: "2024–2025", color: "#1E4FBF" },
+    { archivo: "era7.html", titulo: "FREE SPIRITS: GLOBAL POP STARS", periodo: "2026", color: "#F3EFE7" },
   ];
 
   const lista = document.getElementById('lista-eras-items');
@@ -320,8 +343,8 @@ footer{
     a.style.setProperty('--era-color', era.color);
     a.innerHTML = `
       <div>
-        <span class="kicker-chico">Era ${i+1} de 7</span>
-        <span class="nombre">${era.titulo}</span>
+        <span class="kicker-chico">${window.LANG === 'en' ? `Era ${i+1} of 7` : `Era ${i+1} de 7`}</span>
+        <span class="nombre">${t(era.titulo)}</span>
       </div>
       <span class="periodo">${era.periodo}</span>
     `;
@@ -332,8 +355,8 @@ footer{
     const el = document.getElementById('last-update');
     if(!el) return;
     const d = new Date(document.lastModified);
-    if(isNaN(d.getTime())){ el.textContent = 'sin datos'; return; }
-    el.textContent = d.toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
+    if(isNaN(d.getTime())){ el.textContent = t('sin datos'); return; }
+    el.textContent = d.toLocaleDateString(window.localeFecha || 'es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
   })();
 
   const QUESTIONS = [
@@ -440,7 +463,7 @@ footer{
     },
     3: {
       title: "ERA 3 – FLY SOLO",
-      diag: "Aislamiento Glam & Melodias. Tu casa es tu templo. Estás en tu propio planeta haciendo la tuya, creando en silencio y esquivando a la gente.",
+      diag: "Aislamiento Glam & Melodías. Tu casa es tu templo. Estás en tu propio planeta haciendo la tuya, creando en silencio y esquivando a la gente.",
       cancion: "Saeta / El Disko",
       bebida: "Agua con gas en copa fina.",
       accesorio: "Un gato durmiendo en tu regazo.",
@@ -476,7 +499,7 @@ footer{
     },
     7: {
       title: "ERA 7 – FREE SPIRITS",
-      diag: "Popstar Global Inalcanzable. Ya jugás en otra liga. Mirás el mundo desde arrriba y tus problemas son puramente espirituales.",
+      diag: "Popstar Global Inalcanzable. Ya jugás en otra liga. Mirás el mundo desde arriba y tus problemas son puramente espirituales.",
       cancion: "Muero",
       bebida: "Vino tinto caro derramado en remera blanca.",
       accesorio: "Diamantes gigantes y pelota de goma negra.",
@@ -485,96 +508,146 @@ footer{
     }
   };
 
+  // ---------- Lógica del test ----------
+  // "answers" guarda la Era elegida en cada pregunta: permite volver atrás
+  // y resolver empates (gana, entre las empatadas, la elegida más recientemente).
+  // En inglés, se reemplazan preguntas y resultados por su traducción.
+  if(window.LANG === 'en' && window.I18N_EN){
+    I18N_EN.quiz.questions.forEach((q, i) => { QUESTIONS[i] = q; });
+    Object.keys(I18N_EN.quiz.results).forEach(k => Object.assign(RESULTS[k], I18N_EN.quiz.results[k]));
+  }
   let currentStep = 0;
-  let scores = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
+  let answers = [];
 
   const modalOverlay = document.getElementById('quiz-modal-overlay');
+  const modal = document.getElementById('quiz-modal');
   const btnOpen = document.getElementById('btn-open-quiz');
   const btnClose = document.getElementById('quiz-modal-close');
   const quizContent = document.getElementById('quiz-content');
+  const SITE_URL = 'https://lucesdelsur.github.io/Universo/';
 
-  btnOpen.addEventListener('click', () => {
-    currentStep = 0;
-    scores = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
-    renderQuestion();
+  function openModal(){
     modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => { const b = quizContent.querySelector('button, a'); if(b) b.focus(); }, 50);
+  }
+  function closeModal(){
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    btnOpen.focus();
+  }
+  function startQuiz(){
+    currentStep = 0; answers = [];
+    renderQuestion(); openModal();
+  }
+
+  btnOpen.addEventListener('click', startQuiz);
+  btnClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeModal(); });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
   });
 
-  btnClose.addEventListener('click', () => modalOverlay.classList.remove('open'));
-  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) modalOverlay.classList.remove('open'); });
+  // Un solo listener para todos los botones del modal (en vez de onclick sueltos).
+  quizContent.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    if(btn.dataset.era){ selectOption(Number(btn.dataset.era)); }
+    else if(btn.dataset.action === 'back'){ goBack(); }
+    else if(btn.dataset.action === 'retry'){ currentStep = 0; answers = []; renderQuestion(); }
+    else if(btn.dataset.action === 'share'){ shareResult(Number(btn.dataset.result), btn); }
+    else if(btn.dataset.action === 'start'){ currentStep = 0; answers = []; renderQuestion(); }
+  });
 
   function renderQuestion(){
     const item = QUESTIONS[currentStep];
     quizContent.innerHTML = `
-      <span class="quiz-step-tag">Pregunta ${currentStep + 1} de ${QUESTIONS.length}</span>
-      <h3 class="quiz-question-title">${item.q}</h3>
+      <span class="quiz-step-tag">${t('Pregunta')} ${currentStep + 1} ${t('de')} ${QUESTIONS.length}</span>
+      <div class="quiz-progress" aria-hidden="true"><span style="width:${(currentStep / QUESTIONS.length) * 100}%"></span></div>
+      <h3 class="quiz-question-title" id="quiz-title">${item.q}</h3>
       <div class="quiz-options">
-        ${item.opts.map((opt, i) => `
-          <button class="quiz-opt-btn" onclick="selectOption(${opt.era})">${opt.text}</button>
-        `).join('')}
+        ${item.opts.map(opt => `<button class="quiz-opt-btn" data-era="${opt.era}">${opt.text}</button>`).join('')}
       </div>
+      ${currentStep > 0 ? `<button class="btn-back" data-action="back">${t('← Pregunta anterior')}</button>` : ''}
     `;
+    const first = quizContent.querySelector('.quiz-opt-btn');
+    if(first && modalOverlay.classList.contains('open')) first.focus();
   }
 
-  window.selectOption = function(eraNumber){
-    scores[eraNumber] = (scores[eraNumber] || 0) + 1;
+  function selectOption(eraNumber){
+    answers[currentStep] = eraNumber;
+    answers.length = currentStep + 1;
     currentStep++;
-    if(currentStep < QUESTIONS.length){
-      renderQuestion();
-    } else {
-      renderResult();
-    }
-  };
+    if(currentStep < QUESTIONS.length) renderQuestion();
+    else renderResult(winningEra());
+  }
 
-  function renderResult(){
-    let winningEra = 1;
-    let maxVal = -1;
-    for(let era in scores){
-      if(scores[era] > maxVal){
-        maxVal = scores[era];
-        winningEra = era;
-      }
-    }
+  function goBack(){
+    if(currentStep === 0) return;
+    currentStep--;
+    renderQuestion();
+  }
 
-    const res = RESULTS[winningEra];
+  function winningEra(){
+    const scores = {};
+    answers.forEach(e => { scores[e] = (scores[e] || 0) + 1; });
+    const max = Math.max(...Object.values(scores));
+    // Desempate: de las Eras empatadas, gana la que elegiste más recientemente.
+    for(let i = answers.length - 1; i >= 0; i--){
+      if(scores[answers[i]] === max) return answers[i];
+    }
+    return answers[answers.length - 1];
+  }
+
+  function renderResult(era, compartido){
+    const res = RESULTS[era];
     quizContent.innerHTML = `
       <div class="result-card">
         <div class="result-header">
-          <span class="era-num">PRESCRIPCIÓN MÉDICA OFICIAL</span>
-          <h3>${res.title}</h3>
+          <span class="era-num">${t(compartido ? 'ASÍ LE DIO EL TEST A ALGUIEN QUE TE MANDÓ ESTO' : 'PRESCRIPCIÓN MÉDICA OFICIAL')}</span>
+          <h3 id="quiz-title">${res.title}</h3>
         </div>
         <p class="result-diag">"${res.diag}"</p>
         <div class="result-grid">
-          <div class="result-item">
-            <label>Canción del día</label>
-            <span>${res.cancion}</span>
-          </div>
-          <div class="result-item">
-            <label>Bebida del día</label>
-            <span>${res.bebida}</span>
-          </div>
-          <div class="result-item">
-            <label>Accesorio del día</label>
-            <span>${res.accesorio}</span>
-          </div>
-          <div class="result-item result-danger">
-            <label>Nivel de Peligro Social</label>
-            <span>${res.peligro}</span>
-          </div>
+          <div class="result-item"><label>${t('Canción del día')}</label><span>${res.cancion}</span></div>
+          <div class="result-item"><label>${t('Bebida del día')}</label><span>${res.bebida}</span></div>
+          <div class="result-item"><label>${t('Accesorio del día')}</label><span>${res.accesorio}</span></div>
+          <div class="result-item result-danger"><label>${t('Nivel de Peligro Social')}</label><span>${res.peligro}</span></div>
         </div>
         <div class="result-actions">
-          <a href="${res.archivo}" class="btn-era-link">EXPLORAR ${res.title}</a>
-          <button class="btn-retry" onclick="resetQuiz()">REPETIR TEST</button>
+          <a href="${res.archivo}" class="btn-era-link">${t('EXPLORAR')} ${res.title}</a>
+          ${compartido
+            ? '<button class="btn-retry" data-action="start">' + t('HACER MI TEST') + '</button>'
+            : `<button class="btn-share" data-action="share" data-result="${era}">${t('COMPARTIR RESULTADO')}</button>
+               <button class="btn-retry" data-action="retry">${t('REPETIR TEST')}</button>`}
         </div>
+        <p class="share-feedback" aria-live="polite"></p>
       </div>
     `;
   }
 
-  window.resetQuiz = function(){
-    currentStep = 0;
-    scores = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
-    renderQuestion();
-  };
+  async function shareResult(era, btn){
+    const res = RESULTS[era];
+    const url = `${SITE_URL}?resultado=${era}`;
+    const text = (window.LANG === 'en' && window.I18N_EN)
+      ? I18N_EN.quiz.share.replace('{title}', res.title)
+      : `Me dio ${res.title} en el test de las 7 Eras de CA7RIEL & Paco Amoroso. ¿En qué Era estás vos?`;
+    const fb = quizContent.querySelector('.share-feedback');
+    try{
+      if(navigator.share){ await navigator.share({ title: 'Las 7 Eras', text, url }); return; }
+      await navigator.clipboard.writeText(`${text} ${url}`);
+      fb.textContent = t('¡Copiado! Pegalo en tu historia o en un chat.');
+    }catch(err){
+      if(err && err.name === 'AbortError') return; // la persona canceló
+      fb.innerHTML = `${t('Copiá este link:')} <a href="${url}">${url}</a>`;
+    }
+  }
+
+  // Si alguien llega desde un link compartido (?resultado=N), le mostramos ese resultado.
+  (function resultadoCompartido(){
+    const n = Number(new URLSearchParams(location.search).get('resultado'));
+    if(RESULTS[n]){ renderResult(n, true); openModal(); }
+  })();
 </script>
 <script data-goatcounter="https://lucesdelsur.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

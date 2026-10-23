@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>World Tour — Universo Musical CA7RIEL & Paco Amoroso</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="i18n.js"></script>
 <meta name="description" content="El mapa mundial de la gira de CA7RIEL & Paco Amoroso: kilómetros recorridos, ciudades visitadas y cuántas vueltas al mundo dieron.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Universo Musical — CA7RIEL & Paco Amoroso">
@@ -100,20 +101,22 @@ footer{
   text-align:center; padding:40px 20px 60px; color:var(--text-dim); font-family:var(--mono); font-size:.9rem;
   border-top:1px solid var(--line);
 }
+.nota-periodo{ font-family:'Inter',sans-serif; font-size:.85rem; color:#555; max-width:560px; margin:12px auto 0; text-align:center; line-height:1.5; }
 </style>
 </head>
 <body>
 
   <nav id="site-nav">
-    <a href="index.html">Inicio</a>
-    <a href="historia.html">Historia</a>
-    <a href="mapa.html" class="active">Mapa</a>
+    <a data-i18n="nav.inicio" href="index.html">Inicio</a>
+    <a data-i18n="nav.historia" href="historia.html">Historia</a>
+    <a data-i18n="nav.mapa" href="mapa.html" class="active">Mapa</a>
   </nav>
 
   <header>
-    <div class="kicker">Universo CA7RIEL &amp; Paco Amoroso</div>
+    <div data-i18n="mapa.kicker" class="kicker">Universo CA7RIEL &amp; Paco Amoroso</div>
     <h1>World Tour</h1>
-    <p class="sub-nomade">Más noches en aviones y camas de hotel que en su propia casa. La vida nómade de una gira mundial.</p>
+    <p data-i18n="mapa.sub" class="sub-nomade">Más noches en aviones y camas de hotel que en su propia casa. La vida nómade de una gira mundial.</p>
+    <p data-i18n="mapa.nota" class="nota-periodo">Por ahora el mapa muestra las giras de 2024 a 2026. Los conciertos de las Eras anteriores se van a sumar más adelante.</p>
   </header>
 
   <div class="stats-km" id="stats-km"></div>
@@ -126,17 +129,17 @@ footer{
   </div>
 
   <div class="toggles-region">
-    <div class="toggles-region-label">Región</div>
-    <button class="toggle-region-btn activo" data-region="latam">Latinoamérica</button>
-    <button class="toggle-region-btn activo" data-region="usa_can_mex">USA, Canadá y México</button>
-    <button class="toggle-region-btn activo" data-region="europa_asia">Europa y Asia</button>
+    <div data-i18n="mapa.region" class="toggles-region-label">Región</div>
+    <button data-i18n="mapa.latam" class="toggle-region-btn activo" data-region="latam">Latinoamérica</button>
+    <button data-i18n="mapa.usa" class="toggle-region-btn activo" data-region="usa_can_mex">USA, Canadá y México</button>
+    <button data-i18n="mapa.europa" class="toggle-region-btn activo" data-region="europa_asia">Europa y Asia</button>
   </div>
 
   <div id="mapa"></div>
 
   <footer>
-    Escrito y diseñado por <a href="https://lucesdelsur.substack.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Luces del Sur</a> · última actualización: <span id="last-update">—</span>
-    <div style="font-style:italic; font-size:.78rem; opacity:.75; margin-top:10px; max-width:600px; margin-left:auto; margin-right:auto;">Fotografías sin crédito individual: material de prensa o de las redes oficiales de CA7RIEL & Paco Amoroso. Los derechos pertenecen a sus autores y/o representantes.</div>
+    <span data-i18n="footer.escrito">Escrito y diseñado por</span> <a href="https://lucesdelsur.substack.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Luces del Sur</a> · <span data-i18n="footer.actualizacion">última actualización:</span> <span id="last-update">—</span>
+    <div data-i18n="footer.fotos" style="font-style:italic; font-size:.78rem; opacity:.75; margin-top:10px; max-width:600px; margin-left:auto; margin-right:auto;">Fotografías sin crédito individual: material de prensa o de las redes oficiales de CA7RIEL & Paco Amoroso. Los derechos pertenecen a sus autores y/o representantes.</div>
   </footer>
 
 <script>
@@ -190,13 +193,13 @@ footer{
     const diasVolando = horasVuelo / 24;
 
     document.getElementById('stats-km').innerHTML = `
-      <div><strong>${Math.round(totalKm).toLocaleString('es-AR')}</strong><span>Kilómetros recorridos</span></div>
-      <div><strong>${(totalKm / CIRCUNFERENCIA_TIERRA).toFixed(2)}</strong><span>Vueltas al mundo</span></div>
-      <div><strong>${(totalKm / DISTANCIA_LUNA).toFixed(2)}</strong><span>Viajes a la Luna (ida)</span></div>
+      <div><strong>${Math.round(totalKm).toLocaleString(window.localeFecha || 'es-AR')}</strong><span>${t('Kilómetros recorridos')}</span></div>
+      <div><strong>${(totalKm / CIRCUNFERENCIA_TIERRA).toFixed(2)}</strong><span>${t('Vueltas al mundo')}</span></div>
+      <div><strong>${(totalKm / DISTANCIA_LUNA).toFixed(2)}</strong><span>${t('Viajes a la Luna (ida)')}</span></div>
     `;
     document.getElementById('stats-horas').innerHTML = `
-      <div><strong>${diasVolando.toFixed(1)}</strong><span>Días completos en el aire</span></div>
-      <div><strong>${Math.round(horasShow).toLocaleString('es-AR')} hs</strong><span>Arriba del escenario</span></div>
+      <div><strong>${diasVolando.toFixed(1)}</strong><span>${t('Días completos en el aire')}</span></div>
+      <div><strong>${Math.round(horasShow).toLocaleString(window.localeFecha || 'es-AR')} hs</strong><span>${t('Arriba del escenario')}</span></div>
     `;
   }
 
@@ -234,8 +237,8 @@ footer{
   });
 
   function formatearFechaCorta(iso){
-    if(!iso) return 'Fecha aprox.';
-    const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    if(!iso) return t('Fecha aprox.');
+    const meses = (window.LANG === 'en' && window.I18N_EN) ? I18N_EN.monthsShort : ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
     const [y, m, d] = iso.split('-').map(Number);
     return `${d} ${meses[m-1]} ${y}`;
   }
@@ -244,14 +247,14 @@ footer{
     const filas = l.grupoCompleto.map(s => `
       <div style="padding:8px 0; border-top:1px solid #eee;">
         <div style="font-family:'Inter'; font-weight:700; font-size:.78rem; color:${COLORES[s.anio]};">${formatearFechaCorta(s.fecha)}</div>
-        <div style="font-size:.85rem; color:#111;">${s.ciudad}${s.lugar ? ' — ' + s.lugar : ''}</div>
+        <div style="font-size:.85rem; color:#111;">${tPlace(s.ciudad)}${s.lugar ? ' — ' + s.lugar : ''}</div>
       </div>
     `).join('');
     return `
-      <div class="popup-cat" style="color:${COLORES[l.anio]}">${l.pais || ''}</div>
-      <div class="popup-title">${l.ciudad}</div>
+      <div class="popup-cat" style="color:${COLORES[l.anio]}">${tPlace(l.pais || '')}</div>
+      <div class="popup-title">${tPlace(l.ciudad)}</div>
       ${l.grupoCompleto.length > 1
-        ? `<div style="font-size:.72rem; color:#D71920; font-weight:700; margin-top:4px;">${l.grupoCompleto.length} shows en esta zona</div>`
+        ? `<div style="font-size:.72rem; color:#D71920; font-weight:700; margin-top:4px;">${l.grupoCompleto.length} ${t('shows en esta zona')}</div>`
         : ''}
       <div style="max-height:220px; overflow-y:auto; margin-top:6px;">${filas}</div>
     `;
@@ -315,8 +318,8 @@ footer{
     const el = document.getElementById('last-update');
     if(!el) return;
     const d = new Date(document.lastModified);
-    if(isNaN(d.getTime())){ el.textContent = 'sin datos'; return; }
-    el.textContent = d.toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
+    if(isNaN(d.getTime())){ el.textContent = t('sin datos'); return; }
+    el.textContent = d.toLocaleDateString(window.localeFecha || 'es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
   })();
 </script>
 
