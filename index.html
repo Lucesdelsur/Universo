@@ -6,6 +6,7 @@
 <title>Universo Musical — CA7RIEL & Paco Amoroso</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <script src="i18n.js"></script>
+<script src="tarjeta.js" defer></script>
 <meta name="description" content="Las 7 Eras de CA7RIEL & Paco Amoroso: discografía, conciertos, colaboraciones y prensa, contados como una nota de revista.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Universo Musical — CA7RIEL & Paco Amoroso">
@@ -601,6 +602,7 @@ footer{
 
   function renderResult(era, compartido){
     const res = RESULTS[era];
+    if(!compartido) prepararTarjeta(era);
     quizContent.innerHTML = `
       <div class="result-card">
         <div class="result-header">
@@ -626,6 +628,33 @@ footer{
     `;
   }
 
+  // ---------- Compartir: una imagen tamaño historia de Instagram ----------
+  // La tarjeta se prepara apenas aparece el resultado, así al tocar el botón
+  // ya está lista: el celular solo abre el menú para compartir si el toque
+  // es inmediato.
+  let tarjeta = null; // { era, file, blob }
+  function prepararTarjeta(era){
+    if(typeof window.dibujarTarjeta !== 'function') return;
+    const lista = { era, file: null, blob: null };
+    tarjeta = lista;
+    lista.promesa = (async () => {
+      const canvas = document.createElement('canvas');
+      await dibujarTarjeta(canvas, era, RESULTS[era], window.LANG);
+      const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+      if(!blob) throw new Error('sin imagen');
+      lista.blob = blob;
+      lista.file = new File([blob], `mi-era-${era}.png`, { type: 'image/png' });
+    })().catch(() => {});
+  }
+
+  function descargar(blob, nombre){
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = nombre;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }
+
   async function shareResult(era, btn){
     const res = RESULTS[era];
     const url = `${SITE_URL}?resultado=${era}`;
@@ -633,12 +662,40 @@ footer{
       ? I18N_EN.quiz.share.replace('{title}', res.title)
       : `Me dio ${res.title} en el test de las 7 Eras de CA7RIEL & Paco Amoroso. ¿En qué Era estás vos?`;
     const fb = quizContent.querySelector('.share-feedback');
+    fb.textContent = '';
+
+    if(!tarjeta || tarjeta.era !== era) prepararTarjeta(era);
+    if(tarjeta && !tarjeta.file){
+      const etiqueta = btn.textContent;
+      btn.disabled = true; btn.textContent = t('PREPARANDO IMAGEN…');
+      await tarjeta.promesa;
+      btn.disabled = false; btn.textContent = etiqueta;
+    }
+    const file = tarjeta && tarjeta.file;
+
     try{
+      // Celular: menú para compartir con la imagen (ahí aparece Instagram).
+      if(file && navigator.canShare && navigator.canShare({ files: [file] })){
+        await navigator.share({ files: [file] });
+        return;
+      }
+      // Compu: se descarga la imagen para subirla a mano.
+      if(file){
+        descargar(file, file.name);
+        fb.textContent = t('Descargamos tu tarjeta. Subila a tu historia de Instagram.');
+        return;
+      }
+      // Si no se pudo crear la imagen, se comparte el link como antes.
       if(navigator.share){ await navigator.share({ title: 'Las 7 Eras', text, url }); return; }
       await navigator.clipboard.writeText(`${text} ${url}`);
       fb.textContent = t('¡Copiado! Pegalo en tu historia o en un chat.');
     }catch(err){
       if(err && err.name === 'AbortError') return; // la persona canceló
+      if(file){
+        descargar(file, file.name);
+        fb.textContent = t('Descargamos tu tarjeta. Subila a tu historia de Instagram.');
+        return;
+      }
       fb.innerHTML = `${t('Copiá este link:')} <a href="${url}">${url}</a>`;
     }
   }

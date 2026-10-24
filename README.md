@@ -20,6 +20,7 @@ como acento quirúrgico.
 ├── era.css        → El diseño de las páginas de Era
 ├── i18n.js        → El botón ES/EN y la lógica de idioma
 ├── i18n-en.js     → Todos los textos en inglés
+├── tarjeta.js     → Dibuja la imagen para compartir el resultado del test
 ├── historia.html  → La historia, diagramada como nota de revista
 ├── mapa.html      → World Tour: mapa de la gira (2024–2026)
 └── images/
@@ -124,6 +125,7 @@ Esta sección es un registro de qué se decidió dejar para más adelante, y por
 - **Contador de visitas (GoatCounter)**: está conectado, pero **no se muestra ningún número en la página pública** (decisión tomada a propósito). Para ver las estadísticas (visitas, países), entrar a `lucesdelsur.goatcounter.com` con el login de la cuenta. Es privado, solo lo ve quien tenga ese acceso.
 - **CSS y datos compartidos** (octubre 2026): antes estaban copiados en los 7 archivos de Era; ahora viven en `era.css`, `datos.js` y `era.js`. Así no se desincronizan y el navegador los descarga una sola vez. Para que una página de Era funcione, esos tres archivos tienen que estar subidos junto a ella.
 - **Test "¿En qué Era estás?"**: los empates los gana la Era elegida más recientemente; se puede volver a la pregunta anterior y compartir el resultado (el link `?resultado=N` abre ese resultado en la portada).
+- **Compartir resultado** (octubre 2026): el botón genera una imagen de 1080×1920 (tamaño historia de Instagram) con el resultado, dibujada por `tarjeta.js` con la foto de `images/og/eraN.jpg` (la Era 6 usa `images/hito-tiny-desk.jpg`). En el celular abre el menú para compartir; en la compu descarga la imagen.
 - **Categorías de filtro**: consolidadas a 4 — Discografía (canciones, álbumes/EPs, cortometrajes), Colaboración, Prensa (entrevistas + artículos), Conciertos.
 - **Jerarquía "hito destacado"**: los hitos más importantes de cada Era tienen tratamiento visual más grande (foto e título más grandes, franja con tinte del color de la Era), visible también en celular.
 

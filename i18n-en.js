@@ -134,6 +134,8 @@ window.I18N_EN = {
   "REPETIR TEST": "RETAKE TEST",
   "¡Copiado! Pegalo en tu historia o en un chat.": "Copied! Paste it in your story or a chat.",
   "Copiá este link:": "Copy this link:",
+  "PREPARANDO IMAGEN…": "PREPARING IMAGE…",
+  "Descargamos tu tarjeta. Subila a tu historia de Instagram.": "Your card has been downloaded. Post it to your Instagram story.",
   "Era {n} de 7": "Era {n} of 7"
  },
  "places": {
